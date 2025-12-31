@@ -1,0 +1,107 @@
+body {
+    background-color: #0a2a66;
+    min-height: 100vh;
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.hero {
+    margin-top: -50px;
+}
+
+h1 {
+    margin-bottom: 8px;
+}
+
+h5 {
+    margin-bottom: 24px;
+}
+
+.logo1 {
+    height: auto;
+    display: block;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-bottom: 20px;
+    
+    object-fit: contain;
+}
+.description {
+    margin-bottom: 30px;
+    padding: 0 30px;
+}
+
+.divider {
+    margin: 25px 0;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.card-login {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 40px 30px;
+    color: #0a2a66;
+    max-width: 650px;
+}
+
+.role-icon {
+    width: 100px;
+    height: 100px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+}
+
+.role-btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+    color: #0a2a66;
+}
+
+.role-btn:hover {
+    text-decoration: underline;
+}
+
+.register-link {
+    margin-top: 25px;
+}
+
+.register-link a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.daftar {
+  display: flex;
+  align-items: center;
+  color: white;
+  background: #0b2a63;
+  padding: 12px 20px;
+  margin-top: 70px;
+}
+
+.daftar span {
+  font-weight: bold;
+  margin:0px 15px;
+  white-space: nowrap;
+}
+
+.daftar .garis {
+  flex: 1;
+  height: 1px;
+  background: white;
+  opacity: 0.7;
+}
+
+.daftar span a {
+  color: #00aaff; 
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.daftar span a:hover {
+  color: white;
+  text-decoration: underline; 
+}
