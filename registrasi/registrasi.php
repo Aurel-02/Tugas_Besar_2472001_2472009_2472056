@@ -9,41 +9,34 @@
     <link rel="stylesheet" href="../css/registrasi.css">
 </head>
 <body>
-
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    include "koneksi.php";
+    include __DIR__ . "/../koneksi.php";
 
-    $nama_mahasiswa = $_POST['nama'];
-    $id_prodi       = $_POST['id_prodi'];
-    $password       = $_POST['password'];
+    $nama     = $_POST['nama'];
+    $id_prodi = $_POST['id_prodi'];
+    $password = $_POST['password'];
+    $role_id  = $_POST['role_id'];
 
-    $sql = "EXEC sp_InsertUserMahasiswa 
-            @nama_mahasiswa = ?, 
-            @id_prodi = ?, 
-            @password = ?";
-
-    $params = array(
-        $nama_mahasiswa,
-        $id_prodi,
-        $password
-    );
-
-    $stmt = sqlsrv_query($conn, $sql, $params);
-
-    if ($stmt === false) {
-        echo "<pre>";
-        print_r(sqlsrv_errors());
-        echo "</pre>";
-        exit;
+    if ($role_id == '3') {
+        $sql = "CALL sp_InsertUserMahasiswa(?, ?, ?)";
+    } elseif ($role_id == '2') {
+        $sql = "CALL sp_InsertDosen(?, ?, ?)";
+    } else {
+        die("Role tidak valid");
     }
 
-    while (sqlsrv_next_result($stmt)) {}
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "sss", $nama, $id_prodi, $password);
+
+    if (!mysqli_stmt_execute($stmt)) {
+        die("Error: " . mysqli_error($conn));
+    }
 
     echo "<script>
-        alert('Registrasi mahasiswa berhasil');
-        window.location = 'login.php';
+        alert('Registrasi berhasil');
+        window.location='../index.php';
     </script>";
 }
 ?>
@@ -66,8 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="mb-3">
                         <label class="form-label">Daftar sebagai</label>
-                        <select class="form-select" disabled>
-                            <option value="3" selected>Mahasiswa</option>
+                        <select class="form-select" name="role_id" required>
+                            <option value="" selected disabled>Pilih Peran</option>
+                            <option value="3">Mahasiswa</option>
+                            <option value="2">Dosen</option>
                         </select>
                     </div>
 
@@ -116,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="submit" class="btn btn-primary w-100 py-2">
                         Sign Up
                     </button>
+
                 </form>
 
             </div>

@@ -41,8 +41,10 @@
                     </div>
 
                     <div class="col-md-4 mb-4 mb-md-0">
-                        <div class="role-icon"></div>
-                        <a href="#" class="role-btn">Mahasiswa</a>
+                        <a href="mahasiswa/login.php" class="role-link">
+                            <div class="role-icon mahasiswa"></div>
+                        </a>
+                        <a href="mahasiswa/login.php" class="role-btn">Mahasiswa</a>
                     </div>
 
                     <div class="col-md-4">

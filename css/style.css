@@ -79,7 +79,7 @@ h5 {
   color: white;
   background: #0b2a63;
   padding: 12px 20px;
-  margin-top: 60px;
+  margin-top: 10px;
 }
 
 .daftar span {
@@ -104,4 +104,23 @@ h5 {
 .daftar span a:hover {
   color: white;
   text-decoration: underline; 
+}
+
+.role-icon {
+    width: 80%;
+    height: 150px;
+    border-radius: 90px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 12px;
+}
+
+.role-icon.mahasiswa {
+    background-image: url('../img/mahasiswa_icon.png');
+}
+
+.role-link {
+    display: block;
+    text-decoration: none;
 }
