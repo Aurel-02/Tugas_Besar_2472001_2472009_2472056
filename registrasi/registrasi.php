@@ -10,6 +10,44 @@
 </head>
 <body>
 
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    include "koneksi.php";
+
+    $nama_mahasiswa = $_POST['nama'];
+    $id_prodi       = $_POST['id_prodi'];
+    $password       = $_POST['password'];
+
+    $sql = "EXEC sp_InsertUserMahasiswa 
+            @nama_mahasiswa = ?, 
+            @id_prodi = ?, 
+            @password = ?";
+
+    $params = array(
+        $nama_mahasiswa,
+        $id_prodi,
+        $password
+    );
+
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt === false) {
+        echo "<pre>";
+        print_r(sqlsrv_errors());
+        echo "</pre>";
+        exit;
+    }
+
+    while (sqlsrv_next_result($stmt)) {}
+
+    echo "<script>
+        alert('Registrasi mahasiswa berhasil');
+        window.location = 'login.php';
+    </script>";
+}
+?>
+
 <div class="container-fluid min-vh-100">
     <div class="row min-vh-100">
 
@@ -24,34 +62,55 @@
 
                 <h2 class="fw-bold mb-4 text-center">Registrasi</h2>
 
-                <form class="mx-auto" style="max-width: 520px;">
+                <form method="POST" class="mx-auto" style="max-width: 520px;">
+
                     <div class="mb-3">
                         <label class="form-label">Daftar sebagai</label>
-                        <select class="form-select">
-                            <option value="" selected disabled>Pilih Peran</option>
-                            <option value="mahasiswa">Mahasiswa</option>
-                            <option value="dosen">Dosen</option>
-                            <option value="admin">Admin</option>
+                        <select class="form-select" disabled>
+                            <option value="3" selected>Mahasiswa</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" placeholder="Nama Lengkap">
+                        <input type="text"
+                               class="form-control"
+                               name="nama"
+                               placeholder="Nama Lengkap"
+                               required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Jurusan</label>
-                        <select class="form-select">
-                            <option selected>Pilih jurusan disini</option>
-                            <option>Informatika</option>
-                            <option>Sistem Informasi</option>
+                        <select class="form-select" name="id_prodi" required>
+                            <option value="" selected disabled>Pilih jurusan disini</option>
+                            <option value="01">Pendidikan Dokter</option>
+                            <option value="02">Pendidikan Profesi Dokter</option>
+                            <option value="21">Hukum</option>
+                            <option value="22">Bisnis Digital</option>
+                            <option value="23">Akuntansi</option>
+                            <option value="41">Psikologi</option>
+                            <option value="42">Profesi Psikologi</option>
+                            <option value="51">Kedokteran Gigi</option>
+                            <option value="52">Kedokteran Profesi Gigi</option>
+                            <option value="55">Pertambangan</option>
+                            <option value="61">Desain Komunikasi Visual</option>
+                            <option value="62">Sastra Inggris</option>
+                            <option value="63">Sastra Jepang</option>
+                            <option value="64">Sastra China</option>
+                            <option value="72">Teknik Informatika</option>
+                            <option value="73">Sistem Informasi</option>
+                            <option value="74">Teknik Elektro</option>
                         </select>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label">Password</label>
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password"
+                               class="form-control"
+                               name="password"
+                               placeholder="Password"
+                               required>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100 py-2">
