@@ -1,13 +1,16 @@
-:root {
-  --blue-dark: #0b1f5c;
+
+.left-panel {
+  background-color: #0a2a66;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.logo-section {
-  background-color: var(--blue-dark);
-}
-
-.logo-img {
-  width: 250px;
+.logo-maranatha {
+  width: 320px;
+  max-width: 80%;
+  height: auto;
 }
 
 .login-box {
@@ -16,7 +19,7 @@
 }
 
 .title {
-  color: var(--blue-dark);
+  color: #0a2a66;
   font-weight: bold;
   text-align: center;
 }
@@ -43,12 +46,12 @@
 }
 
 .btn-login {
-  background-color: var(--blue-dark);
+  background-color: #0a2a66;
   color: white;
   height: 45px;
   border-radius: 6px;
 }
 
 .btn-login:hover {
-  background-color: #081847;
+  background-color: #08224f;
 }

@@ -44,13 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container-fluid min-vh-100">
     <div class="row min-vh-100">
 
-        <div class="col-md-6 left-panel d-flex align-items-center justify-content-center">
-            <img src="../img/Logo_Maranatha.png"
-                 alt="Universitas Kristen Maranatha"
-                 class="logo-maranatha">
-        </div>
+        <?php include __DIR__ . '/../include/include.php'; ?>
 
         <div class="col-md-6 bg-white d-flex align-items-center">
+            
             <div class="form-wrapper w-100 px-5">
 
                 <h2 class="fw-bold mb-4 text-center">Registrasi</h2>
