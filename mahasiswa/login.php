@@ -21,12 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-    $sql = "SELECT u.id, u.role_id, m.nama_mahasiswa
+    $sql = "SELECT u.id, u.role_id, m.nama_mahasiswa, p.nama_prodi
             FROM tbUsers u
             JOIN tbMahasiswa m ON u.id = m.nrp
-            WHERE u.id = ?
-              AND u.password = ?
-              AND u.role_id = '3'";
+            JOIN tbProdi p ON m.id_prodi = p.id_prodi
+            WHERE u.id = ? AND u.password = ? AND u.role_id = '3'";
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $username, $password);
@@ -41,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role_id'] = $user['role_id'];
         $_SESSION['nama']    = $user['nama_mahasiswa'];
+        $_SESSION['prodi'] = $user['nama_prodi'];
 
         header("Location: ../mahasiswa/dashboard.php");
         exit;
