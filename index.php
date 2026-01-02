@@ -35,10 +35,13 @@
             <div class="card-login shadow mx-auto">
                 <div class="row text-center">
 
-                    <div class="col-md-4 mb-4 mb-md-0">
-                        <div class="role-icon"></div>
-                        <a href="#" class="role-btn">Dosen</a>
+                      <div class="col-md-4 mb-4 mb-md-0">
+                        <a href="Dosen/login_dosen.php" class="role-link">
+                            <div class="role-icon dosen"></div>
+                        </a>
+                        <a href="Dosen/login_dosen.php" class="role-btn">Dosen</a>
                     </div>
+
 
                     <div class="col-md-4 mb-4 mb-md-0">
                         <a href="mahasiswa/login.php" class="role-link">
