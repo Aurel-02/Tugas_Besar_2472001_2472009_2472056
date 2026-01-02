@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard Dosen</title>
 </head>
 <body>
-    <h1>Hallo Mahasiswa</h1>
+    <h1>Hallo Dosen!</h1>
 </body>
 </html>
 </html>
