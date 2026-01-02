@@ -5,7 +5,8 @@
   <title>Login Dosen</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="login_dosen.css">
+  <link rel="stylesheet" href="../css/include.css">
+  <link rel="stylesheet" href="../css/login_dosen.css">
 </head>
 <body>
 
@@ -48,13 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container-fluid vh-100">
   <div class="row h-100">
 
-    <div class="col-md-6 logo-section d-flex justify-content-center align-items-center">
-      <div class="logo text-center">
-        <img src="logo_marnat_putih-removebg-preview.png" 
-             alt="Logo Kampus" 
-             class="logo-img mb-3">
-      </div>
-    </div>
+    <?php include __DIR__ . '/../include/include.php'; ?>
 
     <div class="col-md-6 d-flex justify-content-center align-items-center">
       <div class="login-box">
