@@ -14,16 +14,19 @@
 session_start();
 include __DIR__ . '/../koneksi.php';
 
+$error = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
-    $sql = "SELECT id, role_id 
-            FROM tbUsers
-            WHERE id = ?
-              AND password = ?
-              AND role_id = '3'";
+    $sql = "SELECT u.id, u.role_id, m.nama_mahasiswa
+            FROM tbUsers u
+            JOIN tbMahasiswa m ON u.id = m.nrp
+            WHERE u.id = ?
+              AND u.password = ?
+              AND u.role_id = '3'";
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $username, $password);
@@ -34,18 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (mysqli_num_rows($result) === 1) {
         $user = mysqli_fetch_assoc($result);
 
-        $_SESSION['login'] = true;
+        $_SESSION['login']   = true;
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role_id'] = $user['role_id'];
+        $_SESSION['nama']    = $user['nama_mahasiswa'];
 
         header("Location: ../mahasiswa/dashboard.php");
         exit;
     } else {
-        $error = "NRP atau Password salah !";
+        $error = "NRP atau Password salah!";
     }
 }
 ?>
-
 <div class="container-fluid vh-100">
   <div class="row h-100">
 
