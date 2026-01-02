@@ -1,4 +1,10 @@
-
+.left-panel {
+  background-color: #0a2a66;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .logo-maranatha {
   width: 320px;
@@ -7,6 +13,10 @@
 }
 :root {
   --blue-dark: #0b1f5c;
+}
+
+.logo-section {
+  background-color: var(--blue-dark);
 }
 
 .logo-img {
