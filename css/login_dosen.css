@@ -1,0 +1,54 @@
+:root {
+  --blue-dark: #0b1f5c;
+}
+
+.logo-section {
+  background-color: var(--blue-dark);
+}
+
+.logo-img {
+  width: 250px;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 400px;
+}
+
+.title {
+  color: var(--blue-dark);
+  font-weight: bold;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+.username,
+.password {
+  height: 45px;
+}
+
+.forgot {
+  font-size: 13px;
+  color: #888;
+  text-decoration: none;
+}
+
+.forgot:hover {
+  text-decoration: underline;
+}
+
+.btn-login {
+  background-color: var(--blue-dark);
+  color: white;
+  height: 45px;
+  border-radius: 6px;
+}
+
+.btn-login:hover {
+  background-color: #081847;
+}

@@ -10,7 +10,14 @@
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
+<?php
+session_start();  
 
+if (!isset($_SESSION['login'])) {
+    header("Location: ../login/login_mahasiswa.php");
+    exit;
+}
+?>
 <div class="d-flex min-vh-100">
 
     <aside class="sidebar d-flex flex-column justify-content-between">
@@ -37,10 +44,10 @@
             </ul>
         </div>
 
-        <div class="logout d-flex align-items-center gap-2">
+        <a href="logout.php" class="logout d-flex align-items-center gap-2 text-decoration-none">
             <div class="logout-icon"></div>
-            <span>Logout</span>
-        </div>
+            <span class="logout-text">Logout</span>
+        </a>
     </aside>
 
     <main class="flex-grow-1 bg-light">
@@ -49,9 +56,12 @@
             <div class="d-flex align-items-center gap-4">
                 <div class="avatar"></div>
                 <div>
-                    <div class="fw-bold"><?= $_SESSION['nama'] ?></div>
+                    <div class="fw-bold">
+                        <?= isset($_SESSION['nama']) ? $_SESSION['nama'] : 'Nama tidak ditemukan'; ?>
+                    </div>
                     <small class="text-muted">
-                        <?= $_SESSION['user_id'] ?><br><?= $_SESSION['prodi'] ?> 
+                        <?= isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'NRP tidak ditemukan'; ?><br>
+                    <?= isset($_SESSION['prodi']) ? $_SESSION['prodi'] : 'Prodi tidak ditemukan'; ?>
                     </small>
                 </div>
             </div>
@@ -64,4 +74,5 @@
 </div>
 
 </body>
+</html>
 </html>
