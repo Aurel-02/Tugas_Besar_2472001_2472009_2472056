@@ -14,63 +14,36 @@
 session_start();
 
 if (!isset($_SESSION['login'])) {
-    header("Location: ../login.php?role=3");
+    header("Location: /TUGAS_BESAR_2472001_2472009_2472056/login.php?role=3");
     exit;
 }
 
-if ($_SESSION['role_id'] != '3') {
-    header("Location: ../login.php?role=" . $_SESSION['role_id']);
+if ($_SESSION['role_id'] !== '3') {
+    header("Location: /TUGAS_BESAR_2472001_2472009_2472056/login.php?role=".$_SESSION['role_id']);
     exit;
 }
 ?>
 <div class="d-flex min-vh-100">
 
-    <aside class="sidebar d-flex flex-column justify-content-between">
-        <div>
-            <div class="sidebar-logo"></div>
-            
-            <hr class="sidebar-divider">
+    <?php include __DIR__ . '/include/sidebar.php'; ?>
 
-            <ul class="nav flex-column sidebar-menu">
-                <li class="nav-item">
-                    <div class="icon nilai"></div>
-                    <span>Nilai</span>
-                </li>
-
-                <li class="nav-item">
-                    <div class="icon dkbs"></div>
-                    <span>DKBS</span>
-                </li>
-
-                <li class="nav-item">
-                    <div class="icon jadwal"></div>
-                    <span>Jadwal</span>
-                </li>
-            </ul>
-        </div>
-
-        <a href="../logout.php" class="logout d-flex align-items-center gap-2 text-decoration-none">
-            <div class="logout-icon"></div>
-            <span class="logout-text">Logout</span>
-        </a>
-    </aside>
-
-    <main class="flex-grow-1 bg-light">
+    <main class="content flex-grow-1 p-4">
 
         <div class="topbar d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-4">
-                <div class="avatar"></div>
-                <div>
-                    <div class="fw-bold">
-                        <?= isset($_SESSION['nama']) ? $_SESSION['nama'] : 'Nama tidak ditemukan'; ?>
+            <a href="profile.php" class="text-decoration-none text-dark">
+                <div class="d-flex align-items-center gap-4">
+                    <div class="avatar"></div>
+                    <div>
+                        <div class="fw-bold">
+                            <?= $_SESSION['nama'] ?? 'Nama tidak ditemukan'; ?>
+                        </div>
+                        <small class="text-muted">
+                            <?= $_SESSION['user_id'] ?? 'NRP tidak ditemukan'; ?><br>
+                            <?= $_SESSION['prodi'] ?? 'Prodi tidak ditemukan'; ?>
+                        </small>
                     </div>
-                    <small class="text-muted">
-                        <?= isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'NRP tidak ditemukan'; ?><br>
-                    <?= isset($_SESSION['prodi']) ? $_SESSION['prodi'] : 'Prodi tidak ditemukan'; ?>
-                    </small>
                 </div>
-            </div>
-
+            </a>
             <div class="notif"></div>
         </div>
 

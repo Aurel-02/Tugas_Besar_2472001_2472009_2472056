@@ -1,0 +1,98 @@
+.sidebar {
+    width: 120px;
+    background-color: #0a2a66;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto -10px;
+    background: url("../img/icon_toga.png") no-repeat center;
+    background-size: contain;
+    border-radius: 10px;
+}
+
+.sidebar-divider {
+    border: none;
+    height: 3px;
+    background: #fff;
+    margin: 10px 20px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 15px;
+}
+
+.sidebar-menu .nav-item {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-menu .nav-item:hover {
+    background-color: #102f7a;
+}
+
+.sidebar-menu .nav-item.active {
+    background-color: #123b8a;
+}
+
+.sidebar-menu .icon {
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.sidebar-menu span {
+    font-size: 15px;
+    margin-top: -20px;
+}
+
+.icon.nilai {
+    background: url("../img/nilai_icon.png") no-repeat center;
+    background-size: 60%;
+}
+
+.icon.dkbs {
+    background: url("../img/dkbs_icon.png") no-repeat center;
+    background-size: 70%;
+}
+
+.icon.jadwal {
+    background: url("../img/jadwal_icon.png") no-repeat center;
+    background-size: 50%;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.logout:hover {
+    color: white;
+}
+
+.logout-icon {
+    width: 30px;
+    height: 30px;
+    background: url("../img/logout_icon.png") no-repeat center;
+    background-size: contain;
+    flex-shrink: 0;
+}

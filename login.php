@@ -34,9 +34,10 @@
         $password = trim($_POST['password']);
 
         if ($role === '3') {
-            $sql = "SELECT u.id, u.role_id, m.nama_mahasiswa AS nama
+            $sql = "SELECT u.id, u.role_id, m.nama_mahasiswa AS nama, p.nama_prodi
                     FROM tbUsers u
                     JOIN tbMahasiswa m ON u.id = m.nrp
+                    JOIN tbProdi p ON m.id_prodi = p.id_prodi
                     WHERE u.id = ? AND u.password = ? AND u.role_id = ?";
         } elseif ($role === '2') {
             $sql = "SELECT u.id, u.role_id, d.nama_dosen AS nama
@@ -62,6 +63,7 @@
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role_id'] = $user['role_id'];
             $_SESSION['nama']    = $user['nama'] ?? 'Admin';
+            $_SESSION['prodi']   = $user['nama_prodi'] ?? '';
 
             if ($role == '1') {
                 header("Location: admin/dashboard.php");

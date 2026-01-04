@@ -1,0 +1,89 @@
+/* HEADER */
+.profile-top {
+    padding: 40px 30px;
+    background: #f8fafc;
+    position: relative;
+}
+
+.profile-header {
+    text-align: center;
+}
+
+.avatar-big {
+    width: 120px;
+    height: 120px;
+    background: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+}
+
+.profile-header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.profile-header p {
+    margin: 5px 0;
+    font-weight: 500;
+}
+
+.profile-header small {
+    color: #666;
+}
+
+/* HOME ICON (KANAN ATAS) */
+.home-btn {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 24px;
+    height: 24px;
+    background: #0a2a66;
+    border-radius: 50%;
+}
+
+/* CARD */
+.profile-card {
+    background: white;
+    margin: 30px auto;
+    padding: 30px;
+    max-width: 900px;
+    border-radius: 12px;
+}
+
+/* GRID DATA */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 40px;
+}
+
+.profile-grid label {
+    font-size: 13px;
+    color: #0a2a66;
+    font-weight: 600;
+}
+
+.profile-grid p {
+    margin: 5px 0 0;
+}
+
+/* BUTTON */
+.edit-btn {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.edit-btn button {
+    padding: 8px 18px;
+    border: 1px solid #0a2a66;
+    background: transparent;
+    color: #0a2a66;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.edit-btn button:hover {
+    background: #0a2a66;
+    color: white;
+}
