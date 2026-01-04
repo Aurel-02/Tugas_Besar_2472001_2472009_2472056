@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 
@@ -35,24 +35,32 @@
             <div class="card-login shadow mx-auto">
                 <div class="row text-center">
 
-                      <div class="col-md-4 mb-4 mb-md-0">
-                        <a href="Dosen/login_dosen.php" class="role-link">
-                            <div class="role-icon dosen"></div>
-                        </a>
-                        <a href="Dosen/login_dosen.php" class="role-btn">Dosen</a>
-                    </div>
-
-
                     <div class="col-md-4 mb-4 mb-md-0">
-                        <a href="mahasiswa/login.php" class="role-link">
-                            <div class="role-icon mahasiswa"></div>
+                        <a href="login.php?role=2" class="role-link">
+                            <div class="role-icon dosen">
+                                <img src="img/icon_dosen.png" alt="Dosen">
+                            </div>
                         </a>
-                        <a href="mahasiswa/login.php" class="role-btn">Mahasiswa</a>
+                        <a href="login.php?role=2" class="role-btn">Dosen</a>
                     </div>
+
 
                     <div class="col-md-4">
-                        <div class="role-icon"></div>
-                        <a href="#" class="role-btn">Admin</a>
+                        <a href="login.php?role=3" class="role-link">
+                            <div class="role-icon mahasiswa">
+                                <img src="img/icon_mahasiswa.png" alt="Mahasiswa">
+                            </div>
+                        </a>
+                        <a href="login.php?role=3" class="role-btn">Mahasiswa</a>
+                    </div>
+
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <a href="login.php?role=1" class="role-link">
+                            <div class="role-icon admin">
+                                <img src="img/admin_icon.png" alt="Admin">
+                            </div>
+                        </a>
+                        <a href="login.php?role=1" class="role-btn">Admin</a>
                     </div>
 
                 </div>

@@ -11,10 +11,15 @@
 </head>
 <body>
 <?php
-session_start();  
+session_start();
 
 if (!isset($_SESSION['login'])) {
-    header("Location: ../login/login_mahasiswa.php");
+    header("Location: ../login.php?role=3");
+    exit;
+}
+
+if ($_SESSION['role_id'] != '3') {
+    header("Location: ../login.php?role=" . $_SESSION['role_id']);
     exit;
 }
 ?>
@@ -44,7 +49,7 @@ if (!isset($_SESSION['login'])) {
             </ul>
         </div>
 
-        <a href="logout.php" class="logout d-flex align-items-center gap-2 text-decoration-none">
+        <a href="../logout.php" class="logout d-flex align-items-center gap-2 text-decoration-none">
             <div class="logout-icon"></div>
             <span class="logout-text">Logout</span>
         </a>
@@ -74,5 +79,4 @@ if (!isset($_SESSION['login'])) {
 </div>
 
 </body>
-</html>
 </html>

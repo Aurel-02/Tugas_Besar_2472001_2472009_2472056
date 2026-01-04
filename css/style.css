@@ -46,10 +46,37 @@ h5 {
 }
 
 .role-icon {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    margin: 0 auto 15px;
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    overflow: hidden;
+}
+
+.role-icon img {
+    width: 145%;
+    height: 145%;
+    object-fit: cover;
+}
+
+.role-icon.dosen img {
+    object-position: center;
+    transform: translateY(7px);
+}
+
+.role-icon.mahasiswa img {
+    width: 180%;
+    height: 180%;
+    object-position: center;
+    transform: translateY(14px);
+}
+
+.role-icon.admin img {
+    object-position: center;
 }
 
 .role-btn {
@@ -104,34 +131,6 @@ h5 {
 .daftar span a:hover {
   color: white;
   text-decoration: underline; 
-}
-
-.role-icon.mahasiswa {
-    width: 125%;
-    height: 145px;
-    border-radius: 90px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-bottom: 12px;
-}
-
-.role-icon.dosen {
-    width: 105%;
-    height: 150px;
-    border-radius: 85px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-bottom: 12px;
-}
-
-.role-icon.mahasiswa {
-    background-image: url('../img/icon_mahasiswa.png');
-}
-
-.role-icon.dosen{
-    background-image:url('../img/icon_dosen.png');
 }
 
 .role-link {
