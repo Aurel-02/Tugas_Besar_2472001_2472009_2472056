@@ -22,84 +22,122 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
     <?php include __DIR__ . '/include/sidebar.php'; ?>
 
     <div class="content">
+    <div class="topbar profile-top">
+        <div class="profile-header">
+            <div class="avatar-big"></div>
+            <h2><?= $_SESSION['nama'] ?></h2>
+            <p><?= $_SESSION['user_id'] ?></p>
+            <small><?= $_SESSION['email'] ?? 'email@email.com' ?></small>
+        </div>
+    </div>
 
-        <!-- TOP BAR -->
-        <div class="topbar profile-top">
-            <div class="profile-header">
-                <div class="avatar-big"></div>
-                <h2><?= $_SESSION['nama'] ?></h2>
+    <div class="profile-card">
+        <div class="profile-grid">
+            <!-- Profil Mahasiswa -->
+            <div>
+                <label>Nama Lengkap</label>
+                <p><?= $_SESSION['nama'] ?></p>
+            </div>
+
+            <div>
+                <label>Fakultas</label>
+                <p>Teknologi dan Rekayasa Cerdas</p>
+            </div>
+
+            <div>
+                <label>NRP</label>
                 <p><?= $_SESSION['user_id'] ?></p>
-                <small><?= $_SESSION['email'] ?? 'email@email.com' ?></small>
             </div>
 
-            <div class="home-btn"></div>
+            <div>
+                <label>Prodi</label>
+                <p><?= $_SESSION['prodi'] ?></p>
+            </div>
+
+            <div>
+                <label>Tanggal Lahir</label>
+                <p>02/11/2005</p>
+            </div>
+
+            <div>
+                <label>Status</label>
+                <p>Aktif</p>
+            </div>
+
+            <div>
+                <label>Tempat Lahir</label>
+                <p>Bandung</p>
+            </div>
+
+            <div>
+                <label>Handphone</label>
+                <p>0859xxxxxxxx</p>
+            </div>
+
+            <div>
+                <label>Jenis Kelamin</label>
+                <p>Perempuan</p>
+            </div>
+
+            <div>
+                <label>Angkatan</label>
+                <p>2024</p>
+            </div>
+
+            <!-- Garis Pemisah untuk Dosen Wali -->
+            <div class="profile-divider"></div>
+
+            <!-- Dosen Wali -->
+            <div>
+                <label>Nama Dosen Wali</label>
+                <p>Dr. Timotius Witono, S.Kom., M.T.</p>
+            </div>
+
+            <div>
+                <label>Handphone Dosen Wali</label>
+                <p>085864102354</p>
+            </div>
+
+            <div>
+                <label>Email Dosen Wali</label>
+                <p>720246@maranatha.ac.id</p>
+            </div>
+
+            <!-- Garis Pemisah untuk Wali -->
+            <div class="profile-divider"></div>
+
+            <!-- Wali -->
+            <div>
+                <label>Nama Wali</label>
+                <p>Benyamin Tomy</p>
+            </div>
+
+            <div>
+                <label>Handphone Wali</label>
+                <p>082654135893</p>
+            </div>
+
+            <div>
+                <label>Email Wali</label>
+                <p>benyamin.tomy@gmail.com</p>
+            </div>
+
+            <div>
+                <label>Alamat Wali</label>
+                <p>Jalan Anggrek</p>
+            </div>
+
         </div>
 
-        <!-- CARD PROFIL -->
-        <div class="profile-card">
-
-            <div class="profile-grid">
-
-                <div>
-                    <label>Nama Lengkap</label>
-                    <p><?= $_SESSION['nama'] ?></p>
-                </div>
-
-                <div>
-                    <label>Fakultas</label>
-                    <p>Teknologi dan Rekayasa Cerdas</p>
-                </div>
-
-                <div>
-                    <label>NRP</label>
-                    <p><?= $_SESSION['user_id'] ?></p>
-                </div>
-
-                <div>
-                    <label>Prodi</label>
-                    <p><?= $_SESSION['prodi'] ?></p>
-                </div>
-
-                <div>
-                    <label>Tanggal Lahir</label>
-                    <p>02/11/2005</p>
-                </div>
-
-                <div>
-                    <label>Status</label>
-                    <p>Aktif</p>
-                </div>
-
-                <div>
-                    <label>Tempat Lahir</label>
-                    <p>Bandung</p>
-                </div>
-
-                <div>
-                    <label>Handphone</label>
-                    <p>0859xxxxxxxx</p>
-                </div>
-
-                <div>
-                    <label>Jenis Kelamin</label>
-                    <p>Perempuan</p>
-                </div>
-
-                <div>
-                    <label>Angkatan</label>
-                    <p>2024</p>
-                </div>
-
-            </div>
-
-            <div class="edit-btn">
-                <button>Edit Profile</button>
-            </div>
-
+        <!-- Tombol Edit Profile -->
+        <div class="edit-btn">
+            <button>
+                <div class="edit-icon"></div>
+                Edit Profile
+            </button>
         </div>
-
     </div>
 </div>
-
+</div>
 </body>
 </html>
