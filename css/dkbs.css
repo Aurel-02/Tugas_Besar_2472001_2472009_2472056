@@ -1,0 +1,70 @@
+.layout {
+    display: flex;
+}
+
+.main-content {
+    margin-left: 120px;
+    width: calc(100% - 120px);
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+.dkbs-header {
+    height: 60px;
+    background-color: #0a2a66;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.container .d-flex {
+    margin-bottom: 15px;
+}
+
+.container label {
+    font-weight: bold;
+    color: #0a2a66;
+}
+
+.container select {
+    width: 150px;
+    padding: 5px;
+}
+
+.dkbs-card {
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.matkul-item {
+    margin-bottom: 20px;
+}
+
+.matkul-item strong {
+    font-size: 16px;
+    color: #0a2a66;
+}
+
+.matkul-item .text-muted {
+    font-size: 14px;
+}
+
+.card-footer {
+    text-align: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.card-footer p {
+    font-size: 14px;
+    color: #0a2a66;
+}

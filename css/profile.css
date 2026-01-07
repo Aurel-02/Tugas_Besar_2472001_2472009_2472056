@@ -48,7 +48,7 @@ hr{
 }
 
 .main-content {
-    margin-left: 120px;
-    width: calc(100% - 120px);
+    margin-left: 150px;
+    width: 1500px;
     padding: 30px 60px;
 }

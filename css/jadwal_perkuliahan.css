@@ -1,0 +1,79 @@
+.layout {
+    display: flex;
+}
+
+.main-content {
+    margin-left: 120px;
+    width: calc(100% - 120px);
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+.jadwal-header {
+    height: 80px;
+    background-color: #0a2a66;
+}
+
+h2{
+    font-weight: bold;
+    margin-left: 520px;
+}
+
+.jadwal-header h4 {
+    font-size: 24px;
+    margin: 0;
+}
+
+label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.form-select{
+    font-size: 18px;
+}
+
+.jadwal-header select {
+    width: 150px;
+    background-color: white;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.d-flex {
+    margin-bottom: 20px;
+}
+
+.jadwal-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    background-color: white;
+}
+
+.jadwal-item {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.jadwal-item strong {
+    font-size: 18px;
+    color: #0a2a66;
+}
+
+.jadwal-detail {
+    font-size: 14px;
+    color: #555;
+}
+
+.jadwal-detail div {
+    margin-top: 5px;
+}
+
+.jadwal-item hr {
+    margin-top: 15px;
+}

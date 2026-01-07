@@ -21,13 +21,17 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
             </li>
 
             <li class="nav-item">
-                <div class="icon dkbs"></div>
-                <span>DKBS</span>
+                <a href="/Tugas_Besar_2472001_2472009_2472056/mahasiswa/dkbs.php">
+                    <div class="icon dkbs"></div>
+                    <span>DKBS</span>
+                </a>
             </li>
 
             <li class="nav-item">
-                <div class="icon jadwal"></div>
-                <span>Jadwal</span>
+                <a href="/Tugas_Besar_2472001_2472009_2472056/mahasiswa/jadwal_perkuliahan.php">
+                    <div class="icon jadwal"></div>
+                    <span>Jadwal</span>
+                </a>
             </li>
         </ul>
     </div>
