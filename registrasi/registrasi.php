@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/registrasi.css">
+    <link rel="stylesheet" href="/Tugas_Besar_2472001_2472009_2472056/css/registrasi.css">
 </head>
 <body>
 <?php
@@ -44,7 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container-fluid min-vh-100">
     <div class="row min-vh-100">
 
-        <?php include __DIR__ . '/../include/include.php'; ?>
+        <div class="col-md-6 left-panel d-flex align-items-center justify-content-center" style="background-color: #0a2a66; min-height: 100vh;">
+                <img src="../img/Logo_Maranatha.png" 
+                    alt="Universitas Kristen Maranatha"
+                    class="logo-maranatha">
+        </div>
 
         <div class="col-md-6 bg-white d-flex align-items-center">
             
