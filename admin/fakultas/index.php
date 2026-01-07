@@ -5,24 +5,32 @@ include "../../koneksi.php";
 $data = mysqli_query($conn,"SELECT * FROM tbfakultas");
 ?>
 
-<h3>Data Fakultas</h3>
-<a href="tambah.php">Tambah Fakultas</a>
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
 
-<table border="1" cellpadding="8">
+<h4>Data Fakultas</h4>
+<a href="tambah.php" class="btn btn-primary mb-3">Tambah Fakultas</a>
+
+<table class="table table-bordered table-striped">
 <tr>
-  <th>No</th>
-  <th>Nama Fakultas</th>
-  <th>Aksi</th>
+<th>No</th><th>Nama Fakultas</th><th>Aksi</th>
 </tr>
 
 <?php $no=1; while($row=mysqli_fetch_assoc($data)): ?>
 <tr>
-  <td><?= $no++ ?></td>
-  <td><?= $row['nama_fakultas'] ?></td>
-  <td>
-    <a href="edit.php?id=<?= $row['id_fakultas'] ?>">Edit</a> |
-    <a href="hapus.php?id=<?= $row['id_fakultas'] ?>" onclick="return confirm('Hapus data?')">Hapus</a>
-  </td>
+<td><?= $no++ ?></td>
+<td><?= $row['nama_fakultas'] ?></td>
+<td>
+<a class="btn btn-warning btn-sm" href="edit.php?id=<?= $row['id_fakultas'] ?>">Edit</a>
+<a class="btn btn-danger btn-sm" href="hapus.php?id=<?= $row['id_fakultas'] ?>" onclick="return confirm('Hapus?')">Hapus</a>
+</td>
 </tr>
 <?php endwhile; ?>
+
 </table>
+</body>
+</html>
