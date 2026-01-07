@@ -1,10 +1,13 @@
 .nilai-header {
     height: 80px;
-    background-color: #0a2a66; /* TEST */
+    background-color: #0a2a66;
     text-align: center;
 }
 
-/* LAYOUT */
+h2{
+    margin-left: 660px;
+}
+
 .layout {
     display: flex;
 }
@@ -16,7 +19,6 @@
     min-height: 100vh;
 }
 
-/* IPK & SKS */
 .stat-box {
     padding: 15px;
 }
@@ -31,15 +33,13 @@
     font-weight: bold;
 }
 
-/* SEMESTER CARD */
 .semester-card {
-    max-width: 700px;
+    max-width: 1600px;
     margin: auto;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* MATKUL */
 .matkul-item {
     align-items: center;
 }

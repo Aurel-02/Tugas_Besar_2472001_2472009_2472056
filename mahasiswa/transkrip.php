@@ -23,9 +23,10 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
     <div class="main-content">
 
         <div class="nilai-header d-flex align-items-center justify-content-between px-4">
-            <h4 class="mb-0 text-white">Nilai</h4>
+            <h2 class="mb-0 text-white flex-grow-1 text-start">Transkrip Nilai</h2>
             <select class="form-select form-select-sm w-auto">
                 <option>Transkrip</option>
+                <option value="Nilai_Perkuliahan">Nilai Perkuliahan</option>
             </select>
         </div>
 
