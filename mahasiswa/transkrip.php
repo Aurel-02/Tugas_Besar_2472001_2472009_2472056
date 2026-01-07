@@ -12,7 +12,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
     <title>Nilai</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="/Tugas_Besar_2472001_2472009_2472056/css/nilai_mahasiswa.css">
+    <link rel="stylesheet" href="/Tugas_Besar_2472001_2472009_2472056/css/transkrip_mahasiswa.css">
 </head>
 <body>
 
@@ -24,9 +24,9 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
 
         <div class="nilai-header d-flex align-items-center justify-content-between px-4">
             <h2 class="mb-0 text-white flex-grow-1 text-start">Transkrip Nilai</h2>
-            <select class="form-select form-select-sm w-auto">
-                <option>Transkrip</option>
-                <option value="Nilai_Perkuliahan">Nilai Perkuliahan</option>
+            <select class="form-select form-select-sm w-auto" onchange="window.location.href=this.value">
+                <option value="/Tugas_Besar_2472001_2472009_2472056/mahasiswa/transkrip.php">Transkrip</option>
+                <option value="/Tugas_Besar_2472001_2472009_2472056/mahasiswa/nilai_perkuliahan.php">Nilai Perkuliahan</option>
             </select>
         </div>
 
