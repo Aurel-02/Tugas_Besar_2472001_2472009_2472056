@@ -68,7 +68,7 @@
             if ($role == '1') {
                 header("Location: admin/dashboard.php");
             } elseif ($role == '2') {
-                header("Location: dosen/dashboard.php");
+                header("Location: Dosen/dashboard.php");
             } elseif ($role == '3') {
                 header("Location: mahasiswa/dashboard.php");
             }
