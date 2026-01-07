@@ -1,0 +1,42 @@
+
+.layout {
+    display: flex;
+}
+
+.main-content {
+    margin-left: 120px;
+    width: calc(100% - 120px);
+    min-height: 100vh;
+    background-color: #f4f6f9;
+}
+
+h2{
+    margin-left: 550px;
+    font-weight: bold;
+}
+.nilai-header {
+    height: 80px;
+    background-color: #0a2a66;
+}
+
+.nilai-card {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.nilai-item {
+    margin-bottom: 10px;
+}
+
+.nilai-detail {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.nilai-huruf {
+    font-weight: bold;
+    color: #0a2a66;
+}
