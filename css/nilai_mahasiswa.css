@@ -1,0 +1,52 @@
+.nilai-header {
+    height: 80px;
+    background-color: #0a2a66;
+    text-align: center;
+}
+
+h2{
+    margin-left: 600px;
+}
+
+.layout {
+    display: flex;
+}
+
+.main-content {
+    margin-left: 120px;
+    width: calc(100% - 120px);
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+.stat-box {
+    padding: 15px;
+}
+
+.stat-title {
+    font-weight: 600;
+    color: #0a2a66;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.semester-card {
+    max-width: 1600px;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.matkul-item {
+    align-items: center;
+}
+
+.nilai-huruf {
+    font-weight: bold;
+    font-size: 18px;
+    color: #0a2a66;
+}
+

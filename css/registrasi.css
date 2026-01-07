@@ -1,17 +1,22 @@
 body {
-    margin: 0;
-    background-color: #f4f6f9;
-} 
-
-.btn-primary {
-    background-color: #0a2a66;
-    border: none;
+  margin: 0;
+  background-color: #f4f6f9;
 }
 
+.logo-maranatha {
+  width: 320px;
+  max-width: 80%;
+  height: auto;
+}
+
+.btn-primary {
+  background-color: #0a2a66;
+  border: none;
+}
 .btn-primary:hover {
-    background-color: #08224f;
+  background-color: #08224f;
 }
 
 h2 {
-    color: #0a2a66;
+  color: #0a2a66;
 }
