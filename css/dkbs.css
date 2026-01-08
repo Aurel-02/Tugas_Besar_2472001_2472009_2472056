@@ -10,8 +10,13 @@
 }
 
 .dkbs-header {
-    height: 60px;
+    height: 80px;
     background-color: #0a2a66;
+}
+
+h2{
+    font-weight: bold;
+    margin-right: 500px;
 }
 
 .container {

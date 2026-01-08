@@ -23,11 +23,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
     <div class="main-content">
 
         <div class="dkbs-header d-flex justify-content-between align-items-center px-4">
-            <h4 class="mb-0 text-white">DKBS</h4>
-            <select class="form-select form-select-sm w-auto">
-                <option>1</option>
-                <option>2</option>
-            </select>
+            <h2 class="mb-0 text-white">DKBS</h2>
         </div>
 
         <div class="container mt-4">
@@ -85,7 +81,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
 
             <div class="mt-4 text-center">
                 <img src="/path/to/logo.png" alt="Logo" class="logo">
-                <p>Pilih mata kuliah untuk semester selanjutnya</p>
+                <a href="/Tugas_Besar_2472001_2472009_2472056/mahasiswa/pilih_matkul.php">Pilih mata kuliah untuk semester selanjutnya</a>
             </div>
 
         </div>
