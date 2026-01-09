@@ -9,15 +9,16 @@
     min-height: 100vh;
 }
 
+h2{
+    margin-left: 550px;
+    font-weight: bold;
+}
+
 .dkbs-header {
     height: 80px;
     background-color: #0a2a66;
 }
 
-h2{
-    font-weight: bold;
-    margin-right: 500px;
-}
 
 .container {
     margin-top: 20px;

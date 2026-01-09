@@ -44,3 +44,7 @@ h2{
 .me-2{
     font-weight: bold;
 }
+
+.fw-bold span{
+    color: black;
+}

@@ -21,6 +21,23 @@ if ($_SESSION['role_id'] !== '3') {
     header("Location: /TUGAS_BESAR_2472001_2472009_2472056/login.php?role=".$_SESSION['role_id']);
     exit;
 }
+
+include __DIR__ . '/../koneksi.php';
+
+$userId = $_SESSION['user_id'];
+$query = "SELECT * FROM vwMahasiswa WHERE NRP = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $userId); 
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $mahasiswa = $result->fetch_assoc();
+} else {
+    $mahasiswa = null;
+}
+
+$stmt->close();
 ?>
 <div class="d-flex min-vh-100">
 
@@ -34,11 +51,11 @@ if ($_SESSION['role_id'] !== '3') {
                     <div class="avatar"></div>
                     <div>
                         <div class="fw-bold">
-                            <?= $_SESSION['nama'] ?? 'Nama tidak ditemukan'; ?>
+                            <?php echo $mahasiswa['Nama'] ?? 'Nama tidak ditemukan'; ?>
                         </div>
                         <small class="text-muted">
-                            <?= $_SESSION['user_id'] ?? 'NRP tidak ditemukan'; ?><br>
-                            <?= $_SESSION['prodi'] ?? 'Prodi tidak ditemukan'; ?>
+                            <?php echo $mahasiswa['NRP'] ?? 'NRP tidak ditemukan'; ?><br>
+                            <?php echo $mahasiswa['Prodi'] ?? 'Prodi tidak ditemukan'; ?>
                         </small>
                     </div>
                 </div>

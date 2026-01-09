@@ -16,7 +16,6 @@ if (isset($_POST['fakultas']) && !empty($_POST['fakultas'])) {
     $resultProdi = $stmtProdi->get_result();
 }
 
-// Mengambil data untuk Ruang berdasarkan Prodi (tabel tbdkbs)
 $resultRuang = [];
 if (isset($_POST['prodi']) && !empty($_POST['prodi'])) {
     $prodiId = $_POST['prodi'];
