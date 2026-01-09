@@ -29,6 +29,10 @@ $sql = "
         jenis_kelamin,  
         id_prodi, 
         no_telp
+    FROM 
+        tbdosen 
+    WHERE 
+        nip = ?";
 
 $stmt = $conn->prepare($sql);
 
@@ -56,7 +60,7 @@ if ($result->num_rows > 0) {
     $tgl_lahir = $row['tgl_lahir'];
     $tempat_lahir = $row['tempat_lahir'];
     $jenis_kelamin = $row['jenis_kelamin'];
-    $no_telp_dosen = $row['no_telp_dosen'];
+    $no_telp = $row['no_telp'];
     $id_prodi = $row['id_prodi'];
     
 } else {
@@ -116,6 +120,10 @@ $conn->close();
                                 <div class="col-6">
                                     <label>Jenis Kelamin</label>
                                     <p><?= $jenis_kelamin ?></p>
+                                </div>
+                                  <div class="col-6">
+                                    <label>No Telepon</label>
+                                    <p><?= $no_telp ?></p>
                                 </div>
                             </div>
 
