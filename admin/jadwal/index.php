@@ -1,3 +1,8 @@
+<?php include "../layout/header.php"; ?>
+<?php include "../layout/sidebar.php"; ?>
+
+<div class="content">
+
 <?php
 session_start();
 include "../../koneksi.php";
@@ -42,3 +47,5 @@ JOIN tbdosen d ON j.nidn = d.nidn
 </table>
 </body>
 </html>
+
+<?php include "../layout/footer.php"; ?>
