@@ -1,3 +1,8 @@
+<?php include "../layout/header.php"; ?>
+<?php include "../layout/sidebar.php"; ?>
+
+<div class="content">
+
 <?php
 session_start();
 include "../../koneksi.php";
@@ -38,3 +43,5 @@ $data = mysqli_query($conn,"
 </table>
 </body>
 </html>
+
+<?php include "../layout/footer.php"; ?>

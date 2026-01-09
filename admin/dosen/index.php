@@ -1,3 +1,8 @@
+<?php include "../layout/header.php"; ?>
+<?php include "../layout/sidebar.php"; ?>
+
+<div class="content">
+
 <?php
 session_start();
 include "../../koneksi.php";
@@ -39,3 +44,5 @@ JOIN tbprodi p ON d.id_prodi = p.id_prodi
 </table>
 </body>
 </html>
+
+<?php include "../layout/footer.php"; ?>

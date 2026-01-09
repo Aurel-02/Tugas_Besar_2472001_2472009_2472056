@@ -1,3 +1,8 @@
+<?php include "../layout/header.php"; ?>
+<?php include "../layout/sidebar.php"; ?>
+
+<div class="content">
+
 <?php
 include "../../koneksi.php";
 $id=$_GET['id'];
