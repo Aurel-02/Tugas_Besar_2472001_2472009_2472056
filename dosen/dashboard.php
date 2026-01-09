@@ -21,6 +21,25 @@ if ($_SESSION['role_id'] !== '2') {
     header("Location: /TUGAS_BESAR_2472001_2472009_2472056/login.php?role=".$_SESSION['role_id']);
     exit;
 }
+
+include __DIR__ . "/../koneksi.php";
+
+$nip = $_SESSION['user_id'];
+$query = "SELECT * FROM vwDosenProdi WHERE NIP = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $nip); 
+$stmt->execute();
+$result = $stmt->get_result();
+
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+} else {
+    echo "Data dosen tidak ditemukan.";
+}
+
+$stmt->close();
+$conn->close();
 ?>
 <div class="d-flex min-vh-100">
 
@@ -34,11 +53,11 @@ if ($_SESSION['role_id'] !== '2') {
                     <div class="avatar"></div>
                     <div>
                         <div class="fw-bold">
-                            <?= $_SESSION['nama'] ?? 'Nama tidak ditemukan'; ?>
+                            <?= $row['Nama'] ?? 'Nama tidak ditemukan'; ?>
                         </div>
                         <small class="text-muted">
-                            <?= $_SESSION['user_id'] ?? 'NRP tidak ditemukan'; ?><br>
-                            <?= $_SESSION['prodi'] ?? 'Prodi tidak ditemukan'; ?>
+                            <?= $row['NIP'] ?? 'NIP tidak ditemukan'; ?><br>
+                            <?= $row['Prodi'] ?? 'Prodi tidak ditemukan'; ?>
                         </small>
                     </div>
                 </div>

@@ -14,7 +14,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '2') {
 
         <ul class="nav flex-column sidebar-menu">
            <li class="nav-item">
-                <a href="/Tugas_Besar_2472001_2472009_2472056/mahasiswa/transkrip.php">
+                <a href="/Tugas_Besar_2472001_2472009_2472056/Dosen/nilai.php">
                     <div class="icon nilai"></div>
                     <span>Kelola Nilai</span>
                 </a>
