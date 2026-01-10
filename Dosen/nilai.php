@@ -5,26 +5,47 @@ include __DIR__ . "/../koneksi.php";
 $queryFakultas = "SELECT * FROM tbfakultas";
 $resultFakultas = $conn->query($queryFakultas);
 
-// Mengambil data untuk Prodi berdasarkan Fakultas
-$resultProdi = [];
 if (isset($_POST['fakultas']) && !empty($_POST['fakultas'])) {
     $fakultasId = $_POST['fakultas'];
     $queryProdi = "SELECT * FROM tbprodi WHERE id_fakultas = ?";
     $stmtProdi = $conn->prepare($queryProdi);
-    $stmtProdi->bind_param("i", $fakultasId);
+    $stmtProdi->bind_param("s", $fakultasId);
+    $stmtProdi->execute();
+    $resultProdi = $stmtProdi->get_result();
+}
+
+if (isset($_POST['prodi']) && !empty($_POST['prodi'])) {
+    $prodiId = $_POST['prodi'];
+
+    $queryProdi = "SELECT * FROM tbprodi WHERE id_prodi = ?";
+    $stmtProdi = $conn->prepare($queryProdi);
+
+    if (!$stmtProdi) {
+        die("Prepare gagal: " . $conn->error);
+    }
+
+    $stmtProdi->bind_param("s", $prodiId);
     $stmtProdi->execute();
     $resultProdi = $stmtProdi->get_result();
 }
 
 $resultRuang = [];
-if (isset($_POST['prodi']) && !empty($_POST['prodi'])) {
-    $prodiId = $_POST['prodi'];
+
+$prodiId = $_POST['prodi'] ?? null;
+
+if ($prodiId) {
     $queryRuang = "SELECT DISTINCT ruang FROM tbdkbs WHERE id_prodi = ?";
     $stmtRuang = $conn->prepare($queryRuang);
-    $stmtRuang->bind_param("i", $prodiId);
+
+    if (!$stmtRuang) {
+        die("Prepare ruang gagal: " . $conn->error);
+    }
+
+    $stmtRuang->bind_param("s", $prodiId);
     $stmtRuang->execute();
     $resultRuang = $stmtRuang->get_result();
 }
+
 
 // Menutup koneksi database setelah query selesai
 $conn->close();
