@@ -21,6 +21,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '2') {
             </li>
 
             <li class="nav-item">
+                <a href="/Tugas_Besar_2472001_2472009_2472056/Dosen/jadwal.php">
                 <div class="icon jadwal"></div>
                 <span>Jadwal</span>
             </li>
