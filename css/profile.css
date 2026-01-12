@@ -1,7 +1,6 @@
 .container {
     flex: 1;
-    padding: 20px;
-    max-width: 1200px;
+    padding: 40px 100px;
     margin: 0 auto;
 }
 
@@ -43,12 +42,14 @@ hr{
     border: 3px solid black;
 }
 
-.layout {
-    display: flex;
+.edit-link {
+    color: #0d6efd;          
+    text-decoration: underline;
+    font-weight: 500;
 }
 
-.main-content {
-    margin-left: 150px;
-    width: 1500px;
-    padding: 30px 60px;
+.edit-link:hover {
+    color: #0a58ca;
+    text-decoration: underline;
 }
+

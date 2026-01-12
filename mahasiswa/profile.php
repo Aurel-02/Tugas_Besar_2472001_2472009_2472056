@@ -91,9 +91,9 @@ $conn->close();
     <?php include __DIR__ . '/include/sidebar.php'; ?>
 
     <div class="main-content">
-        <div class="container-fluid mt-3">
+        <div class="container mt-3">
             <div class="row">
-                <div class="col-12" style="max-width: 1000px">
+                <div class="col-12 mx-auto" style="max-width: 2000px">
                     <div class="profile-header text-center p-4 bg-white rounded shadow">
 
                         <div class="avatar-big mb-3">
@@ -190,10 +190,10 @@ $conn->close();
                         </div>
                     </div>
 
-                    <div class="mt-4 text-center">
-                        <button class="btn btn-primary">
+                    <div class="mt-4">
+                        <a href="edit_profile.php" class="edit-link">
                             <i class="bi bi-pencil-square"></i> Edit Profile
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
