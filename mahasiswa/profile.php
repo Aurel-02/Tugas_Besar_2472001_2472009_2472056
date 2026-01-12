@@ -30,7 +30,7 @@ $sql = "
         m.jenis_kelamin, 
         m.no_telp_mahasiswa, 
         m.status_mhs, 
-        m.id_prodi, 
+        p.nama_prodi, 
         d.nama_dosen, 
         d.email AS email_dosen, 
         d.no_telp
@@ -38,6 +38,8 @@ $sql = "
         tbmahasiswa m
     INNER JOIN 
         tbdosen d ON m.id_dosen_wali = d.nip
+    INNER JOIN
+        tbprodi p ON m.id_prodi = p.id_prodi
     WHERE 
         m.nrp = ?"; 
 
@@ -71,7 +73,7 @@ if ($result->num_rows > 0) {
     $jenis_kelamin = $row['jenis_kelamin'];
     $no_telp_mahasiswa = $row['no_telp_mahasiswa'];
     $status_mhs = $row['status_mhs'];
-    $id_prodi = $row['id_prodi'];
+    $nama_prodi = $row['nama_prodi'];
 
     $nama_dosen = $row['nama_dosen'];
     $email_dosen = $row['email_dosen'];
@@ -120,7 +122,7 @@ $conn->close();
                                 </div>
                                 <div class="col-6">
                                     <label>Prodi</label>
-                                    <p><?= $id_prodi ?></p>
+                                    <p><?= $nama_prodi ?></p>
                                 </div>
                                 <div class="col-6">
                                     <label>Tanggal Lahir</label>
