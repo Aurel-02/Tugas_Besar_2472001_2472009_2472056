@@ -1,16 +1,15 @@
 <div class="sidebar">
-    <h4 class="text-center">ADMIN PANEL</h4>
-    <hr>
+    <h4>🎓 Portal Admin</h4>
 
-    <a href="../dashboard.php">Dashboard</a>
-    <a href="../fakultas/index.php">Fakultas</a>
-    <a href="../prodi/index.php">Prodi</a>
-    <a href="../mahasiswa/index.php">Mahasiswa</a>
-    <a href="../dosen/index.php">Dosen</a>
-    <a href="../matkul/index.php">Mata Kuliah</a>
-    <a href="../jadwal/index.php">Jadwal</a>
-    <a href="../nilai/index.php">Nilai</a>
+    <a href="../admin/dashboard.php">Dashboard</a>
+    <a href="../admin/fakultas/index.php">Fakultas</a>
+    <a href="../admin/prodi/index.php">Program Studi</a>
+    <a href="../admin/mahasiswa/index.php">Mahasiswa</a>
+    <a href="../admin/dosen/index.php">Dosen</a>
+    <a href="../admin/matakuliah/index.php">Mata Kuliah</a>
+    <a href="../admin/jadwal/index.php">Jadwal</a>
 
-    <hr>
-    <a href="../../logout.php" class="text-danger">Logout</a>
+    <hr class="text-white mx-3">
+
+    <a href="../../logout.php" class="text-warning">Logout</a>
 </div>

@@ -1,51 +1,79 @@
-<?php include "../layout/header.php"; ?>
-<?php include "../layout/sidebar.php"; ?>
-
-<div class="content">
-
 <?php
-session_start();
+include "../layout/header.php";
+include "../layout/sidebar.php";
+
 include "../../koneksi.php";
 
-$data = mysqli_query($conn,"
-SELECT j.*, m.nama_mk, d.nama_dosen
-FROM tbjadwal j
-JOIN tbmatakuliah m ON j.id_mk = m.id_mk
-JOIN tbdosen d ON j.nidn = d.nidn
+// Query data jadwal
+$data = mysqli_query($conn, "
+    SELECT j.*, m.nama_mk, d.nama_dosen
+    FROM tbdkbs j
+    JOIN tbmatakuliah m ON j.id_mk = m.id_mk
+    JOIN tbdosen d ON j.nidn = d.nidn
 ");
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="p-4">
+<div class="main">
 
-<h4>Data Jadwal Kuliah</h4>
-<a href="tambah.php" class="btn btn-primary mb-3">Tambah Jadwal</a>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="admin">
+            <div class="avatar"></div>
+            <span>Admin</span>
+        </div>
+    </div>
 
-<table class="table table-bordered table-striped">
-<tr>
-<th>Hari</th><th>Mata Kuliah</th><th>Dosen</th><th>Jam</th><th>Ruang</th><th>Aksi</th>
-</tr>
+    <!-- Content -->
+    <div class="content">
 
-<?php while($row=mysqli_fetch_assoc($data)): ?>
-<tr>
-<td><?= $row['hari'] ?></td>
-<td><?= $row['nama_mk'] ?></td>
-<td><?= $row['nama_dosen'] ?></td>
-<td><?= $row['jam_mulai'] ?> - <?= $row['jam_selesai'] ?></td>
-<td><?= $row['ruang'] ?></td>
-<td>
-<a class="btn btn-warning btn-sm" href="edit.php?id=<?= $row['id_jadwal'] ?>">Edit</a>
-<a class="btn btn-danger btn-sm" href="hapus.php?id=<?= $row['id_jadwal'] ?>" onclick="return confirm('Hapus?')">Hapus</a>
-</td>
-</tr>
-<?php endwhile; ?>
+        <h4 class="mb-3">Data Jadwal Kuliah</h4>
 
-</table>
-</body>
-</html>
+        <a href="tambah.php" class="btn btn-primary mb-3">
+            + Tambah Jadwal
+        </a>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <table class="table table-bordered table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Hari</th>
+                            <th>Mata Kuliah</th>
+                            <th>Dosen</th>
+                            <th>Jam</th>
+                            <th>Ruang</th>
+                            <th width="160">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($data)) : ?>
+                        <tr>
+                            <td><?= $row['hari']; ?></td>
+                            <td><?= $row['nama_mk']; ?></td>
+                            <td><?= $row['nama_dosen']; ?></td>
+                            <td><?= $row['jam_mulai']; ?> - <?= $row['jam_selesai']; ?></td>
+                            <td><?= $row['ruang']; ?></td>
+                            <td>
+                                <a href="edit.php?id=<?= $row['id_jadwal']; ?>" 
+                                   class="btn btn-warning btn-sm">
+                                   Edit
+                                </a>
+
+                                <a href="hapus.php?id=<?= $row['id_jadwal']; ?>" 
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Yakin ingin menghapus?')">
+                                   Hapus
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div> <!-- content -->
 
 <?php include "../layout/footer.php"; ?>
