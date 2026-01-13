@@ -3,11 +3,12 @@ include __DIR__ . "/../koneksi.php"; // Koneksi ke database
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Ambil data dari form
-    $nrp = $_POST['nrp'] ?? ''; // Ambil nilai NRP yang dikirimkan
+    $nrp = $_POST['nrp'] ?? ''; // Ambil nilai NRP yang dikirimkan atau kosongkan jika tidak ada
     if (empty($nrp) || $nrp == '0') {
         die("NRP tidak valid atau kosong!");
     }
 
+    
     // Ambil data lain yang bisa diubah
     $tgl_lahir = $_POST['tgl_lahir'];
     $tempat_lahir = $_POST['tempat_lahir'];
@@ -73,4 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error preparing statement: " . $conn->error;
     }
 }
+var_dump($nrp); // Menampilkan nilai NRP yang dikirimkan melalui hidden field
+exit;
 ?>
