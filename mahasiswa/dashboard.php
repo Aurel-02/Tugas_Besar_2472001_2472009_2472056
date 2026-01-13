@@ -60,7 +60,6 @@ $stmt->close();
                     </div>
                 </div>
             </a>
-            <div class="notif"></div>
         </div>
 
     </main>
