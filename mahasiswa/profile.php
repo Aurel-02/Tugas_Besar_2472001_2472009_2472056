@@ -29,7 +29,11 @@ $sql = "
         m.tempat_lahir, 
         m.jenis_kelamin, 
         m.no_telp_mahasiswa, 
-        m.status_mhs, 
+        m.status_mhs,
+        m.nama_wali,
+        m.alamat_wali,
+        m.no_telp_wali,
+        m.email_wali,
         p.nama_prodi, 
         d.nama_dosen, 
         d.email AS email_dosen, 
@@ -73,13 +77,17 @@ if ($result->num_rows > 0) {
     $jenis_kelamin = $row['jenis_kelamin'];
     $no_telp_mahasiswa = $row['no_telp_mahasiswa'];
     $status_mhs = $row['status_mhs'];
+    $nama_wali = $row['nama_wali'];
+    $alamat_wali = $row['alamat_wali'];
+    $no_telp_wali = $row['no_telp_wali'];
+    $email_wali = $row['email_wali'];
     $nama_prodi = $row['nama_prodi'];
 
     $nama_dosen = $row['nama_dosen'];
     $email_dosen = $row['email_dosen'];
     $no_telp_dosen = $row['no_telp'];
 } else {
-    echo "Data tidak ditemukan";
+    echo "Tidak ada data";
 }
 
 if ($jenis_kelamin === 'L') {
@@ -104,13 +112,13 @@ $conn->close();
                 <div class="col-12 mx-auto" style="max-width: 1700px">
                     <div class="profile-header text-center p-4 bg-white rounded shadow">
 
-                        <div class="avatar-big mb-3">
-                            <img src="/img/profile_icon.png" alt="Profile Image">
+                        <div class="avatar-big mb-2">
+                            <img src="../img/profile_icon.png" alt="Profile Image">
                         </div>
-        
-                        <h2><?= $nama_mahasiswa ?></h2>
-                        <p><?= $nrp ?></p>
-                        <small><?= $email ?></small>
+
+                        <h2 class="mb-1"><?= $nama_mahasiswa ?></h2>
+                        <p class="mb-0"><?= $nrp ?></p>
+                        <p class="mb-0"><?= $email ?></p>
                     </div>
 
                     <div class="profile-details mt-4">
@@ -180,26 +188,28 @@ $conn->close();
                             <div class="row">
                                 <div class="col-6">
                                     <label>Nama Wali</label>
-                                    <p>Benyamin Tomy</p>
+                                    <p><?= $nama_wali ?></p>
                                 </div>
                                 <div class="col-6">
                                     <label>Handphone Wali</label>
-                                    <p>082654135893</p>
+                                    <p><?= $no_telp_wali ?></p>
                                 </div>
                                 <div class="col-6">
                                     <label>Email Wali</label>
-                                    <p>benyamin.tomy@gmail.com</p>
+                                    <p><?= $email_wali ?></p>
                                 </div>
                                 <div class="col-6">
                                     <label>Alamat Wali</label>
-                                    <p>Jalan Anggrek</p>
+                                    <p><?= $alamat_wali ?></p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-4 text-end mb-5">
-                        <a href="edit_data.php" class="edit-link">
+                        <a href="#" class="edit-link"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editProfileModal">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="#0a2a66">
                                 <path d="M12 20h9"/>
                                 <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
@@ -212,5 +222,133 @@ $conn->close();
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editProfileModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+        <div class="modal-header" style="background:#0a2a66;color:white">
+            <h5 class="modal-title">Edit Data Diri</h5>
+            <button type="button" class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+            <form action="update_data.php" method="POST">
+
+            <input type="hidden" name="nrp" value="<?= $nrp ?>">
+
+            <div class="mb-3">
+                <label>Nama Lengkap Mahasiswa</label>
+                <input type="text" class="form-control"
+                    value="<?= $nama_mahasiswa ?>" disabled>
+            </div>
+
+            <div class="mb-3">
+                <label>NRP</label>
+                <input type="text" class="form-control"
+                    value="<?= $nrp ?>" disabled>
+            </div>
+
+            <div class="mb-3">
+                <label>Program Studi</label>
+                <input type="text" class="form-control"
+                    value="<?= $nama_prodi ?>" disabled>
+            </div>
+
+            <div class="mb-3">
+                <label>Angkatan</label>
+                <input type="text" class="form-control"
+                    value="<?= $angkatan ?>" disabled>
+            </div>
+
+            <hr>
+
+            <div class="mb-3">
+                <label>Tanggal Lahir</label>
+                <input type="date" class="form-control"
+                    name="tgl_lahir"
+                    value="<?= $tgl_lahir ?>">
+            </div>
+
+            <div class="mb-3">
+                <label>Tempat Lahir</label>
+                <input type="text" class="form-control"
+                    name="tempat_lahir"
+                    value="<?= $tempat_lahir ?>">
+            </div>
+
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" class="form-control"
+                    name="email"
+                    value="<?= $email ?>">
+            </div>
+
+            <div class="mb-3">
+                <label>No. Telp Mahasiswa</label>
+                <input type="text" class="form-control"
+                    name="no_telp_mahasiswa"
+                    value="<?= $no_telp_mahasiswa ?>">
+            </div>
+
+            <div class="mb-3">
+                <label>Alamat Mahasiswa</label>
+                <input type="text" class="form-control"
+                    name="alamat_mahasiswa"
+                    value="<?= $alamat_mahasiswa ?? '' ?>">
+            </div>
+
+            <div class="mb-4">
+                <label>Jenis Kelamin</label><br>
+                <input type="radio" name="jenis_kelamin" value="L"
+                <?= $jenis_kelamin=='L'?'checked':'' ?>> Laki-laki
+                <input type="radio" name="jenis_kelamin" value="P" class="ms-3"
+                <?= $jenis_kelamin=='P'?'checked':'' ?>> Perempuan
+            </div>
+
+            <hr>
+
+            <div class="mb-3">
+                <label>Nama Wali</label>
+                <input type="text" class="form-control"
+                    name="nama_wali"
+                    value="<?= $nama_wali ?? '' ?>">
+            </div>
+
+            <div class="mb-3">
+                <label>Email Wali</label>
+                <input type="email" class="form-control"
+                    name="email_wali"
+                    value="<?= $email_wali ?? '' ?>">
+            </div>
+
+            <div class="mb-3">
+                <label>No. Telp Wali</label>
+                <input type="text" class="form-control"
+                    name="no_telp_wali"
+                    value="<?= $no_telp_wali ?? '' ?>">
+            </div>
+
+            <div class="mb-4">
+                <label>Alamat Wali</label>
+                <input type="text" class="form-control"
+                    name="alamat_wali"
+                    value="<?= $alamat_wali ?? '' ?>">
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary px-5">
+                Simpan Perubahan
+                </button>
+            </div>
+
+            </form>
+        </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
