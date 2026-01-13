@@ -30,6 +30,7 @@ $sql = "
         m.jenis_kelamin, 
         m.no_telp_mahasiswa, 
         m.status_mhs,
+        m.alamat_mahasiswa,
         m.nama_wali,
         m.alamat_wali,
         m.no_telp_wali,
@@ -77,6 +78,7 @@ if ($result->num_rows > 0) {
     $jenis_kelamin = $row['jenis_kelamin'];
     $no_telp_mahasiswa = $row['no_telp_mahasiswa'];
     $status_mhs = $row['status_mhs'];
+    $alamat_mahasiswa = $row['alamat_mahasiswa'];
     $nama_wali = $row['nama_wali'];
     $alamat_wali = $row['alamat_wali'];
     $no_telp_wali = $row['no_telp_wali'];
@@ -164,6 +166,10 @@ $conn->close();
                                     <label>Angkatan</label>
                                     <p><?= $angkatan ?></p>
                                 </div>
+                                <div class="col-6">
+                                    <label>Alamat Mahasiswa</label>
+                                    <p><?= $alamat_mahasiswa ?></p>
+                                </div>
                             </div>
 
                             <hr>
@@ -236,113 +242,92 @@ $conn->close();
         <div class="modal-body">
             <form action="update_data.php" method="POST">
 
-            <input type="hidden" name="nrp" value="<?= $nrp ?>">
+                <!-- NRP tidak dapat diubah, hanya ditampilkan -->
+                <input type="hidden" name="nrp" value="<?= $nrp ?>">
 
-            <div class="mb-3">
-                <label>Nama Lengkap Mahasiswa</label>
-                <input type="text" class="form-control"
-                    value="<?= $nama_mahasiswa ?>" disabled>
-            </div>
+                <!-- Nama, Fakultas, Prodi, dan Status tidak bisa diubah -->
+                <div class="mb-3">
+                    <label>Nama Lengkap Mahasiswa</label>
+                    <input type="text" class="form-control" value="<?= $nama_mahasiswa ?>" disabled>
+                </div>
 
-            <div class="mb-3">
-                <label>NRP</label>
-                <input type="text" class="form-control"
-                    value="<?= $nrp ?>" disabled>
-            </div>
+                <div class="mb-3">
+                    <label>NRP</label>
+                    <input type="text" class="form-control" value="<?= $nrp ?>" disabled>
+                </div>
 
-            <div class="mb-3">
-                <label>Program Studi</label>
-                <input type="text" class="form-control"
-                    value="<?= $nama_prodi ?>" disabled>
-            </div>
+                <div class="mb-3">
+                    <label>Program Studi</label>
+                    <input type="text" class="form-control" value="<?= $nama_prodi ?>" disabled>
+                </div>
 
-            <div class="mb-3">
-                <label>Angkatan</label>
-                <input type="text" class="form-control"
-                    value="<?= $angkatan ?>" disabled>
-            </div>
+                <div class="mb-3">
+                    <label>Angkatan</label>
+                    <input type="text" class="form-control" value="<?= $angkatan ?>" disabled>
+                </div>
 
-            <hr>
+                <hr>
 
-            <div class="mb-3">
-                <label>Tanggal Lahir</label>
-                <input type="date" class="form-control"
-                    name="tgl_lahir"
-                    value="<?= $tgl_lahir ?>">
-            </div>
+                <!-- Hanya data yang dapat diubah -->
+                <div class="mb-3">
+                    <label>Tanggal Lahir</label>
+                    <input type="date" class="form-control" name="tgl_lahir" value="<?= $tgl_lahir ?>">
+                </div>
 
-            <div class="mb-3">
-                <label>Tempat Lahir</label>
-                <input type="text" class="form-control"
-                    name="tempat_lahir"
-                    value="<?= $tempat_lahir ?>">
-            </div>
+                <div class="mb-3">
+                    <label>Tempat Lahir</label>
+                    <input type="text" class="form-control" name="tempat_lahir" value="<?= $tempat_lahir ?>">
+                </div>
 
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" class="form-control"
-                    name="email"
-                    value="<?= $email ?>">
-            </div>
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" value="<?= $email ?>">
+                </div>
 
-            <div class="mb-3">
-                <label>No. Telp Mahasiswa</label>
-                <input type="text" class="form-control"
-                    name="no_telp_mahasiswa"
-                    value="<?= $no_telp_mahasiswa ?>">
-            </div>
+                <div class="mb-3">
+                    <label>No. Telp Mahasiswa</label>
+                    <input type="text" class="form-control" name="no_telp_mahasiswa" value="<?= $no_telp_mahasiswa ?>">
+                </div>
 
-            <div class="mb-3">
-                <label>Alamat Mahasiswa</label>
-                <input type="text" class="form-control"
-                    name="alamat_mahasiswa"
-                    value="<?= $alamat_mahasiswa ?? '' ?>">
-            </div>
+                <div class="mb-3">
+                    <label>Alamat Mahasiswa</label>
+                    <input type="text" class="form-control" name="alamat_mahasiswa" value="<?= $alamat_mahasiswa ?? '' ?>">
+                </div>
 
-            <div class="mb-4">
-                <label>Jenis Kelamin</label><br>
-                <input type="radio" name="jenis_kelamin" value="L"
-                <?= $jenis_kelamin=='L'?'checked':'' ?>> Laki-laki
-                <input type="radio" name="jenis_kelamin" value="P" class="ms-3"
-                <?= $jenis_kelamin=='P'?'checked':'' ?>> Perempuan
-            </div>
+                <div class="mb-4">
+                    <label>Jenis Kelamin</label><br>
+                    <input type="radio" name="jenis_kelamin" value="L" <?= $jenis_kelamin=='L'?'checked':'' ?>> Laki-laki
+                    <input type="radio" name="jenis_kelamin" value="P" class="ms-3" <?= $jenis_kelamin=='P'?'checked':'' ?>> Perempuan
+                </div>
 
-            <hr>
+                <hr>
 
-            <div class="mb-3">
-                <label>Nama Wali</label>
-                <input type="text" class="form-control"
-                    name="nama_wali"
-                    value="<?= $nama_wali ?? '' ?>">
-            </div>
+                <!-- Data wali -->
+                <div class="mb-3">
+                    <label>Nama Wali</label>
+                    <input type="text" class="form-control" name="nama_wali" value="<?= $nama_wali ?? '' ?>">
+                </div>
 
-            <div class="mb-3">
-                <label>Email Wali</label>
-                <input type="email" class="form-control"
-                    name="email_wali"
-                    value="<?= $email_wali ?? '' ?>">
-            </div>
+                <div class="mb-3">
+                    <label>Email Wali</label>
+                    <input type="email" class="form-control" name="email_wali" value="<?= $email_wali ?? '' ?>">
+                </div>
 
-            <div class="mb-3">
-                <label>No. Telp Wali</label>
-                <input type="text" class="form-control"
-                    name="no_telp_wali"
-                    value="<?= $no_telp_wali ?? '' ?>">
-            </div>
+                <div class="mb-3">
+                    <label>No. Telp Wali</label>
+                    <input type="text" class="form-control" name="no_telp_wali" value="<?= $no_telp_wali ?? '' ?>">
+                </div>
 
-            <div class="mb-4">
-                <label>Alamat Wali</label>
-                <input type="text" class="form-control"
-                    name="alamat_wali"
-                    value="<?= $alamat_wali ?? '' ?>">
-            </div>
+                <div class="mb-4">
+                    <label>Alamat Wali</label>
+                    <input type="text" class="form-control" name="alamat_wali" value="<?= $alamat_wali ?? '' ?>">
+                </div>
 
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary px-5">
-                Simpan Perubahan
-                </button>
-            </div>
-
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-5">
+                        Simpan Perubahan
+                    </button>
+                </div>
             </form>
         </div>
 
