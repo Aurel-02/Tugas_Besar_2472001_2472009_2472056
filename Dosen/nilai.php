@@ -1,38 +1,15 @@
 <?php
-include __DIR__ . '/../koneksi.php';
+include __DIR__ . "/../koneksi.php";
 
-// Ambil daftar Prodi
-$queryProdi = "SELECT * FROM tbprodi ORDER BY nama_prodi";
-$resultProdi = $conn->query($queryProdi);
+/* AMBIL SEMUA MATA KULIAH */
+$queryMK = "SELECT * FROM tbmatakuliah ORDER BY nama_mk";
+$resultMK = $conn->query($queryMK);
+$mataKuliah = $resultMK->fetch_all(MYSQLI_ASSOC);
 
-// Tangkap pilihan Prodi
-$prodiId = $_POST['prodi'] ?? null;
+$queryKelas = "SELECT DISTINCT kelas FROM tbperwalian";
+$resultKelas = $conn->query($queryKelas);
 
-// Ambil Mata Kuliah sesuai Prodi
-$mataKuliah = [];
-if ($prodiId) {
-    $queryMK = "SELECT * FROM tbmatakuliah WHERE id_prodi = ?";
-    $stmtMK = $conn->prepare($queryMK);
-    if (!$stmtMK) die("Prepare mata kuliah gagal: " . $conn->error);
-    $stmtMK->bind_param("s", $prodiId);
-    $stmtMK->execute();
-    $resultMK = $stmtMK->get_result();
-    $mataKuliah = $resultMK->fetch_all(MYSQLI_ASSOC);
-    $stmtMK->close();
-}
 
-// Ambil Ruang sesuai Prodi
-$resultRuang = [];
-if ($prodiId) {
-    $queryRuang = "SELECT DISTINCT ruang FROM tbdkbs WHERE id_prodi = ?";
-    $stmtRuang = $conn->prepare($queryRuang);
-    if (!$stmtRuang) die("Prepare ruang gagal: " . $conn->error);
-    $stmtRuang->bind_param("s", $prodiId);
-    $stmtRuang->execute();
-    $resultRuang = $stmtRuang->get_result();
-}
-
-// Menutup koneksi database
 $conn->close();
 ?>
 
@@ -54,48 +31,35 @@ $conn->close();
 
             <form action="#" method="POST">
 
-                <!-- Prodi Dropdown -->
-                <div class="form-group">
-                    <label for="prodi">Prodi :</label>
-                    <select id="prodi" class="form-control" name="prodi" onchange="this.form.submit()">
-                        <option value="">Pilih Prodi</option>
-                        <?php while ($rowProdi = $resultProdi->fetch_assoc()) { ?>
-                            <option value="<?php echo $rowProdi['id_prodi']; ?>" <?php echo ($prodiId == $rowProdi['id_prodi']) ? 'selected' : ''; ?>>
-                                <?php echo $rowProdi['nama_prodi']; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-                <!-- Mata Kuliah Dropdown -->
+                <!-- MATA KULIAH -->
                 <div class="form-group">
                     <label for="matkul">Mata Kuliah :</label>
-                    <select id="matkul" class="form-control" name="matkul" <?= $prodiId ? '' : 'disabled' ?>>
+                    <select id="matkul" class="form-control" name="matkul">
                         <option value="">Pilih Mata Kuliah</option>
                         <?php foreach ($mataKuliah as $mk) { ?>
-                            <option value="<?php echo $mk['id_matkul']; ?>">
-                                <?php echo $mk['nama_matkul']; ?>
+                            <option value="<?php echo $mk['id_mk']; ?>">
+                                <?php echo $mk['nama_mk']; ?>
                             </option>
                         <?php } ?>
                     </select>
                 </div>
 
-                <!-- Ruang Dropdown -->
+                <!-- RUANG -->
                 <div class="form-group">
-                    <label for="ruang">Ruang :</label>
-                    <select id="ruang" class="form-control" name="ruang">
-                        <option value="">Pilih Ruang</option>
-                        <?php if ($resultRuang && $resultRuang->num_rows > 0) { ?>
-                            <?php while ($rowRuang = $resultRuang->fetch_assoc()) { ?>
-                                <option value="<?php echo $rowRuang['ruang']; ?>">
-                                    <?php echo $rowRuang['ruang']; ?>
+                    <label for="kelas">Kelas :</label>
+<                   <select id="kelas" class="form-control" name="kelas">
+
+                        <?php if ($resultKelas && $resultKelas->num_rows > 0) { ?>
+                            <?php while ($rowKelas = $resultKelas->fetch_assoc()) { ?>
+                                <option value="<?php echo $rowKelas['kelas']; ?>">
+                                    <?php echo $rowKelas['kelas']; ?>
                                 </option>
                             <?php } ?>
                         <?php } ?>
                     </select>
                 </div>
 
-                <!-- Jenis Penilaian (Radio Buttons) -->
+                <!-- JENIS PENILAIAN -->
                 <div class="form-group">
                     <label>Jenis Penilaian :</label>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
