@@ -1,56 +1,76 @@
-<?php include "../layout/header.php"; ?>
-<?php include "../layout/sidebar.php"; ?>
-
-<div class="content">
-
 <?php
-session_start();
+include "../layout/header.php";
+include "../layout/sidebar.php";
+
 include "../../koneksi.php";
 
-$data = mysqli_query($conn,"
-SELECT m.*, p.nama_prodi
-FROM tbmatakuliah m
-LEFT JOIN tbprodi p ON m.id_prodi = p.id_prodi
+// Query data mata kuliah + prodi
+$data = mysqli_query($conn, "
+    SELECT m.*, p.nama_prodi
+    FROM tbmatakuliah m
+    LEFT JOIN tbprodi p ON m.id_prodi = p.id_prodi
 ");
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Data Mata Kuliah</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="p-4">
+<div class="main">
 
-<h4>Data Mata Kuliah</h4>
-<a href="tambah.php" class="btn btn-primary mb-3">Tambah Mata Kuliah</a>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="admin">
+            <div class="avatar"></div>
+            <span>Admin</span>
+        </div>
+    </div>
 
-<table class="table table-bordered table-striped">
-<tr>
-<th>Kode MK</th>
-<th>Nama Mata Kuliah</th>
-<th>SKS</th>
-<th>Program Studi</th>
-<th>Aksi</th>
-</tr>
+    <!-- Content -->
+    <div class="content">
 
-<?php while($row = mysqli_fetch_assoc($data)): ?>
-<tr>
-<td><?= $row['id_mk'] ?></td>
-<td><?= $row['nama_mk'] ?></td>
-<td><?= $row['sks'] ?></td>
-<td><?= $row['nama_prodi'] ?? '-' ?></td>
-<td>
-<a class="btn btn-warning btn-sm" href="edit.php?id=<?= $row['id_mk'] ?>">Edit</a>
-<a class="btn btn-danger btn-sm" href="hapus.php?id=<?= $row['id_mk'] ?>" onclick="return confirm('Hapus?')">Hapus</a>
-</td>
-</tr>
-<?php endwhile; ?>
+        <h4 class="mb-3">Data Mata Kuliah</h4>
 
-</table>
+        <a href="tambah.php" class="btn btn-primary mb-3">
+            + Tambah Mata Kuliah
+        </a>
 
-</body>
-</html>
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <table class="table table-bordered table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th width="140">Kode MK</th>
+                            <th>Nama Mata Kuliah</th>
+                            <th width="80">SKS</th>
+                            <th>Program Studi</th>
+                            <th width="180">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($data)) : ?>
+                        <tr>
+                            <td><?= $row['id_mk']; ?></td>
+                            <td><?= $row['nama_mk']; ?></td>
+                            <td><?= $row['sks']; ?></td>
+                            <td><?= $row['nama_prodi'] ?? '-'; ?></td>
+                            <td>
+                                <a href="edit.php?id=<?= $row['id_mk']; ?>" 
+                                   class="btn btn-warning btn-sm">
+                                   Edit
+                                </a>
+
+                                <a href="hapus.php?id=<?= $row['id_mk']; ?>" 
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Yakin ingin menghapus?')">
+                                   Hapus
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div> <!-- content -->
 
 <?php include "../layout/footer.php"; ?>
