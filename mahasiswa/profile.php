@@ -82,6 +82,14 @@ if ($result->num_rows > 0) {
     echo "Data tidak ditemukan";
 }
 
+if ($jenis_kelamin === 'L') {
+    $jenis_kelamin_text = 'Laki-laki';
+} elseif ($jenis_kelamin === 'P') {
+    $jenis_kelamin_text = 'Perempuan';
+} else {
+    $jenis_kelamin_text = '-';
+}
+
 $stmt->close();
 $conn->close();
 ?>
@@ -93,7 +101,7 @@ $conn->close();
     <div class="main-content">
         <div class="container mt-3">
             <div class="row">
-                <div class="col-12 mx-auto" style="max-width: 2000px">
+                <div class="col-12 mx-auto" style="max-width: 1700px">
                     <div class="profile-header text-center p-4 bg-white rounded shadow">
 
                         <div class="avatar-big mb-3">
@@ -142,7 +150,7 @@ $conn->close();
                                 </div>
                                 <div class="col-6">
                                     <label>Jenis Kelamin</label>
-                                    <p><?= $jenis_kelamin ?></p>
+                                    <p><?= $jenis_kelamin_text ?></p>
                                 </div>
                                 <div class="col-6">
                                     <label>Angkatan</label>
@@ -190,9 +198,13 @@ $conn->close();
                         </div>
                     </div>
 
-                    <div class="mt-4">
-                        <a href="edit_profile.php" class="edit-link">
-                            <i class="bi bi-pencil-square"></i> Edit Profile
+                    <div class="mt-4 text-end mb-5">
+                        <a href="edit_data.php" class="edit-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#0a2a66">
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                            </svg>
+                            Edit Profile
                         </a>
                     </div>
                 </div>

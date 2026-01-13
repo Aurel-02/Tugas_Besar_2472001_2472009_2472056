@@ -1,7 +1,7 @@
 .container {
     flex: 1;
-    padding: 40px 100px;
-    margin: 0 auto;
+    padding: 0 100px;
+    margin: 10px auto;
 }
 
 .profile-header {
@@ -42,14 +42,16 @@ hr{
     border: 3px solid black;
 }
 
-.edit-link {
-    color: #0d6efd;          
+a.edit-link,
+a.edit-link:visited,
+a.edit-link:hover,
+a.edit-link:active {
+    color: #0a2a66;
     text-decoration: underline;
     font-weight: 500;
 }
 
-.edit-link:hover {
-    color: #0a58ca;
-    text-decoration: underline;
-}
+
+
+
 
