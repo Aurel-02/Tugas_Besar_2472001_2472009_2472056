@@ -15,6 +15,30 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
     <link rel="stylesheet" href="../css/jadwal_perkuliahan.css">
 </head>
 <body>
+<?php
+include __DIR__ . '/../koneksi.php';
+
+$nrp = $_SESSION['user_id'];
+$semester = 1; 
+
+$query = "
+    SELECT 
+        p.hari, p.jam_mulai, p.jam_selesai,
+        p.kelas, p.ruang, p.sks,
+        d.id_mk, d.nama_mk
+    FROM tbdkbs d
+    JOIN tbperwalian p ON d.id_perwalian = p.id_perwalian
+    WHERE d.nrp = ?
+    ORDER BY 
+        FIELD(p.hari,'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'),
+        p.jam_mulai
+";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $nrp);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
 
 <div class="layout">
 
@@ -48,34 +72,53 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
             </div>
 
             <div class="card jadwal-card">
-                <div class="jadwal-item">
-                    <div class="d-flex justify-content-between">
-                        <strong>SENIN</strong>
-                    </div>
-                    <div class="jadwal-detail">
-                        <div>IN231 - Teknologi Multimedia</div>
-                        <div>3 sks</div>
-                        <div>Kelas A</div>
-                        <div>Lab ADV 3</div>
-                        <div><strong>12.30 - 14.10</strong></div>
-                    </div>
-                </div>
 
-                <hr>
+                <?php
+                $hari_sekarang = ''; // Menyimpan nama hari
 
-                <div class="jadwal-item">
-                    <div class="d-flex justify-content-between">
-                        <strong>SELASA</strong>
-                    </div>
-                    <div class="jadwal-detail">
-                        <div>IN231 - Teknologi Multimedia</div>
-                        <div>3 sks</div>
-                        <div>Kelas A</div>
-                        <div>Lab ADV 3</div>
-                        <div><strong>12.30 - 14.10</strong></div>
-                    </div>
-                </div>
+                while ($row = $result->fetch_assoc()):
 
+                    // Jika hari sekarang tidak sama dengan hari di baris ini
+                    if ($hari_sekarang !== $row['hari']):
+
+                        // Tutup div hari sebelumnya
+                        if ($hari_sekarang !== '') {
+                            echo '</div>';
+                        }
+
+                        // Ubah hari_sekarang menjadi hari yang baru
+                        $hari_sekarang = $row['hari'];
+                        ?>
+                        <!-- Tampilkan nama hari dalam header -->
+                        <div class="jadwal-hari mb-4">
+                            <strong class="d-block mb-2"><?= strtoupper($hari_sekarang) ?></strong>
+                        <?php endif; ?>
+
+                    <!-- Jadwal kuliah detail -->
+                    <div class="jadwal-detail mb-3">
+                        <div><?= $row['id_mk'] ?> - <?= $row['nama_mk'] ?></div>
+                        <div><?= $row['sks'] ?> SKS</div>
+                        <div>Kelas <?= $row['kelas'] ?></div>
+                        <div><?= $row['ruang'] ?></div>
+                        <div>
+                            <strong>
+                                <?= substr($row['jam_mulai'], 0, 5) ?> -
+                                <?= substr($row['jam_selesai'], 0, 5) ?>
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- Garis pemisah antar jadwal dalam hari yang sama -->
+                    <hr class="my-2">
+
+                <?php endwhile; ?>
+
+                <?php
+                // Pastikan untuk menutup div terakhir jika hari terakhir sudah selesai diproses
+                if ($hari_sekarang !== '') {
+                    echo '</div>';
+                }
+                ?>
             </div>
         </div>
 

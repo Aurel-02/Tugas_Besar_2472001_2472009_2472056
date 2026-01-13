@@ -1,53 +1,38 @@
 <?php
-include __DIR__ . "/../koneksi.php";
+include __DIR__ . '/../koneksi.php';
 
-// Mengambil data untuk Fakultas
-$queryFakultas = "SELECT * FROM tbfakultas";
-$resultFakultas = $conn->query($queryFakultas);
+// Ambil daftar Prodi
+$queryProdi = "SELECT * FROM tbprodi ORDER BY nama_prodi";
+$resultProdi = $conn->query($queryProdi);
 
-if (isset($_POST['fakultas']) && !empty($_POST['fakultas'])) {
-    $fakultasId = $_POST['fakultas'];
-    $queryProdi = "SELECT * FROM tbprodi WHERE id_fakultas = ?";
-    $stmtProdi = $conn->prepare($queryProdi);
-    $stmtProdi->bind_param("s", $fakultasId);
-    $stmtProdi->execute();
-    $resultProdi = $stmtProdi->get_result();
-}
-
-if (isset($_POST['prodi']) && !empty($_POST['prodi'])) {
-    $prodiId = $_POST['prodi'];
-
-    $queryProdi = "SELECT * FROM tbprodi WHERE id_prodi = ?";
-    $stmtProdi = $conn->prepare($queryProdi);
-
-    if (!$stmtProdi) {
-        die("Prepare gagal: " . $conn->error);
-    }
-
-    $stmtProdi->bind_param("s", $prodiId);
-    $stmtProdi->execute();
-    $resultProdi = $stmtProdi->get_result();
-}
-
-$resultRuang = [];
-
+// Tangkap pilihan Prodi
 $prodiId = $_POST['prodi'] ?? null;
 
+// Ambil Mata Kuliah sesuai Prodi
+$mataKuliah = [];
+if ($prodiId) {
+    $queryMK = "SELECT * FROM tbmatakuliah WHERE id_prodi = ?";
+    $stmtMK = $conn->prepare($queryMK);
+    if (!$stmtMK) die("Prepare mata kuliah gagal: " . $conn->error);
+    $stmtMK->bind_param("s", $prodiId);
+    $stmtMK->execute();
+    $resultMK = $stmtMK->get_result();
+    $mataKuliah = $resultMK->fetch_all(MYSQLI_ASSOC);
+    $stmtMK->close();
+}
+
+// Ambil Ruang sesuai Prodi
+$resultRuang = [];
 if ($prodiId) {
     $queryRuang = "SELECT DISTINCT ruang FROM tbdkbs WHERE id_prodi = ?";
     $stmtRuang = $conn->prepare($queryRuang);
-
-    if (!$stmtRuang) {
-        die("Prepare ruang gagal: " . $conn->error);
-    }
-
+    if (!$stmtRuang) die("Prepare ruang gagal: " . $conn->error);
     $stmtRuang->bind_param("s", $prodiId);
     $stmtRuang->execute();
     $resultRuang = $stmtRuang->get_result();
 }
 
-
-// Menutup koneksi database setelah query selesai
+// Menutup koneksi database
 $conn->close();
 ?>
 
@@ -68,40 +53,39 @@ $conn->close();
             </div>
 
             <form action="#" method="POST">
-                <!-- Fakultas Dropdown -->
+
+                <!-- Prodi Dropdown -->
                 <div class="form-group">
-                    <label for="fakultas">Fakultas :</label>
-                    <select id="fakultas" class="form-control" name="fakultas" onchange="this.form.submit()">
-                        <option value="">Pilih Fakultas</option>
-                        <?php while ($rowFakultas = $resultFakultas->fetch_assoc()) { ?>
-                            <option value="<?php echo $rowFakultas['id_fakultas']; ?>" <?php echo (isset($_POST['fakultas']) && $_POST['fakultas'] == $rowFakultas['id_fakultas']) ? 'selected' : ''; ?>>
-                                <?php echo $rowFakultas['nama_fakultas']; ?>
+                    <label for="prodi">Prodi :</label>
+                    <select id="prodi" class="form-control" name="prodi" onchange="this.form.submit()">
+                        <option value="">Pilih Prodi</option>
+                        <?php while ($rowProdi = $resultProdi->fetch_assoc()) { ?>
+                            <option value="<?php echo $rowProdi['id_prodi']; ?>" <?php echo ($prodiId == $rowProdi['id_prodi']) ? 'selected' : ''; ?>>
+                                <?php echo $rowProdi['nama_prodi']; ?>
                             </option>
                         <?php } ?>
                     </select>
                 </div>
 
-                <!-- Prodi Dropdown (Bergantung pada Fakultas yang dipilih) -->
+                <!-- Mata Kuliah Dropdown -->
                 <div class="form-group">
-                    <label for="prodi">Prodi :</label>
-                    <select id="prodi" class="form-control" name="prodi" onchange="this.form.submit()">
-                        <option value="">Pilih Prodi</option>
-                        <?php if (isset($resultProdi) && $resultProdi->num_rows > 0) { ?>
-                            <?php while ($rowProdi = $resultProdi->fetch_assoc()) { ?>
-                                <option value="<?php echo $rowProdi['id_prodi']; ?>" <?php echo (isset($_POST['prodi']) && $_POST['prodi'] == $rowProdi['id_prodi']) ? 'selected' : ''; ?>>
-                                    <?php echo $rowProdi['nama_prodi']; ?>
-                                </option>
-                            <?php } ?>
+                    <label for="matkul">Mata Kuliah :</label>
+                    <select id="matkul" class="form-control" name="matkul" <?= $prodiId ? '' : 'disabled' ?>>
+                        <option value="">Pilih Mata Kuliah</option>
+                        <?php foreach ($mataKuliah as $mk) { ?>
+                            <option value="<?php echo $mk['id_matkul']; ?>">
+                                <?php echo $mk['nama_matkul']; ?>
+                            </option>
                         <?php } ?>
                     </select>
                 </div>
 
-                <!-- Ruang Dropdown (Bergantung pada Prodi yang dipilih) -->
+                <!-- Ruang Dropdown -->
                 <div class="form-group">
                     <label for="ruang">Ruang :</label>
                     <select id="ruang" class="form-control" name="ruang">
                         <option value="">Pilih Ruang</option>
-                        <?php if (isset($resultRuang) && $resultRuang->num_rows > 0) { ?>
+                        <?php if ($resultRuang && $resultRuang->num_rows > 0) { ?>
                             <?php while ($rowRuang = $resultRuang->fetch_assoc()) { ?>
                                 <option value="<?php echo $rowRuang['ruang']; ?>">
                                     <?php echo $rowRuang['ruang']; ?>
@@ -111,9 +95,9 @@ $conn->close();
                     </select>
                 </div>
 
-                <!-- Input Nilai (Radio Buttons) -->
+                <!-- Jenis Penilaian (Radio Buttons) -->
                 <div class="form-group">
-                    <label>Input Nilai :</label>
+                    <label>Jenis Penilaian :</label>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="nilai" id="kat" autocomplete="off">
                         <label class="btn btn-outline-primary" for="kat">KAT</label>

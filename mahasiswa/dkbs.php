@@ -41,46 +41,72 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
 
             <div class="card dkbs-card">
                 <div class="card-body">
-                    <div class="matkul-item">
-                        <div class="d-flex justify-content-between">
-                            <strong>IN231 - Teknologi Multimedia</strong>
-                            <span>12.30 - 14.10</span>
-                        </div>
-                        <div>
-                            <small class="text-muted">Kelas A | Lab ADV 3</small>
-                            <div><strong>3 SKS</strong></div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="matkul-item">
-                        <div class="d-flex justify-content-between">
-                            <strong>IN231 - Teknologi Multimedia</strong>
-                            <span>12.30 - 14.10</span>
-                        </div>
-                        <div>
-                            <small class="text-muted">Kelas A | Lab ADV 3</small>
-                            <div><strong>3 SKS</strong></div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="matkul-item">
-                        <div class="d-flex justify-content-between">
-                            <strong>IN231 - Teknologi Multimedia</strong>
-                            <span>12.30 - 14.10</span>
-                        </div>
-                        <div>
-                            <small class="text-muted">Kelas A | Lab ADV 3</small>
-                            <div><strong>3 SKS</strong></div>
-                        </div>
-                    </div>
+                    <?php
+                    include __DIR__ . '/../koneksi.php';
+                    
+                    $nrp = $_SESSION['user_id'];    
+
+                    $query = "
+                        SELECT 
+                            d.id_mk, 
+                            m.nama_mk, 
+                            p.jam_mulai, 
+                            p.jam_selesai, 
+                            p.kelas, 
+                            p.ruang, 
+                            p.sks
+                        FROM tbdkbs d
+                        JOIN tbperwalian p ON d.id_perwalian = p.id_perwalian
+                        JOIN tbmatakuliah m ON d.id_mk = m.id_mk
+                        WHERE d.nrp = ? 
+                        ORDER BY p.jam_mulai
+                    ";
+
+                    if ($stmt = $conn->prepare($query)) {
+                        $stmt->bind_param("s", $nrp); 
+                        $stmt->execute();
+                        $result = $stmt->get_result(); 
+
+                        $hari_sekarang = '';
+                        $total_sks = 0; 
+
+                        while ($row = $result->fetch_assoc()):
+
+                            $total_sks += $row['sks'];
+
+                                ?>
+
+                                <div class="matkul-item mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><?= $row['id_mk'] ?> - <?= $row['nama_mk'] ?></strong>
+                                        <span><?= substr($row['jam_mulai'], 0, 5) ?> - <?= substr($row['jam_selesai'], 0, 5) ?></span>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted">
+                                            Kelas <?= $row['kelas'] ?> | 
+                                            Ruang <?= $row['ruang'] ?>
+                                        </small>
+                                        <div><strong><?= $row['sks'] ?> SKS</strong></div>
+                                    </div>
+                                </div>
+                            
+                        <?php endwhile; ?>
+
+                        <?php
+                        if ($hari_sekarang !== '') {
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "Error preparing query: " . $conn->error;
+                    }
+                    ?>
                 </div>
                 <div class="card-footer">
-                    <strong>Total SKS: 18 SKS</strong>
+                    <strong>Total SKS: <?= $total_sks ?> SKS</strong>
                 </div>
             </div>
 
             <div class="mt-4 text-center">
-                <img src="/path/to/logo.png" alt="Logo" class="logo">
                 <a href="/Tugas_Besar_2472001_2472009_2472056/mahasiswa/pilih_matkul.php">Pilih mata kuliah untuk semester selanjutnya</a>
             </div>
 

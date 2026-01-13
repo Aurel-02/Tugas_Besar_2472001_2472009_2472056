@@ -52,33 +52,75 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
 
             <div class="card nilai-card">
 
-                <div class="nilai-item">
-                    <div class="d-flex justify-content-between">
-                        <strong>IN210 - JARINGAN KOMPUTER</strong>
-                        <span class="nilai-huruf">Nilai Huruf : A</span>
-                    </div>
-                    <div class="nilai-detail">
-                        <div>KAT : 90 (60%)</div>
-                        <div>UTS : 90 (20%)</div>
-                        <div>UAS : 90 (20%)</div>
-                        <div><strong>Nilai Akhir : 90</strong></div>
-                    </div>
-                </div>
+                <?php
+                include __DIR__ . '/../koneksi.php';
 
-                <hr>
+                $nrp = $_SESSION['user_id'];
 
-                <div class="nilai-item">
-                    <div class="d-flex justify-content-between">
-                        <strong>IN210 - JARINGAN KOMPUTER</strong>
-                        <span class="nilai-huruf">Nilai Huruf : A</span>
-                    </div>
-                    <div class="nilai-detail">
-                        <div>KAT : 90 (60%)</div>
-                        <div>UTS : 90 (20%)</div>
-                        <div>UAS : 90 (20%)</div>
-                        <div><strong>Nilai Akhir : 90</strong></div>
-                    </div>
-                </div>
+                // Query untuk mengambil data nilai
+                $query = "
+                    SELECT 
+                        n.id_mk, 
+                        m.nama_mk,
+                        n.nilai_akhir,
+                        n.nilai_uts,
+                        n.nilai_uas,
+                        n.nilai_kat,
+                        n.nilai_mutu
+                    FROM tbnilai n
+                    JOIN tbdkbs m ON n.id_mk = m.id_mk
+                    WHERE n.nrp = ?
+                ";
+
+                // Cek jika query berhasil disiapkan
+                if ($stmt = $conn->prepare($query)) {
+                    $stmt->bind_param("s", $nrp); // Mengikat parameter
+                    $stmt->execute(); // Menjalankan query
+                    $result = $stmt->get_result(); // Mendapatkan hasil
+
+                    // Menampilkan data nilai jika ada
+                    while ($row = $result->fetch_assoc()):
+                    ?>
+                        <div class="nilai-item">
+                            <div class="d-flex justify-content-between">
+                                <strong><?= $row['nama_mk'] ?></strong>
+                                <span class="nilai-huruf">Nilai Huruf : 
+                                    <?php
+                                        // Menentukan nilai huruf berdasarkan nilai akhir
+                                        if ($row['nilai_akhir'] >= 85) {
+                                            echo 'A';
+                                        } elseif ($row['nilai_akhir'] >= 70) {
+                                            echo 'B';
+                                        } elseif ($row['nilai_akhir'] >= 60) {
+                                            echo 'C';
+                                        } else {
+                                            echo 'D';
+                                        }
+                                    ?>
+                                </span>
+                            </div>
+                            <div class="nilai-detail">
+                                <div>KAT : <?= $row['nilai_kat'] ?> (60%)</div>
+                                <div>UTS : <?= $row['nilai_uts'] ?> (20%)</div>
+                                <div>UAS : <?= $row['nilai_uas'] ?> (20%)</div>
+                                <div><strong>Nilai Akhir : <?= $row['nilai_akhir'] ?></strong></div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                    <?php endwhile; ?>
+
+                    <?php
+                    // Jika tidak ada data
+                    if ($result->num_rows === 0) {
+                        echo '<div class="p-4 text-center text-muted">Nilai belum tersedia</div>';
+                    }
+                } else {
+                    // Menampilkan pesan error jika query gagal dipersiapkan
+                    echo "Error preparing query: " . $conn->error;
+                }
+                ?>
 
             </div>
         </div>
