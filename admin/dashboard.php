@@ -22,58 +22,76 @@ if(!isset($_SESSION['login']) || $_SESSION['role_id'] != 1){
 </head>
 <body>
 
-<div class="wrapper">
+<div class="d-flex">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="brand">
-            <span class="icon">🛡️</span> Portal Admin
+    <div class="sidebar p-3">
+        <h4 class="text-center text-white mb-4">ADMIN PANEL</h4>
+
+        <div class="text-center text-white mb-4">
+            👤 <?= $_SESSION['nama'] ?>
         </div>
 
-        <ul class="menu">
-            <li class="active"><a href="#">Dashboard</a></li>
-            <li><a href="fakultas/index.php">Fakultas</a></li>
-            <li><a href="prodi/index.php">Program Studi</a></li>
-            <li><a href="mahasiswa/index.php">Mahasiswa</a></li>
-            <li><a href="dosen/index.php">Dosen</a></li>
-            <li><a href="matakuliah/index.php">Mata Kuliah</a></li>
-            <li><a href="jadwal/index.php">Jadwal</a></li>
-            <li class="logout"><a href="../logout.php">Logout</a></li>
-        </ul>
-    </aside>
+        <a href="dashboard.php">Dashboard</a>
+        <a href="fakultas/index.php">Fakultas</a>
+        <a href="prodi/index.php">Prodi</a>
+        <a href="mahasiswa/index.php">Mahasiswa</a>
+        <a href="dosen/index.php">Dosen</a>
+        <a href="matakuliah/index.php">Mata Kuliah</a>
+        <a href="jadwal/index.php">Jadwal</a>
 
-    <!-- MAIN -->
-    <main class="main">
+        <a class="logout mt-3" href="../logout.php">Logout</a>
+    </div>
 
-        <!-- TOPBAR -->
-        <div class="topbar">
-            <h6>Dashboard</h6>
-            <div class="user">
-                <span><?= $_SESSION['nama'] ?></span>
-                <div class="avatar"></div>
-            </div>
-        </div>
+    <!-- CONTENT -->
+    <div class="content flex-grow-1 p-4">
 
-        <!-- CONTENT -->
-        <div class="content">
+        <h3 class="mb-3">Dashboard Admin</h3>
+        <p>Selamat datang di sistem akademik.</p>
 
-            <!-- SMALL CARDS -->
-            <div class="stats">
-                <div class="stat-card"></div>
-                <div class="stat-card"></div>
-                <div class="stat-card"></div>
-                <div class="stat-card"></div>
+        <div class="row g-4 mt-3">
+
+            <div class="col-md-4">
+                <div class="card shadow-sm text-center p-4">
+                    Fakultas
+                </div>
             </div>
 
-            <!-- BIG CARD -->
-            <div class="big-card"></div>
+            <div class="col-md-4">
+                <div class="card shadow-sm text-center p-4">
+                    Program Studi
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm text-center p-4">
+                    Mahasiswa
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm text-center p-4">
+                    Dosen
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm text-center p-4">
+                    Mata Kuliah
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm text-center p-4">
+                    Jadwal
+                </div>
+            </div>
 
         </div>
 
-    </main>
+    </div>
 
 </div>
 
 </body>
-
 </html>
