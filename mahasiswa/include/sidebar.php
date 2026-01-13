@@ -8,7 +8,9 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
 
 <aside class="sidebar d-flex flex-column justify-content-between">
     <div>
-        <div class="sidebar-logo"></div>
+        <a href="/Tugas_Besar_2472001_2472009_2472056/mahasiswa/dashboard.php">
+            <div class="sidebar-logo"></div>
+        </a>
 
         <hr class="sidebar-divider">
 
