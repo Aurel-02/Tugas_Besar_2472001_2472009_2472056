@@ -1,7 +1,4 @@
         </div>
-
-        <footer class="bg-white text-center py-2 border-top">
-            © 2026 Portal Admin
         </footer>
 
     </div>
