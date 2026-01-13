@@ -9,7 +9,7 @@ $data = mysqli_query($conn, "
     SELECT j.*, m.nama_mk, d.nama_dosen
     FROM tbdkbs j
     JOIN tbmatakuliah m ON j.id_mk = m.id_mk
-    JOIN tbdosen d ON j.nidn = d.nidn
+    JOIN tbdosen d ON j.nip = d.nip
 ");
 ?>
 
@@ -55,12 +55,12 @@ $data = mysqli_query($conn, "
                             <td><?= $row['jam_mulai']; ?> - <?= $row['jam_selesai']; ?></td>
                             <td><?= $row['ruang']; ?></td>
                             <td>
-                                <a href="edit.php?id=<?= $row['id_jadwal']; ?>" 
+                                <a href="edit.php?id=<?= $row['id_dkbs']; ?>" 
                                    class="btn btn-warning btn-sm">
                                    Edit
                                 </a>
 
-                                <a href="hapus.php?id=<?= $row['id_jadwal']; ?>" 
+                                <a href="hapus.php?id=<?= $row['id_dkbs']; ?>" 
                                    class="btn btn-danger btn-sm"
                                    onclick="return confirm('Yakin ingin menghapus?')">
                                    Hapus

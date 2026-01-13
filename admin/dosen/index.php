@@ -37,7 +37,7 @@ $data = mysqli_query($conn, "
                 <table class="table table-bordered table-striped mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th width="120">NIDN</th>
+                            <th width="120">NIP</th>
                             <th>Nama Dosen</th>
                             <th>Program Studi</th>
                             <th width="180">Aksi</th>
@@ -46,16 +46,16 @@ $data = mysqli_query($conn, "
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($data)) : ?>
                         <tr>
-                            <td><?= $row['nidn']; ?></td>
+                            <td><?= $row['nip']; ?></td>
                             <td><?= $row['nama_dosen']; ?></td>
                             <td><?= $row['nama_prodi']; ?></td>
                             <td>
-                                <a href="edit.php?id=<?= $row['nidn']; ?>" 
+                                <a href="edit.php?id=<?= $row['nip']; ?>" 
                                    class="btn btn-warning btn-sm">
                                    Edit
                                 </a>
 
-                                <a href="hapus.php?id=<?= $row['nidn']; ?>" 
+                                <a href="hapus.php?id=<?= $row['nip']; ?>" 
                                    class="btn btn-danger btn-sm"
                                    onclick="return confirm('Yakin ingin menghapus?')">
                                    Hapus
