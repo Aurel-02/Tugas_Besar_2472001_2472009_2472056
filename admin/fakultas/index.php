@@ -1,66 +1,43 @@
+<?php include "../layout/header.php"; ?>
+<?php include "../layout/sidebar.php"; ?>
+
+<div class="content">
+
 <?php
 session_start();
 include "../../koneksi.php";
-include "../layout/header.php";
-include "../layout/sidebar.php";
 
-$data = mysqli_query($conn, "SELECT * FROM tbfakultas ORDER BY id_fakultas ASC");
+$data = mysqli_query($conn,"SELECT * FROM tbfakultas");
 ?>
 
-<div class="main">
-    <!-- TOPBAR -->
-    <div class="topbar">
-        <h6>Data Fakultas</h6>
-        <div class="user">
-            <span><?= $_SESSION['nama']; ?></span>
-            <div class="avatar"></div>
-            <a href="../../logout.php" class="logout-link">Logout</a>
-        </div>
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
 
-    <!-- CONTENT -->
-    <div class="content">
+<h4>Data Fakultas</h4>
+<a href="tambah.php" class="btn btn-primary mb-3">Tambah Fakultas</a>
 
-        <div class="card shadow-sm p-3">
+<table class="table table-bordered table-striped">
+<tr>
+<th>No</th><th>Nama Fakultas</th><th>Aksi</th>
+</tr>
 
-            <div class="d-flex justify-content-between mb-3">
-                <h5>Data Fakultas</h5>
-                <a href="tambah.php" class="btn btn-primary btn-sm">
-                    + Tambah Fakultas
-                </a>
-            </div>
+<?php $no=1; while($row=mysqli_fetch_assoc($data)): ?>
+<tr>
+<td><?= $no++ ?></td>
+<td><?= $row['nama_fakultas'] ?></td>
+<td>
+<a class="btn btn-warning btn-sm" href="edit.php?id=<?= $row['id_fakultas'] ?>">Edit</a>
+<a class="btn btn-danger btn-sm" href="hapus.php?id=<?= $row['id_fakultas'] ?>" onclick="return confirm('Hapus?')">Hapus</a>
+</td>
+</tr>
+<?php endwhile; ?>
 
-            <table class="table table-bordered table-sm align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th width="50">No</th>
-                        <th width="120">ID Fakultas</th>
-                        <th>Nama Fakultas</th>
-                        <th width="120">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php $no=1; while($row=mysqli_fetch_assoc($data)): ?>
-                    <tr>
-                        <td><?= $no++; ?></td>
-                        <td><?= $row['kode_fakultas']; ?></td>
-                        <td><?= $row['nama_fakultas']; ?></td>
-                        <td>
-                            <a href="edit.php?id=<?= $row['id_fakultas']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="hapus.php?id=<?= $row['id_fakultas']; ?>" 
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('Yakin hapus data?')">
-                               Hapus
-                            </a>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-                </tbody>
-            </table>
-
-        </div>
-
-    </div>
-</div>
+</table>
+</body>
+</html>
 
 <?php include "../layout/footer.php"; ?>
