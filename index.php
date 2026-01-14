@@ -57,7 +57,7 @@
                     <div class="col-md-4 mb-4 mb-md-0">
                         <a href="login.php?role=1" class="role-link">
                             <div class="role-icon admin">
-                                <img src="img/admin_icon.png" alt="Admin">
+                                <img src="img/icon_admin.png" alt="Admin">
                             </div>
                         </a>
                         <a href="login.php?role=1" class="role-btn">Admin</a>
