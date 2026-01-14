@@ -1,4 +1,12 @@
 <?php
 include "../../koneksi.php";
-mysqli_query($conn,"INSERT INTO tbmatakuliah VALUES(NULL,'$_POST[nama_mk]','$_POST[sks]','$_POST[id_prodi]')");
-header("Location:index.php");
+
+$id_mk  = $_POST['id_mk'];
+$nama   = $_POST['nama_mk'];
+
+mysqli_query($conn,"
+    INSERT INTO tbmatakuliah (id_mk, nama_mk)
+    VALUES ('$id_mk', '$nama')
+");
+
+header("Location: index.php");

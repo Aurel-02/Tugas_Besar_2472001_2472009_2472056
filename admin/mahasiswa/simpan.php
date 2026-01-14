@@ -1,5 +1,12 @@
 <?php
 include "../../koneksi.php";
-$nama = $_POST['nama_mahasiswa'];
-mysqli_query($conn,"INSERT INTO tbmahasiswa VALUES(NULL,'$nama')");
-header("Location:index.php");
+
+$nrp  = $_POST['nrp'];
+$nama = $_POST['nama'];
+
+mysqli_query($conn,"
+    INSERT INTO tbmahasiswa (nrp, nama_mahasiswa)
+    VALUES ('$nrp', '$nama')
+");
+
+header("Location: index.php");

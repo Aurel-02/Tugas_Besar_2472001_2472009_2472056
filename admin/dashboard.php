@@ -1,11 +1,26 @@
 <?php
 // dashboard.php
 include 'layout/header.php';
-include 'layout/sidebar.php';
 ?>
 
-<div class="main">
+<div class="sidebar">
+    <h4>🎓 Portal Admin</h4>
 
+    <a href="dashboard.php">Dashboard</a>
+    <a href="fakultas/index.php">Fakultas</a>
+    <a href="prodi/index.php">Program Studi</a>
+    <a href="mahasiswa/index.php">Mahasiswa</a>
+    <a href="dosen/index.php">Dosen</a>
+    <a href="matakuliah/index.php">Mata Kuliah</a>
+    <a href="jadwal/index.php">Jadwal</a>
+
+    <hr class="text-white mx-3">
+
+    <a href="../logout.php" class="text-warning">Logout</a>
+</div>
+
+<div class="main">
+    
     <!-- Header / Topbar -->
     <div class="topbar">
         <div class="admin">
@@ -14,6 +29,7 @@ include 'layout/sidebar.php';
         </div>
     </div>
 
+    
     <!-- Content -->
     <div class="content">
         <h4 class="mb-4">Dashboard</h4>

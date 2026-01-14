@@ -1,15 +1,79 @@
 <?php
 include "../../koneksi.php";
-$id=$_GET['id'];
-$data=mysqli_query($conn,"SELECT * FROM tbmatakuliah WHERE id_mk='$id'");
-$row=mysqli_fetch_assoc($data);
+$id = $_GET['id'];
+
+$data = mysqli_fetch_assoc(
+    mysqli_query($conn,"SELECT * FROM tbmatakuliah WHERE id_mk='$id'")
+);
 ?>
 
-<form method="POST" action="update.php">
-<input type="hidden" name="id" value="<?= $row['id_mk'] ?>">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Edit Mata Kuliah</title>
 
-<label>Nama MK</label>
-<input class="form-control mb-2" name="nama" value="<?= $row['nama_mk'] ?>">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<button class="btn btn-primary">Update</button>
-</form>
+<style>
+body{ background:#f4f6fb; }
+
+.modal-box{
+    max-width:600px;
+    margin:80px auto;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+.modal-header{
+    border-bottom:1px solid #eee;
+    padding:15px 20px;
+    font-size:18px;
+    font-weight:600;
+    color:#2b4cff;
+}
+.modal-body{ padding:20px; }
+.modal-footer{
+    padding:15px 20px;
+    border-top:1px solid #eee;
+    text-align:right;
+}
+.form-label{ font-weight:500; }
+</style>
+</head>
+<body>
+
+<div class="modal-box">
+
+    <div class="modal-header d-flex justify-content-between align-items-center">
+        <span>Edit Mata Kuliah</span>
+        <a href="index.php" class="text-dark text-decoration-none fs-5">&times;</a>
+    </div>
+
+    <form method="POST" action="update.php">
+        <div class="modal-body">
+
+            <input type="hidden" name="id" value="<?= $data['id_mk'] ?>">
+
+            <div class="mb-3">
+                <label class="form-label">ID Mata Kuliah</label>
+                <input type="text" class="form-control" value="<?= $data['id_mk'] ?>" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nama Mata Kuliah</label>
+                <input type="text" name="nama" class="form-control" value="<?= $data['nama_mk'] ?>" required>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="index.php" class="btn btn-secondary">Batal</a>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,15 +1,87 @@
 <?php
 include "../../koneksi.php";
-$id=$_GET['id'];
-$data=mysqli_query($conn,"SELECT * FROM tbdosen WHERE nidn='$id'");
-$row=mysqli_fetch_assoc($data);
+$id = $_GET['id'];
+$data = mysqli_query($conn,"SELECT * FROM tbdosen WHERE nip='$id'");
+$row = mysqli_fetch_assoc($data);
 ?>
 
-<form method="POST" action="update.php">
-<input type="hidden" name="nidn" value="<?= $row['nidn'] ?>">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Edit Dosen</title>
 
-<label>Nama Dosen</label>
-<input class="form-control mb-2" name="nama" value="<?= $row['nama_dosen'] ?>">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<button class="btn btn-primary">Update</button>
-</form>
+<style>
+body{
+    background:#f4f6fb;
+}
+
+.modal-box{
+    max-width:600px;
+    margin:80px auto;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
+.modal-header{
+    border-bottom:1px solid #eee;
+    padding:15px 20px;
+    font-size:18px;
+    font-weight:600;
+    color:#2b4cff;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.modal-footer{
+    padding:15px 20px;
+    border-top:1px solid #eee;
+    text-align:right;
+}
+
+.form-label{
+    font-weight:500;
+}
+</style>
+</head>
+<body>
+
+<div class="modal-box">
+    
+    <div class="modal-header d-flex justify-content-between align-items-center">
+        <span>Edit Dosen</span>
+        <a href="index.php" class="text-dark text-decoration-none fs-5">&times;</a>
+    </div>
+
+    <form method="POST" action="update.php">
+        <div class="modal-body">
+
+            <input type="hidden" name="nip" value="<?= $row['nip'] ?>">
+
+            <div class="mb-3">
+                <label class="form-label">NIP</label>
+                <input type="text" class="form-control" value="<?= $row['nip'] ?>" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nama Dosen</label>
+                <input type="text" name="nama" class="form-control" value="<?= $row['nama_dosen'] ?>" required>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="index.php" class="btn btn-secondary">Batal</a>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>
