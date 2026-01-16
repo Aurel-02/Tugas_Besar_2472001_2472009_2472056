@@ -12,8 +12,11 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
 // Tentukan nilai maksimal semester (misalnya 8 semester)
 $semesterMax = 8; 
 
-// Ambil semester yang ada berdasarkan nilai yang ada di database
-include __DIR__ . '/../koneksi.php';
+// Tentukan semester berdasarkan GET parameter, default ke 1 jika tidak ada
+$semester = isset($_GET['semester']) ? $_GET['semester'] : 1;
+
+include __DIR__ . '/../koneksi.php'; // Pastikan koneksi ke database sudah benar
+
 $nrp = $_SESSION['user_id'];
 
 // Query untuk mengecek semester yang memiliki data nilai
@@ -22,10 +25,17 @@ $querySemester = "
     FROM tbperwalian pw
     JOIN tbmatakuliah mk ON mk.id_mk = pw.id_mk
     JOIN tbnilai n ON n.id_mk = mk.id_mk
-    WHERE n.nrp = ?
+    JOIN tbtranskrip t ON t.id_transkrip = n.id_transkrip
+    WHERE t.nrp = ?
 ";
 
 $stmt = $conn->prepare($querySemester);
+
+// Periksa apakah query berhasil dipersiapkan
+if (!$stmt) {
+    die("Error preparing query: " . $conn->error); // Menampilkan pesan error jika gagal
+}
+
 $stmt->bind_param("s", $nrp);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -37,6 +47,47 @@ while ($row = $result->fetch_assoc()) {
 
 // Tentukan semester berdasarkan GET parameter, default ke 1 jika tidak ada parameter
 $semester = isset($_GET['semester']) && in_array($_GET['semester'], $availableSemesters) ? $_GET['semester'] : (count($availableSemesters) > 0 ? $availableSemesters[0] : 1);
+
+// Query untuk mengambil data nilai berdasarkan semester dan persentase
+$query = "
+    SELECT 
+        n.id_mk, 
+        m.nama_mk,
+        n.nilai_akhir,
+        n.nilai_uts,
+        n.nilai_uas,
+        n.nilai_kat,
+        n.nilai_mutu,
+        n.persentase_nilai_kat,
+        n.persentase_nilai_uts,
+        n.persentase_nilai_uas,
+        IFNULL(pw.ip_semester, '-') AS ip_semester,
+        pw.semester
+    FROM tbnilai n
+    JOIN tbmatakuliah m ON n.id_mk = m.id_mk
+    JOIN tbtranskrip t ON n.id_transkrip = t.id_transkrip
+    JOIN tbperwalian pw ON m.id_mk = pw.id_mk
+    WHERE t.nrp = ? AND pw.semester = ? 
+    ORDER BY m.nama_mk
+";
+
+$stmt = $conn->prepare($query);
+
+// Cek apakah query berhasil disiapkan
+if ($stmt) {
+    $stmt->bind_param("si", $nrp, $semester); // Mengikat parameter
+    $stmt->execute(); // Menjalankan query
+    $result = $stmt->get_result(); // Mendapatkan hasil
+
+    // Menyimpan hasil dalam array untuk pengelompokan per semester
+    $nilaiPerSemester = [];
+    while ($row = $result->fetch_assoc()) {
+        $nilaiPerSemester[$row['semester']][] = $row;
+    }
+} else {
+    echo "Error preparing query: " . $conn->error;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -88,62 +139,28 @@ $semester = isset($_GET['semester']) && in_array($_GET['semester'], $availableSe
             <div class="card nilai-card">
 
                 <?php
-                // Query untuk mengambil data nilai berdasarkan semester dan persentase
-                $query = "
-                    SELECT 
-                        n.id_mk, 
-                        m.nama_mk,
-                        n.nilai_akhir,
-                        n.nilai_uts,
-                        n.nilai_uas,
-                        n.nilai_kat,
-                        n.nilai_mutu,
-                        pw.ip_semester,
-                        n.persentase_nilai_kat,
-                        n.persentase_nilai_uts,
-                        n.persentase_nilai_uas
-                    FROM tbnilai n
-                    JOIN tbdkbs m ON n.id_mk = m.id_mk
-                    JOIN tbtranskrip t ON n.id_transkrip = t.id_transkrip
-                    JOIN tbmatakuliah mk ON n.id_mk = mk.id_mk
-                    JOIN tbperwalian pw ON mk.id_mk = pw.id_mk
-                    WHERE t.nrp = ? AND pw.semester = ? 
-                ";
-
-                // Cek jika query berhasil disiapkan
-                if ($stmt = $conn->prepare($query)) {
-                    $stmt->bind_param("si", $nrp, $semester); // Mengikat parameter
-                    $stmt->execute(); // Menjalankan query
-                    $result = $stmt->get_result(); // Mendapatkan hasil
-
-                    // Menampilkan data nilai jika ada
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()):
+                if (isset($nilaiPerSemester[$semester])) {
+                    foreach ($nilaiPerSemester[$semester] as $row) {
                         ?>
-                            <div class="nilai-item">
-                                <div class="d-flex justify-content-between">
-                                    <strong><?= htmlspecialchars($row['nama_mk']) ?></strong>
-                                    <span class="nilai-huruf">Nilai Huruf : <?= $row['nilai_mutu'] ?: '-' ?></span>
-                                </div>
-                                <div class="nilai-detail">
-                                    <div>KAT : <?= htmlspecialchars($row['nilai_kat']) ?> (<?= $row['persentase_nilai_kat'] ?: '-' ?>%)</div>
-                                    <div>UTS : <?= htmlspecialchars($row['nilai_uts']) ?> (<?= $row['persentase_nilai_uts'] ?: '-' ?>%)</div>
-                                    <div>UAS : <?= htmlspecialchars($row['nilai_uas']) ?> (<?= $row['persentase_nilai_uas'] ?: '-' ?>%)</div>
-                                    <div><strong>Nilai Akhir : <?= htmlspecialchars($row['nilai_akhir']) ?: '-' ?></strong></div>
-                                </div>
+                        <div class="nilai-item">
+                            <div class="d-flex justify-content-between">
+                                <strong><?= htmlspecialchars($row['nama_mk']) ?></strong>
+                                <span class="nilai-huruf">Nilai Huruf : <?= $row['nilai_mutu'] ?: '-' ?></span>
                             </div>
+                            <div class="nilai-detail">
+                                <div>KAT : <?= htmlspecialchars($row['nilai_kat']) ?> (<?= $row['persentase_nilai_kat'] ?: '-' ?>%)</div>
+                                <div>UTS : <?= htmlspecialchars($row['nilai_uts']) ?> (<?= $row['persentase_nilai_uts'] ?: '-' ?>%)</div>
+                                <div>UAS : <?= htmlspecialchars($row['nilai_uas']) ?> (<?= $row['persentase_nilai_uas'] ?: '-' ?>%)</div>
+                                <div><strong>Nilai Akhir : <?= htmlspecialchars($row['nilai_akhir']) ?: '-' ?></strong></div>
+                                <div>IPS : <?= $row['ip_semester'] ?></div>
+                            </div>
+                        </div>
 
-                            <hr>
-
-                        <?php endwhile; ?>
-
-                    <?php
-                    } else {
-                        echo '<div class="p-4 text-center text-muted">Nilai belum tersedia untuk semester ini.</div>';
+                        <hr>
+                        <?php
                     }
                 } else {
-                    // Menampilkan pesan error jika query gagal dipersiapkan
-                    echo "Error preparing query: " . $conn->error;
+                    echo '<div class="p-4 text-center text-muted">Nilai belum tersedia untuk semester ini.</div>';
                 }
                 ?>
 
