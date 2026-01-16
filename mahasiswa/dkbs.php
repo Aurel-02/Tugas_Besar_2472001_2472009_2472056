@@ -22,27 +22,24 @@ include __DIR__ . '/../koneksi.php';
 $nrp = $_SESSION['user_id'];
 
 $querySemester = "
-    SELECT DISTINCT p.semester
+    SELECT MAX(p.semester) AS semester
     FROM tbdkbs d
     JOIN tbperwalian p ON d.id_perwalian = p.id_perwalian
     WHERE d.nrp = ?
-    ORDER BY p.semester
 ";
 
 $stmtSemester = $conn->prepare($querySemester);
 $stmtSemester->bind_param("s", $nrp);
 $stmtSemester->execute();
-$resultSemester = $stmtSemester->get_result();
+$dataSemester = $stmtSemester->get_result()->fetch_assoc();
+$semesterMax = $dataSemester ? (int)$dataSemester['semester'] : 1;
 
 $semesterAktif = $_GET['semester'] ?? null;
 
-if (!$semesterAktif && $resultSemester->num_rows > 0) {
-    $rowFirst = $resultSemester->fetch_assoc();
-    $semesterAktif = $rowFirst['semester'];
-}
-
 if (!$semesterAktif) {
-    $semesterAktif = '1';
+    $semesterAktif = $semesterMax;
+} elseif ($semesterAktif < 1 || $semesterAktif > $semesterMax) {
+    $semesterAktif = $semesterMax;
 }
 
 $query = "
@@ -85,12 +82,11 @@ $result = $stmt->get_result();
                 <select name="semester"
                         class="form-select form-select-sm w-auto ms-auto"
                         onchange="this.form.submit()">
-                    <?php while ($s = $resultSemester->fetch_assoc()): ?>
-                        <option value="<?= $s['semester'] ?>"
-                            <?= $s['semester'] == $semesterAktif ? 'selected' : '' ?>>
-                            <?= $s['semester'] ?>
+                    <?php for ($i = 1; $i <= $semesterMax; $i++): ?>
+                        <option value="<?= $i ?>" <?= ($semesterAktif == $i) ? 'selected' : '' ?>>
+                            <?= $i ?>
                         </option>
-                    <?php endwhile; ?>
+                    <?php endfor; ?>
                 </select>
             </form>
             
@@ -135,6 +131,9 @@ $result = $stmt->get_result();
                             <div><?= $row['sks'] ?> SKS</div>
                         </div>
                     </div>
+
+                    <hr style="border: 1px solid ;">
+
                     <?php endwhile; ?>
                 </div>
                 <div class="card-footer">
