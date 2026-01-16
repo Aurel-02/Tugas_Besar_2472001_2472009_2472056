@@ -9,12 +9,11 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '2') {
 include __DIR__ . "/../koneksi.php";
 
 /* =========================
-   DATA PILIHAN DARI nilai.php
+   DATA PILIHAN
 ========================= */
-$nip        = $_SESSION['user_id'];
-$id_mk      = $_SESSION['id_mk'];
-$kelas      = $_SESSION['kelas'];
-$jenisNilai = $_SESSION['jenis_nilai'];
+$nip   = $_SESSION['user_id'];
+$id_mk = $_SESSION['id_mk'];
+$kelas = $_SESSION['kelas'];
 
 /* =========================
    DATA DOSEN
@@ -46,49 +45,63 @@ $semesterRow = $conn->query("
 $semester = $semesterRow['semester'] ?? '-';
 
 /* =========================
-   AMBIL MAHASISWA (FIX)
-   tbtranskrip → tbmahasiswa
+   AMBIL MAHASISWA + NILAI KAT
 ========================= */
-$qMhs = $conn->query("
+$stmt = $conn->prepare("
     SELECT DISTINCT
         m.nrp,
-        m.nama_mahasiswa
-    FROM tbtranskrip t
-    JOIN tbmahasiswa m ON t.nrp = m.nrp
-    WHERE t.semester = '$semester'
+        m.nama_mahasiswa,
+        n.nilai_kat
+    FROM tbdkbs d
+    JOIN tbmahasiswa m ON d.nrp = m.nrp
+    JOIN tbperwalian p ON d.id_perwalian = p.id_perwalian
+    LEFT JOIN tbnilai n 
+        ON n.id_transkrip = CONCAT('TR', m.nrp)
+       AND n.id_mk = ?
+    WHERE p.nip = ?
+      AND p.id_mk = ?
+      AND p.kelas = ?
     ORDER BY m.nama_mahasiswa ASC
 ");
 
+$stmt->bind_param("ssss", $id_mk, $nip, $id_mk, $kelas);
+$stmt->execute();
+$qMhs = $stmt->get_result();
+
 /* =========================
-   SIMPAN NILAI
+   SIMPAN NILAI KAT
 ========================= */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($_POST['nilai'] as $nrp => $nilai) {
 
+        $id_transkrip = 'TR' . $nrp;
+
         $cek = $conn->query("
             SELECT 1 FROM tbnilai
-            WHERE nrp = '$nrp'
+            WHERE id_transkrip = '$id_transkrip'
               AND id_mk = '$id_mk'
-              AND jenis_nilai = '$jenisNilai'
         ");
 
         if ($cek->num_rows == 0) {
             $conn->query("
-                INSERT INTO tbnilai (nrp, id_mk, jenis_nilai, nilai)
-                VALUES ('$nrp', '$id_mk', '$jenisNilai', '$nilai')
+                INSERT INTO tbnilai (id_transkrip, id_mk, nilai_kat, nip)
+                VALUES ('$id_transkrip', '$id_mk', '$nilai', '$nip')
             ");
         } else {
             $conn->query("
                 UPDATE tbnilai
-                SET nilai = '$nilai'
-                WHERE nrp = '$nrp'
+                SET nilai_kat = '$nilai'
+                WHERE id_transkrip = '$id_transkrip'
                   AND id_mk = '$id_mk'
-                  AND jenis_nilai = '$jenisNilai'
             ");
         }
     }
 
-    echo "<script>alert('Nilai berhasil disimpan');</script>";
+    echo "<script>
+        alert('Nilai KAT berhasil disimpan');
+        window.location.href = window.location.href;
+    </script>";
+    exit;
 }
 ?>
 
@@ -96,7 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Lembar Penilaian KAT</title>
+    <title>Lembar Penilaian</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="../css/penilaian.css">
 </head>
 <body>
@@ -116,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div>
             <p><b>Semester</b> : <?= $semester ?></p>
-            <p><b>Jenis Nilai</b> : <?= $jenisNilai ?></p>
+            <p><b>Jenis Nilai</b> : KAT</p>
         </div>
     </div>
 
@@ -126,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <th>NRP</th>
                     <th>Nama Mahasiswa</th>
-                    <th>Nilai</th>
+                    <th>Nilai KAT</th>
                 </tr>
             </thead>
             <tbody>
@@ -138,6 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td>
                         <input type="number"
                                name="nilai[<?= $m['nrp'] ?>]"
+                               value="<?= htmlspecialchars($m['nilai_kat'] ?? '') ?>"
                                min="0" max="100" required>
                     </td>
                 </tr>
@@ -151,12 +169,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </table>
 
         <div class="button-area">
-            <button type="submit" class="btn btn-submit">Edit</button>
-            <button type="submit" class="btn btn-submit">Submit</button>
+            <button type="button"
+                    class="btn btn-submit"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editNilaiModal">
+                Edit
+            </button>
+
+            <button type="submit" class="btn btn-submit">
+                Submit
+            </button>
         </div>
     </form>
 
 </div>
+
+<!-- MODAL -->
+<div class="modal fade" id="editNilaiModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Edit Data Dosen</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-muted">
+                    Silakan edit nilai langsung di tabel, lalu klik <b>Submit</b>.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
