@@ -74,3 +74,20 @@ h2{
     font-size: 14px;
     color: #0a2a66;
 }
+
+.px-4.mt-4 {
+    margin-bottom: 30px; 
+}
+
+.link-perwalian {
+    color: #0a2a66;
+    text-decoration: underline;
+    display: inline-flex;
+    font-size: 17px;
+}
+
+.link-perwalian .icon {
+    width: 17px;
+    height: 17px;
+    margin-right: 3px; 
+}
