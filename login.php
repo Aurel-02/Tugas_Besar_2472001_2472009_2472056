@@ -5,6 +5,7 @@
   <title>Login</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
@@ -83,9 +84,11 @@
     <div class="row h-100">
 
         <div class="col-md-6 left-panel d-flex align-items-center justify-content-center">
-            <img src="img/Logo_Maranatha.png" 
-                alt="Universitas Kristen Maranatha"
-                class="logo-maranatha">
+            <a href="index.php" class="logo-link">
+                <img src="img/Logo_Maranatha.png" 
+                    alt="Universitas Kristen Maranatha"
+                    class="logo-maranatha">
+            </a>
         </div>
 
         <div class="col-md-6 d-flex justify-content-center align-items-center">

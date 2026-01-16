@@ -76,7 +76,10 @@ h5 {
 }
 
 .role-icon.admin img {
+    width: 130%;
+    height: 130%;
     object-position: center;
+    transform: translateY(8px);
 }
 
 .role-btn {
