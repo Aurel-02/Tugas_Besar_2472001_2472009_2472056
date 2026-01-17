@@ -104,9 +104,9 @@ while ($row = $result->fetch_assoc()) {
                 </div>
                 <div class="col-auto">
                     <select class="form-select form-select-sm">
-                        <option value="1">Perkuliahan</option>
-                        <option value="2">UTS</option>
-                        <option value="3">UAS</option>
+                        <option value="jadwal_perkuliahan.php">Perkuliahan</option>
+                        <option value="ujian.php?jenis_ujian=UTS">UTS</option>
+                        <option value="ujian.php?jenis_ujian=UAS">UAS</option>
                     </select>
                 </div>
             </div>

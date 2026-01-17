@@ -98,12 +98,12 @@
 }
 
 .logout-icon {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     background: url("../img/logout_icon.png") no-repeat center;
     background-size: contain;
     flex-shrink: 0;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .sidebar-menu .nav-link {

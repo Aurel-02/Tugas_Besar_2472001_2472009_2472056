@@ -75,76 +75,78 @@ $result = $stmt->get_result();
             <h2 class="mb-0 text-white">DKBS</h2>
         </div>
 
-        <div class="px-4 mt-4">
-            <form method="GET" class="d-flex justify-content-between align-items-center mb-3">
-                <label class="mb-0">Semester Perkuliahan</label>
+        <div class="p-3 ps-4 pe-4">
+            <div class="px-4 mt-4">
+                <form method="GET" class="d-flex justify-content-between align-items-center mb-3">
+                    <label class="mb-0 fw-bold" style="font-size: 20px;">Semester Perkuliahan</label>
 
-                <select name="semester"
-                        class="form-select form-select-sm w-auto ms-auto"
-                        onchange="this.form.submit()">
-                    <?php for ($i = 1; $i <= $semesterMax; $i++): ?>
-                        <option value="<?= $i ?>" <?= ($semesterAktif == $i) ? 'selected' : '' ?>>
-                            <?= $i ?>
-                        </option>
-                    <?php endfor; ?>
-                </select>
-            </form>
-            
-            <div class="card dkbs-card">
-                <div class="card-body">
-                    <?php
-                    $total_sks = 0;
+                    <select name="semester"
+                            class="form-select form-select-sm w-auto ms-auto"
+                            onchange="this.form.submit()">
+                        <?php for ($i = 1; $i <= $semesterMax; $i++): ?>
+                            <option value="<?= $i ?>" <?= ($semesterAktif == $i) ? 'selected' : '' ?>>
+                                <?= $i ?>
+                            </option>
+                        <?php endfor; ?>
+                    </select>
+                </form>
+                
+                <div class="card dkbs-card">
+                    <div class="card-body">
+                        <?php
+                        $total_sks = 0;
 
-                    while ($row = $result->fetch_assoc()):
-                        $jenis = '';
-                        if (str_ends_with($row['id_mk'], 'T')) {
-                            $jenis = 'Teori';
-                        } elseif (str_ends_with($row['id_mk'], 'P')) {
-                            $jenis = 'Praktikum';
-                        }
+                        while ($row = $result->fetch_assoc()):
+                            $jenis = '';
+                            if (str_ends_with($row['id_mk'], 'T')) {
+                                $jenis = 'Teori';
+                            } elseif (str_ends_with($row['id_mk'], 'P')) {
+                                $jenis = 'Praktikum';
+                            }
 
-                        $queryDosen = "
-                            SELECT dos.nama_dosen
-                            FROM tbperwalian p
-                            JOIN tbdosen dos ON p.nip = dos.nip
-                            WHERE p.id_perwalian = (SELECT id_perwalian FROM tbdkbs WHERE id_mk = ? AND nrp = ? LIMIT 1)
-                        ";
-                        $stmtDosen = $conn->prepare($queryDosen);
-                        $stmtDosen->bind_param("ss", $row['id_mk'], $nrp);
-                        $stmtDosen->execute();
-                        $resultDosen = $stmtDosen->get_result();
-                        $dosen = $resultDosen->fetch_assoc();
+                            $queryDosen = "
+                                SELECT dos.nama_dosen
+                                FROM tbperwalian p
+                                JOIN tbdosen dos ON p.nip = dos.nip
+                                WHERE p.id_perwalian = (SELECT id_perwalian FROM tbdkbs WHERE id_mk = ? AND nrp = ? LIMIT 1)
+                            ";
+                            $stmtDosen = $conn->prepare($queryDosen);
+                            $stmtDosen->bind_param("ss", $row['id_mk'], $nrp);
+                            $stmtDosen->execute();
+                            $resultDosen = $stmtDosen->get_result();
+                            $dosen = $resultDosen->fetch_assoc();
 
-                        $total_sks += $row['sks'];
-                    ?>
-                    <div class="matkul-item mb-3">
-                        <div class="d-flex justify-content-between">
-                            <strong><?= $row['id_mk'] ?> - <?= $row['nama_mk'] ?></strong>
-                            <span><?= substr($row['jam_mulai'], 0, 8) ?> - <?= substr($row['jam_selesai'], 0, 8) ?></span>
+                            $total_sks += $row['sks'];
+                        ?>
+                        <div class="matkul-item mb-3">
+                            <div class="d-flex justify-content-between">
+                                <strong><?= $row['id_mk'] ?> - <?= $row['nama_mk'] ?></strong>
+                                <span><?= substr($row['jam_mulai'], 0, 8) ?> - <?= substr($row['jam_selesai'], 0, 8) ?></span>
+                            </div>
+                            <div class="text-muted"><?= $jenis ?></div>
+                            <div>
+                                <small class="text-muted">
+                                    Kelas <?= $row['kelas'] ?> | Ruang <?= $row['ruang'] ?>
+                                </small>
+                                <div class="text-muted"><?= $dosen['nama_dosen'] ?></div>
+                                <div><?= $row['sks'] ?> SKS</div>
+                            </div>
                         </div>
-                        <div class="text-muted"><?= $jenis ?></div>
-                        <div>
-                            <small class="text-muted">
-                                Kelas <?= $row['kelas'] ?> | Ruang <?= $row['ruang'] ?>
-                            </small>
-                            <div class="text-muted"><?= $dosen['nama_dosen'] ?></div>
-                            <div><?= $row['sks'] ?> SKS</div>
-                        </div>
+
+                        <hr style="border: 1px solid ;">
+
+                        <?php endwhile; ?>
                     </div>
-
-                    <hr style="border: 1px solid ;">
-
-                    <?php endwhile; ?>
+                    <div class="card-footer">
+                        <strong>Total SKS: <?= $total_sks ?> SKS</strong> 
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <strong>Total SKS: <?= $total_sks ?> SKS</strong> 
+                <div class="text-end mt-4">
+                    <a href="../mahasiswa/pilih_matkul.php" class="link-perwalian">
+                        <img src="../img/edit_icon.png" alt="Edit Icon" class="icon" />
+                        Lakukan Perwalian
+                    </a>
                 </div>
-            </div>
-            <div class="text-end mt-4">
-                <a href="../mahasiswa/pilih_matkul.php" class="link-perwalian">
-                    <img src="../img/edit_icon.png" alt="Edit Icon" class="icon" />
-                    Lakukan Perwalian
-                </a>
             </div>
         </div>
     </div>

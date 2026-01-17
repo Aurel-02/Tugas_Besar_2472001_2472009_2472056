@@ -1,39 +1,30 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Cek apakah user sudah login dan memiliki role yang benar
 if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
     header("Location: /login.php");
     exit;
 }
 
-// Tentukan nilai maksimal semester (misalnya 8 semester)
 $semesterMax = 8; 
 
-// Tentukan semester berdasarkan GET parameter, default ke 1 jika tidak ada
 $semester = isset($_GET['semester']) ? $_GET['semester'] : 1;
 
-include __DIR__ . '/../koneksi.php'; // Pastikan koneksi ke database sudah benar
+include __DIR__ . '/../koneksi.php';
 
 $nrp = $_SESSION['user_id'];
 
-// Query untuk mengecek semester yang memiliki data nilai
 $querySemester = "
-    SELECT DISTINCT pw.semester
-    FROM tbperwalian pw
-    JOIN tbmatakuliah mk ON mk.id_mk = pw.id_mk
-    JOIN tbnilai n ON n.id_mk = mk.id_mk
+    SELECT DISTINCT m.semester
+    FROM tbmatakuliah m
+    JOIN tbnilai n ON n.id_mk = m.id_mk
     JOIN tbtranskrip t ON t.id_transkrip = n.id_transkrip
     WHERE t.nrp = ?
 ";
 
 $stmt = $conn->prepare($querySemester);
 
-// Periksa apakah query berhasil dipersiapkan
 if (!$stmt) {
-    die("Error preparing query: " . $conn->error); // Menampilkan pesan error jika gagal
+    die("Error preparing query: " . $conn->error);
 }
 
 $stmt->bind_param("s", $nrp);
@@ -45,10 +36,8 @@ while ($row = $result->fetch_assoc()) {
     $availableSemesters[] = $row['semester'];
 }
 
-// Tentukan semester berdasarkan GET parameter, default ke 1 jika tidak ada parameter
 $semester = isset($_GET['semester']) && in_array($_GET['semester'], $availableSemesters) ? $_GET['semester'] : (count($availableSemesters) > 0 ? $availableSemesters[0] : 1);
 
-// Query untuk mengambil data nilai berdasarkan semester dan persentase
 $query = "
     SELECT 
         n.id_mk, 
@@ -58,28 +47,26 @@ $query = "
         n.nilai_uas,
         n.nilai_kat,
         n.nilai_mutu,
-        n.persentase_nilai_kat,
-        n.persentase_nilai_uts,
-        n.persentase_nilai_uas,
-        IFNULL(pw.ip_semester, '-') AS ip_semester,
-        pw.semester
+        n.presentase_nilai_kat,
+        n.presentase_nilai_uts,
+        n.presentase_nilai_uas,
+        m.semester,
+        t.ip_semester
     FROM tbnilai n
     JOIN tbmatakuliah m ON n.id_mk = m.id_mk
     JOIN tbtranskrip t ON n.id_transkrip = t.id_transkrip
-    JOIN tbperwalian pw ON m.id_mk = pw.id_mk
-    WHERE t.nrp = ? AND pw.semester = ? 
+    WHERE t.nrp = ? AND m.semester = ? 
     ORDER BY m.nama_mk
 ";
 
 $stmt = $conn->prepare($query);
 
-// Cek apakah query berhasil disiapkan
 if ($stmt) {
-    $stmt->bind_param("si", $nrp, $semester); // Mengikat parameter
-    $stmt->execute(); // Menjalankan query
-    $result = $stmt->get_result(); // Mendapatkan hasil
+    $stmt->bind_param("si", $nrp, $semester);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Menyimpan hasil dalam array untuk pengelompokan per semester
+
     $nilaiPerSemester = [];
     while ($row = $result->fetch_assoc()) {
         $nilaiPerSemester[$row['semester']][] = $row;
@@ -132,7 +119,7 @@ if ($stmt) {
                     </select>
                 </div>
                 <div class="fw-bold">
-                    IPS : <span class="text-primary">4.00</span>
+                    <span>IPS : <?= isset($row['ip_semester']) && $row['ip_semester'] !== null ? $row['ip_semester'] : '-' ?></span>
                 </div>
             </div>
 
@@ -148,11 +135,10 @@ if ($stmt) {
                                 <span class="nilai-huruf">Nilai Huruf : <?= $row['nilai_mutu'] ?: '-' ?></span>
                             </div>
                             <div class="nilai-detail">
-                                <div>KAT : <?= htmlspecialchars($row['nilai_kat']) ?> (<?= $row['persentase_nilai_kat'] ?: '-' ?>%)</div>
-                                <div>UTS : <?= htmlspecialchars($row['nilai_uts']) ?> (<?= $row['persentase_nilai_uts'] ?: '-' ?>%)</div>
-                                <div>UAS : <?= htmlspecialchars($row['nilai_uas']) ?> (<?= $row['persentase_nilai_uas'] ?: '-' ?>%)</div>
+                                <div>KAT : <?= htmlspecialchars($row['nilai_kat']) ?> (<?= rtrim(rtrim($row['presentase_nilai_kat'], 0), '.') ?: '-' ?>%)</div>
+                                <div>UTS : <?= htmlspecialchars($row['nilai_uts']) ?> (<?= rtrim(rtrim($row['presentase_nilai_uts'], 0), '.') ?: '-' ?>%)</div>
+                                <div>UAS : <?= htmlspecialchars($row['nilai_uas']) ?> (<?= rtrim(rtrim($row['presentase_nilai_uas'], 0), '.') ?: '-' ?>%)</div>
                                 <div><strong>Nilai Akhir : <?= htmlspecialchars($row['nilai_akhir']) ?: '-' ?></strong></div>
-                                <div>IPS : <?= $row['ip_semester'] ?></div>
                             </div>
                         </div>
 
