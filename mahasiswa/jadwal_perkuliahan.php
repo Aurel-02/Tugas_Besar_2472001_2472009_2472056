@@ -103,10 +103,10 @@ while ($row = $result->fetch_assoc()) {
                     <h3 class="mb-0 text-white">Jadwal Perkuliahan</h3>
                 </div>
                 <div class="col-auto">
-                    <select class="form-select form-select-sm">
+                    <select class="form-select form-select-sm" onchange="window.location.href = this.value;">
                         <option value="jadwal_perkuliahan.php">Perkuliahan</option>
-                        <option value="ujian.php?jenis_ujian=UTS">UTS</option>
-                        <option value="ujian.php?jenis_ujian=UAS">UAS</option>
+                        <option value="uts.php">UTS</option>
+                        <option value="uas.php">UAS</option>
                     </select>
                 </div>
             </div>
