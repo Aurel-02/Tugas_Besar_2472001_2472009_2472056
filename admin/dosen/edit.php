@@ -95,6 +95,51 @@ body{ background:#f4f6fb; }
             </div>
 
             <div class="mb-3">
+                <label class="form-label">Tempat Lahir</label>
+                <input type="text" name="tempat_lahir"
+                       class="form-control"
+                       value="<?= $row['tempat_lahir']; ?>"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tanggal Lahir</label>
+                <input type="date" name="tgl_lahir"
+                       class="form-control"
+                       value="<?= $row['tgl_lahir']; ?>"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Jenis Kelamin</label>
+                <select name="jenis_kelamin" class="form-select" required>
+                    <option value="L" <?= ($row['jenis_kelamin'] == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
+                    <option value="P" <?= ($row['jenis_kelamin'] == 'P') ? 'selected' : ''; ?>>Perempuan</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email"
+                       class="form-control"
+                       value="<?= $row['email']; ?>"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">No Telepon</label>
+                <input type="text" name="no_telp"
+                       class="form-control"
+                       value="<?= $row['no_telp']; ?>"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Alamat</label>
+                <textarea name="alamat" class="form-control" rows="3" required><?= $row['alamat']; ?></textarea>
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label">Program Studi</label>
                 <select name="id_prodi" class="form-select" required>
                     <?php while($p = mysqli_fetch_assoc($prodi)) : ?>
