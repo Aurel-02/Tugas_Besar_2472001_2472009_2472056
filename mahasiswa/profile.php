@@ -32,9 +32,9 @@ $sql = "
         m.status_mhs,
         m.alamat_mahasiswa,
         m.nama_wali,
-        m.alamat_wali,
-        m.no_telp_wali,
         m.email_wali,
+        m.no_telp_wali,
+        m.alamat_wali,
         p.nama_prodi, 
         d.nama_dosen, 
         d.email AS email_dosen, 
@@ -242,10 +242,9 @@ $conn->close();
         <div class="modal-body">
             <form action="update_data.php" method="POST">
 
-                <!-- NRP tidak dapat diubah, hanya ditampilkan -->
+
                 <input type="hidden" name="nrp" value="<?= $nrp ?>">
 
-                <!-- Nama, Fakultas, Prodi, dan Status tidak bisa diubah -->
                 <div class="mb-3">
                     <label>Nama Lengkap Mahasiswa</label>
                     <input type="text" class="form-control" value="<?= $nama_mahasiswa ?>" disabled>
@@ -268,7 +267,6 @@ $conn->close();
 
                 <hr>
 
-                <!-- Hanya data yang dapat diubah -->
                 <div class="mb-3">
                     <label>Tanggal Lahir</label>
                     <input type="date" class="form-control" name="tgl_lahir" value="<?= $tgl_lahir ?>">
@@ -302,7 +300,6 @@ $conn->close();
 
                 <hr>
 
-                <!-- Data wali -->
                 <div class="mb-3">
                     <label>Nama Wali</label>
                     <input type="text" class="form-control" name="nama_wali" value="<?= $nama_wali ?? '' ?>">

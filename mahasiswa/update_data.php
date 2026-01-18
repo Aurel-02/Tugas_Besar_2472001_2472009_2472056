@@ -40,9 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $no_telp_mahasiswa, 
             $alamat_mahasiswa, 
             $nama_wali, 
-            $email_wali, 
+            $alamat_wali, 
             $no_telp_wali, 
-            $alamat_wali
+            $email_wali
         );
 
         if ($stmt->execute()) {

@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role_id  = $_POST['role_id'];
 
     if ($role_id == '3') {
-        $sql = "CALL sp_InsertUserMahasiswa(?, ?, ?)";
+        $sql = "CALL sp_InsertMahasiswa(?, ?, ?)";
     } elseif ($role_id == '2') {
         $sql = "CALL sp_InsertDosen(?, ?, ?)";
     } else {

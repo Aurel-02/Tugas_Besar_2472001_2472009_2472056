@@ -5,10 +5,7 @@
 }
 
 .main-content {
-    margin-left: 120px; /* Space for sidebar */
-    padding: 20px;
     background-color: #f4f6f9;
-    flex-grow: 1;
 }
 
 /* Header */
