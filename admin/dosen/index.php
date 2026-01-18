@@ -1,14 +1,11 @@
 <?php
 include "../layout/header.php";
 include "../layout/sidebar.php";
-
 include "../../koneksi.php";
 
-// Query data dosen + prodi
+// ambil data dari VIEW
 $data = mysqli_query($conn, "
-    SELECT d.*, p.nama_prodi
-    FROM tbdosen d
-    JOIN tbprodi p ON d.id_prodi = p.id_prodi
+    SELECT * FROM view_dosen
 ");
 ?>
 
@@ -22,7 +19,6 @@ $data = mysqli_query($conn, "
         </div>
     </div>
 
-    <!-- Content -->
     <div class="content">
 
         <h4 class="mb-3">Data Dosen</h4>
@@ -40,35 +36,47 @@ $data = mysqli_query($conn, "
                             <th width="120">NIP</th>
                             <th>Nama Dosen</th>
                             <th>Program Studi</th>
-                            <th width="180">Aksi</th>
+                            <th width="220">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         <?php while ($row = mysqli_fetch_assoc($data)) : ?>
                         <tr>
                             <td><?= $row['nip']; ?></td>
                             <td><?= $row['nama_dosen']; ?></td>
                             <td><?= $row['nama_prodi']; ?></td>
                             <td>
-                                <a href="edit.php?id=<?= $row['nip']; ?>" 
+
+                                <!-- DETAIL -->
+                                <a href="detail.php?id=<?= $row['nip']; ?>"
+                                   class="btn btn-info btn-sm">
+                                   Detail
+                                </a>
+
+                                <!-- EDIT -->
+                                <a href="edit.php?id=<?= $row['nip']; ?>"
                                    class="btn btn-warning btn-sm">
                                    Edit
                                 </a>
 
-                                <a href="hapus.php?id=<?= $row['nip']; ?>" 
+                                <!-- HAPUS -->
+                                <a href="hapus.php?id=<?= $row['nip']; ?>"
                                    class="btn btn-danger btn-sm"
                                    onclick="return confirm('Yakin ingin menghapus?')">
                                    Hapus
                                 </a>
+
                             </td>
                         </tr>
                         <?php endwhile; ?>
+
                     </tbody>
                 </table>
-
+                            
             </div>
         </div>
 
-    </div> <!-- content -->
+    </div>
 
 <?php include "../layout/footer.php"; ?>
