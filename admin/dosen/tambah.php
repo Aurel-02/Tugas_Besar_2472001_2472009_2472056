@@ -44,6 +44,11 @@ body{
 </head>
 <body>
 
+<?php
+include "../../koneksi.php";
+$prodi = mysqli_query($conn, "SELECT * FROM tbprodi ORDER BY nama_prodi ASC");
+?>
+
 <div class="modal-box">
     
     <div class="modal-header d-flex justify-content-between align-items-center">
@@ -62,6 +67,18 @@ body{
             <div class="mb-3">
                 <label class="form-label">Nama Dosen</label>
                 <input type="text" name="nama" class="form-control" placeholder="Masukkan nama dosen" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Program Studi</label>
+                <select name="id_prodi" class="form-select" required>
+                    <option value="">-- Pilih Program Studi --</option>
+                    <?php while($row = mysqli_fetch_assoc($prodi)) : ?>
+                        <option value="<?= $row['id_prodi']; ?>">
+                            <?= $row['id_prodi']; ?> - <?= $row['nama_prodi']; ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
             </div>
 
         </div>

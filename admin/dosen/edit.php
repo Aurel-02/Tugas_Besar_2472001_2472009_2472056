@@ -1,8 +1,27 @@
 <?php
 include "../../koneksi.php";
+
+if (!isset($_GET['id'])) {
+    header("Location: index.php");
+    exit;
+}
+
 $id = $_GET['id'];
-$data = mysqli_query($conn,"SELECT * FROM tbdosen WHERE nip='$id'");
-$row = mysqli_fetch_assoc($data);
+
+$stmt = $conn->prepare("CALL sp_get_dosen_by_nip(?)");
+$stmt->bind_param("s", $id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+$stmt->close();
+$conn->next_result();
+
+if (!$row) {
+    echo "Data dosen tidak ditemukan.";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,36 +68,47 @@ body{
 }
 </style>
 </head>
+
 <body>
 
 <div class="modal-box">
-    
+
     <div class="modal-header d-flex justify-content-between align-items-center">
         <span>Edit Dosen</span>
         <a href="index.php" class="text-dark text-decoration-none fs-5">&times;</a>
     </div>
 
     <form method="POST" action="update.php">
+
         <div class="modal-body">
 
-            <input type="hidden" name="nip" value="<?= $row['nip'] ?>">
+            <input type="hidden" name="nip" value="<?= $row['nip']; ?>">
 
             <div class="mb-3">
                 <label class="form-label">NIP</label>
-                <input type="text" class="form-control" value="<?= $row['nip'] ?>" readonly>
+                <input type="text" class="form-control"
+                       value="<?= $row['nip']; ?>" readonly>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Nama Dosen</label>
-                <input type="text" name="nama" class="form-control" value="<?= $row['nama_dosen'] ?>" required>
+                <input type="text" name="nama"
+                       class="form-control"
+                       value="<?= $row['nama_dosen']; ?>"
+                       required>
             </div>
 
         </div>
 
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="index.php" class="btn btn-secondary">Batal</a>
+            <button type="submit" class="btn btn-primary">
+                Simpan
+            </button>
+            <a href="index.php" class="btn btn-secondary">
+                Batal
+            </a>
         </div>
+
     </form>
 
 </div>

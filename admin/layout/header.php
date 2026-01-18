@@ -20,13 +20,11 @@ body {
     background-color: #f4f6f9;
 }
 
-/* Layout */
 .wrapper {
     display: flex;
     min-height: 100vh;
 }
 
-/* Sidebar */
 .sidebar {
     width: 230px;
     background-color: #344eb8;
@@ -54,7 +52,6 @@ body {
     background-color: rgba(255,255,255,0.2);
 }
 
-/* Main */
 .main {
     margin-left: 230px;
     width: calc(100% - 230px);
@@ -62,7 +59,6 @@ body {
     flex-direction: column;
 }
 
-/* Header */
 .topbar {
     height: 60px;
     background-color: #0c2d83;
@@ -86,7 +82,6 @@ body {
     border-radius: 50%;
 }
 
-/* Content */
 .content {
     padding: 20px;
     flex: 1;

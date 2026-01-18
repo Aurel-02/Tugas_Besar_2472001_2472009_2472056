@@ -24,7 +24,6 @@ if (!$data) {
 
 <div class="main">
 
-    <!-- Topbar -->
     <div class="topbar">
         <div class="admin">
             <div class="avatar"></div>
@@ -32,7 +31,6 @@ if (!$data) {
         </div>
     </div>
 
-    <!-- Content -->
     <div class="content">
 
         <h4 class="mb-4">Detail Dosen</h4>

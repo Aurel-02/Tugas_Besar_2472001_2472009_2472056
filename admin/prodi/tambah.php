@@ -1,3 +1,8 @@
+<?php
+include "../../koneksi.php";
+$fakultas = mysqli_query($conn,"SELECT * FROM tbfakultas ORDER BY nama_fakultas");
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,7 +13,6 @@
 
 <style>
 body{ background:#f4f6fb; }
-
 .modal-box{
     max-width:600px;
     margin:80px auto;
@@ -36,32 +40,44 @@ body{ background:#f4f6fb; }
 
 <div class="modal-box">
 
-    <div class="modal-header d-flex justify-content-between align-items-center">
-        <span>Tambah Program Studi</span>
-        <a href="index.php" class="text-dark text-decoration-none fs-5">&times;</a>
+<div class="modal-header d-flex justify-content-between align-items-center">
+    <span>Tambah Program Studi</span>
+    <a href="index.php" class="text-dark fs-5 text-decoration-none">&times;</a>
+</div>
+
+<form method="POST" action="simpan.php">
+<div class="modal-body">
+
+    <div class="mb-3">
+        <label class="form-label">ID Prodi</label>
+        <input type="text" name="id_prodi" class="form-control" required>
     </div>
 
-    <form method="POST" action="simpan.php">
-        <div class="modal-body">
+    <div class="mb-3">
+        <label class="form-label">Nama Program Studi</label>
+        <input type="text" name="nama_prodi" class="form-control" required>
+    </div>
 
-            <div class="mb-3">
-                <label class="form-label">ID Prodi</label>
-                <input type="text" name="id_prodi" class="form-control" placeholder="Masukkan ID Prodi" required>
-            </div>
+    <div class="mb-3">
+        <label class="form-label">Fakultas</label>
+        <select name="id_fakultas" class="form-select" required>
+            <option value="">-- Pilih Fakultas --</option>
+            <?php while($f = mysqli_fetch_assoc($fakultas)) : ?>
+                <option value="<?= $f['id_fakultas'] ?>">
+                    <?= $f['nama_fakultas'] ?>
+                </option>
+            <?php endwhile; ?>
+        </select>
+    </div>
 
-            <div class="mb-3">
-                <label class="form-label">Nama Prodi</label>
-                <input type="text" name="nama_prodi" class="form-control" placeholder="Masukkan nama prodi" required>
-            </div>
+</div>
 
-        </div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="index.php" class="btn btn-secondary">Batal</a>
+</div>
 
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="index.php" class="btn btn-secondary">Batal</a>
-        </div>
-    </form>
-
+</form>
 </div>
 
 </body>

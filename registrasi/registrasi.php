@@ -19,23 +19,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $role_id  = $_POST['role_id'];
 
+    $nrp = '';
+
     if ($role_id == '3') {
-        $sql = "CALL sp_InsertMahasiswa(?, ?, ?)";
+
+        $sql = "CALL sp_InsertMahasiswa(?, ?, ?, @nrp)";
     } elseif ($role_id == '2') {
+
         $sql = "CALL sp_InsertDosen(?, ?, ?)";
     } else {
         die("Role tidak valid");
     }
 
+
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sss", $nama, $id_prodi, $password);
+    if ($role_id == '3') {
+
+        mysqli_stmt_bind_param($stmt, "sss", $nama, $id_prodi, $password);
+    } elseif ($role_id == '2') {
+
+        mysqli_stmt_bind_param($stmt, "sss", $nama, $id_prodi, $password);
+    }
+
 
     if (!mysqli_stmt_execute($stmt)) {
         die("Error: " . mysqli_error($conn));
     }
 
+
+    $result = mysqli_query($conn, "SELECT @nrp AS nrp");
+    $row = mysqli_fetch_assoc($result);
+    $nrp = $row['nrp'];
+
     echo "<script>
-        alert('Registrasi berhasil');
+        alert('Registrasi berhasil. NRP Anda: " . $nrp . "');
         window.location='../index.php';
     </script>";
 }

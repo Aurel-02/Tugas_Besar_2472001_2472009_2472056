@@ -4,7 +4,6 @@ include "../layout/sidebar.php";
 
 include "../../koneksi.php";
 
-// Query data mata kuliah + prodi
 $data = mysqli_query($conn, "
     SELECT m.*, p.nama_prodi
     FROM tbmatakuliah m
@@ -14,7 +13,6 @@ $data = mysqli_query($conn, "
 
 <div class="main">
 
-    <!-- Topbar -->
     <div class="topbar">
         <div class="admin">
             <div class="avatar"></div>
@@ -22,7 +20,6 @@ $data = mysqli_query($conn, "
         </div>
     </div>
 
-    <!-- Content -->
     <div class="content">
 
         <h4 class="mb-3">Data Mata Kuliah</h4>
@@ -71,6 +68,6 @@ $data = mysqli_query($conn, "
             </div>
         </div>
 
-    </div> <!-- content -->
+    </div>
 
 <?php include "../layout/footer.php"; ?>
