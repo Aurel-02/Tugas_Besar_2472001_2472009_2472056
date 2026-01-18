@@ -1,16 +1,19 @@
 <?php
 include "../../koneksi.php";
 
-$hari    = $_POST['hari'];
-$mulai   = $_POST['jam_mulai'];
-$selesai = $_POST['jam_selesai'];
-$mk      = $_POST['nama_mk'];
-$nip     = $_POST['nip'];
-$ruang   = $_POST['ruang'];
+$hari        = $_POST['hari'];
+$id_mk       = $_POST['id_mk'];
+$nip         = $_POST['nip'];
+$jam_mulai   = $_POST['jam_mulai'];
+$jam_selesai = $_POST['jam_selesai'];
+$ruang       = $_POST['ruang'];
 
-mysqli_query($conn,"
-    INSERT INTO tbdkbs (hari, jam_mulai, jam_selesai, nama_mk, nip, ruang)
-    VALUES ('$hari','$mulai','$selesai','$mk','$nip','$ruang')
+mysqli_query($conn, "
+    INSERT INTO tbperwalian
+    (hari, id_mk, nip, jam_mulai, jam_selesai, ruang)
+    VALUES
+    ('$hari', '$id_mk', '$nip', '$jam_mulai', '$jam_selesai', '$ruang')
 ");
 
 header("Location: index.php");
+exit;

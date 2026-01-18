@@ -1,20 +1,30 @@
 <?php
 include "../../koneksi.php";
+
 $id = $_GET['id'];
 
+/* ===============================
+   DATA PERWALIAN
+================================ */
 $data = mysqli_fetch_assoc(
-    mysqli_query($conn,"
+    mysqli_query($conn, "
         SELECT 
-            dkbs.*, 
-            d.nama_dosen 
-        FROM tbdkbs dkbs
-        JOIN tbdosen d ON dkbs.nip = d.nip
-        WHERE dkbs.id_dkbs = '$id'
+            p.*,
+            m.nama_mk,
+            d.nama_dosen
+        FROM tbperwalian p
+        JOIN tbmatakuliah m ON p.id_mk = m.id_mk
+        JOIN tbdosen d ON p.nip = d.nip
+        WHERE p.id_perwalian = '$id'
     ")
 );
 
+/* ===============================
+   DATA MASTER
+================================ */
+$matakuliah = mysqli_query($conn, "SELECT * FROM tbmatakuliah ORDER BY nama_mk ASC");
+$dosen      = mysqli_query($conn, "SELECT * FROM tbdosen ORDER BY nama_dosen ASC");
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">
@@ -50,58 +60,105 @@ body{ background:#f4f6fb; }
 .form-label{ font-weight:500; }
 </style>
 </head>
+
 <body>
 
 <div class="modal-box">
+
     <div class="modal-header d-flex justify-content-between align-items-center">
-        <span>Edit Jadwal</span>
+        <span>Edit Jadwal Perwalian</span>
         <a href="index.php" class="text-dark text-decoration-none fs-5">&times;</a>
     </div>
 
     <form method="POST" action="update.php">
+
         <div class="modal-body">
 
-            <input type="hidden" name="id_dkbs" value="<?= $data['id_dkbs'] ?>">
+            <input type="hidden" name="id_perwalian" value="<?= $data['id_perwalian']; ?>">
+
+            <!-- HARI -->
+            <div class="mb-3">
+                <label class="form-label">Hari</label>
+                <select name="hari" class="form-select" required>
+                    <?php
+                    $hari = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+                    foreach ($hari as $h) {
+                        $selected = ($data['hari'] == $h) ? "selected" : "";
+                        echo "<option value='$h' $selected>$h</option>";
+                    }
+                    ?>
+                </select>
+            </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Hari</label>
-                    <input type="text" name="hari" class="form-control" value="<?= $data['hari'] ?>" required>
-                </div>
-
-                <div class="col-md-3 mb-3">
                     <label class="form-label">Jam Mulai</label>
-                    <input type="time" name="jam_mulai" class="form-control" value="<?= $data['jam_mulai'] ?>" required>
+                    <input type="time"
+                           name="jam_mulai"
+                           class="form-control"
+                           value="<?= $data['jam_mulai']; ?>"
+                           required>
                 </div>
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-6 mb-3">
                     <label class="form-label">Jam Selesai</label>
-                    <input type="time" name="jam_selesai" class="form-control" value="<?= $data['jam_selesai'] ?>" required>
+                    <input type="time"
+                           name="jam_selesai"
+                           class="form-control"
+                           value="<?= $data['jam_selesai']; ?>"
+                           required>
                 </div>
             </div>
 
+            <!-- MATA KULIAH -->
             <div class="mb-3">
                 <label class="form-label">Mata Kuliah</label>
-                <input type="text" name="nama_mk" class="form-control" value="<?= $data['nama_mk'] ?>" required>
+                <select name="id_mk" class="form-select" required>
+                    <?php while ($mk = mysqli_fetch_assoc($matakuliah)) : ?>
+                        <option value="<?= $mk['id_mk']; ?>"
+                            <?= ($data['id_mk'] == $mk['id_mk']) ? "selected" : ""; ?>>
+                            <?= $mk['id_mk']; ?> - <?= $mk['nama_mk']; ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
             </div>
 
+            <!-- DOSEN -->
             <div class="mb-3">
                 <label class="form-label">Dosen</label>
-                <input type="text" name="nama_dosen" class="form-control" value="<?= $data['nama_dosen'] ?>" required>
+                <select name="nip" class="form-select" required>
+                    <?php while ($d = mysqli_fetch_assoc($dosen)) : ?>
+                        <option value="<?= $d['nip']; ?>"
+                            <?= ($data['nip'] == $d['nip']) ? "selected" : ""; ?>>
+                            <?= $d['nip']; ?> - <?= $d['nama_dosen']; ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
             </div>
 
+            <!-- RUANG -->
             <div class="mb-3">
                 <label class="form-label">Ruang</label>
-                <input type="text" name="ruang" class="form-control" value="<?= $data['ruang'] ?>" required>
+                <input type="text"
+                       name="ruang"
+                       class="form-control"
+                       value="<?= $data['ruang']; ?>"
+                       required>
             </div>
 
         </div>
 
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="index.php" class="btn btn-secondary">Batal</a>
+            <button type="submit" class="btn btn-primary">
+                Simpan
+            </button>
+            <a href="index.php" class="btn btn-secondary">
+                Batal
+            </a>
         </div>
+
     </form>
+
 </div>
 
 </body>

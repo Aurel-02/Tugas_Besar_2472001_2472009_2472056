@@ -62,10 +62,11 @@ $data = mysqli_query($conn, "
 
                                 <!-- HAPUS -->
                                 <a href="hapus.php?id=<?= $row['nip']; ?>"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Yakin ingin menghapus?')">
-                                   Hapus
+                                    onclick="return confirm('Yakin ingin menghapus data dosen ini?')"
+                                    class="btn btn-danger btn-sm">
+                                    Hapus
                                 </a>
+
 
                             </td>
                         </tr>
