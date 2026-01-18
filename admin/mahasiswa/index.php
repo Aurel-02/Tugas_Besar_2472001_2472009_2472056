@@ -1,14 +1,11 @@
 <?php
 include "../layout/header.php";
 include "../layout/sidebar.php";
-
 include "../../koneksi.php";
 
-// Query data mahasiswa + prodi
+// Query data mahasiswa dari VIEW
 $data = mysqli_query($conn, "
-    SELECT m.*, p.nama_prodi
-    FROM tbmahasiswa m
-    JOIN tbprodi p ON m.id_prodi = p.id_prodi
+    SELECT * FROM view_mahasiswa
 ");
 ?>
 
@@ -41,7 +38,7 @@ $data = mysqli_query($conn, "
                             <th>Nama Mahasiswa</th>
                             <th>Program Studi</th>
                             <th width="120">Angkatan</th>
-                            <th width="180">Aksi</th>
+                            <th width="220">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,16 +49,26 @@ $data = mysqli_query($conn, "
                             <td><?= $row['nama_prodi']; ?></td>
                             <td><?= $row['angkatan']; ?></td>
                             <td>
+
+                                <!-- tombol detail -->
+                                <a href="detail.php?id=<?= $row['nrp']; ?>" 
+                                   class="btn btn-info btn-sm">
+                                   Detail
+                                </a>
+
+                                <!-- tombol edit -->
                                 <a href="edit.php?id=<?= $row['nrp']; ?>" 
                                    class="btn btn-warning btn-sm">
                                    Edit
                                 </a>
 
+                                <!-- tombol hapus -->
                                 <a href="hapus.php?id=<?= $row['nrp']; ?>" 
                                    class="btn btn-danger btn-sm"
                                    onclick="return confirm('Yakin ingin menghapus?')">
                                    Hapus
                                 </a>
+
                             </td>
                         </tr>
                         <?php endwhile; ?>
@@ -71,6 +78,6 @@ $data = mysqli_query($conn, "
             </div>
         </div>
 
-    </div> <!-- content -->
+    </div>
 
 <?php include "../layout/footer.php"; ?>
