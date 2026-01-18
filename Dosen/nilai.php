@@ -10,9 +10,6 @@ include __DIR__ . "/../koneksi.php";
 
 $nip = $_SESSION['user_id'];
 
-/* =========================
-   HANDLE SUBMIT FORM
-========================= */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $_SESSION['id_mk'] = $_POST['matkul'];
@@ -25,22 +22,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: lembar_penilaian_uts.php");
     } elseif ($_POST['nilai'] === 'UAS') {
         header("Location: lembar_penilaian_uas.php");
+    }elseif ($_POST['nilai'] === 'akhir') {
+        header("Location: nilai_akhir.php");
     }
     exit;
 }
 
-/* =========================
-   Ambil Prodi Dosen
-========================= */
+
 $qDosen = $conn->query("SELECT id_prodi FROM tbdosen WHERE nip='$nip'");
 if (!$qDosen || $qDosen->num_rows == 0) {
     die("Data dosen tidak ditemukan");
 }
 $id_prodi = $qDosen->fetch_assoc()['id_prodi'];
 
-/* =========================
-   Mata Kuliah & Kelas
-========================= */
 $query = "
     SELECT DISTINCT
         pw.semester,
@@ -122,6 +116,9 @@ while ($row = $result->fetch_assoc()) {
 
                 <input type="radio" class="btn-check" name="nilai" id="uas" value="UAS">
                 <label class="btn btn-outline-primary" for="uas">UAS</label>
+
+                <input type="radio" class="btn-check" name="nilai" id="akhir" value="akhir">
+                <label class="btn btn-outline-primary" for="akhir">Nilai Akhir</label>
             </div>
         </div>
 

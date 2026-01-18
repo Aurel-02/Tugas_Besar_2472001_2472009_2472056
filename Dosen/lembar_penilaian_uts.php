@@ -8,31 +8,26 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '2') {
 
 include __DIR__ . "/../koneksi.php";
 
-/* =========================
-   DATA PILIHAN
-========================= */
+/* ================= SESSION ================= */
 $nip   = $_SESSION['user_id'];
 $id_mk = $_SESSION['id_mk'];
 $kelas = $_SESSION['kelas'];
 
-/* =========================
-   DATA DOSEN
-========================= */
+/* ================= DATA DOSEN ================= */
 $dosen = $conn->query("
     SELECT nama_dosen 
     FROM tbdosen 
     WHERE nip = '$nip'
 ")->fetch_assoc();
 
-/* =========================
-   DATA MK + SEMESTER
-========================= */
+/* ================= DATA MK ================= */
 $mk = $conn->query("
     SELECT nama_mk 
     FROM tbmatakuliah 
     WHERE id_mk = '$id_mk'
 ")->fetch_assoc();
 
+/* ================= SEMESTER ================= */
 $semesterRow = $conn->query("
     SELECT semester
     FROM tbperwalian
@@ -44,9 +39,44 @@ $semesterRow = $conn->query("
 
 $semester = $semesterRow['semester'] ?? '-';
 
-/* =========================
-   AMBIL MAHASISWA + NILAI UTS
-========================= */
+/* ================= SIMPAN NILAI UTS ================= */
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nilai'])) {
+
+    $stmtSP = $conn->prepare(
+        "CALL spSimpanNilaiLengkap(?, ?, ?, ?, ?)"
+    );
+
+    foreach ($_POST['nilai'] as $nrp => $nilai) {
+
+        if ($nilai === '') continue;
+
+        // SESUAI FORMAT DATABASE
+        $id_transkrip = '01-' . $nrp;
+        $jenis = 'UTS';
+
+        $stmtSP->bind_param(
+            "sssds",
+            $id_transkrip,
+            $id_mk,
+            $nip,
+            $nilai,
+            $jenis
+        );
+
+        $stmtSP->execute();
+        $conn->next_result(); // 🔥 WAJIB
+    }
+
+    $stmtSP->close();
+
+    echo "<script>
+        alert('Nilai UTS berhasil disimpan');
+        window.location.href = window.location.href;
+    </script>";
+    exit;
+}
+
+/* ================= DATA MAHASISWA ================= */
 $stmt = $conn->prepare("
     SELECT DISTINCT
         m.nrp,
@@ -56,7 +86,7 @@ $stmt = $conn->prepare("
     JOIN tbmahasiswa m ON d.nrp = m.nrp
     JOIN tbperwalian p ON d.id_perwalian = p.id_perwalian
     LEFT JOIN tbnilai n 
-        ON n.id_transkrip = CONCAT('TR', m.nrp)
+        ON n.id_transkrip = CONCAT('01-', m.nrp)
        AND n.id_mk = ?
     WHERE p.nip = ?
       AND p.id_mk = ?
@@ -67,40 +97,6 @@ $stmt = $conn->prepare("
 $stmt->bind_param("ssss", $id_mk, $nip, $id_mk, $kelas);
 $stmt->execute();
 $qMhs = $stmt->get_result();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    foreach ($_POST['nilai'] as $nrp => $nilai) {
-
-        $id_transkrip = 'TR' . $nrp;
-
-        $cek = $conn->query("
-            SELECT 1 FROM tbnilai
-            WHERE id_transkrip = '$id_transkrip'
-              AND id_mk = '$id_mk'
-        ");
-
-        if ($cek->num_rows == 0) {
-            $conn->query("
-                INSERT INTO tbnilai (id_transkrip, id_mk, nilai_uts, nip)
-                VALUES ('$id_transkrip', '$id_mk', '$nilai', '$nip')
-            ");
-        } else {
-            $conn->query("
-                UPDATE tbnilai
-                SET nilai_uts = '$nilai'
-                WHERE id_transkrip = '$id_transkrip'
-                  AND id_mk = '$id_mk'
-            ");
-        }
-    }
-
-echo "<script>
-    alert('Nilai UTS berhasil disimpan');
-    window.location.href = window.location.href;
-</script>";
-exit;
-
-}
 ?>
 
 <!DOCTYPE html>
@@ -133,7 +129,7 @@ exit;
     </div>
 
     <form method="POST">
-        <table>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>NRP</th>
@@ -147,57 +143,32 @@ exit;
                 <tr>
                     <td><?= $m['nrp'] ?></td>
                     <td><?= $m['nama_mahasiswa'] ?></td>
-                    <td>
+                    <td width="150">
                         <input type="number"
+                               class="form-control text-center"
                                name="nilai[<?= $m['nrp'] ?>]"
                                value="<?= htmlspecialchars($m['nilai_uts'] ?? '') ?>"
-                               min="0" max="100" required>
+                               min="0" max="100">
                     </td>
                 </tr>
                 <?php endwhile; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="3" align="center">Tidak ada mahasiswa</td>
+                    <td colspan="3" class="text-center">Tidak ada mahasiswa</td>
                 </tr>
             <?php endif; ?>
             </tbody>
         </table>
-       <div class="button-area">
-            <button type="button"
-                    class="btn btn-submit"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editNilaiModal">
-                Edit
-            </button>
 
-            <button type="submit" class="btn btn-submit">
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary px-4">
                 Submit
             </button>
-         </div>
+        </div>
     </form>
 
 </div>
-<div class="modal fade" id="editNilaiModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
 
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Edit Data Dosen</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
-                <p class="text-muted">
-                    Silakan edit nilai langsung di tabel, lalu klik <b>Submit</b>.
-                </p>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-             
 </body>
 </html>
