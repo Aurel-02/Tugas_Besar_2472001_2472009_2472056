@@ -3,7 +3,6 @@ include "../layout/header.php";
 include "../layout/sidebar.php";
 include "../../koneksi.php";
 
-// ambil data dari VIEW
 $data = mysqli_query($conn, "
     SELECT * FROM view_dosen
 ");
@@ -11,7 +10,6 @@ $data = mysqli_query($conn, "
 
 <div class="main">
 
-    <!-- Topbar -->
     <div class="topbar">
         <div class="admin">
             <div class="avatar"></div>
@@ -48,24 +46,22 @@ $data = mysqli_query($conn, "
                             <td><?= $row['nama_prodi']; ?></td>
                             <td>
 
-                                <!-- DETAIL -->
                                 <a href="detail.php?id=<?= $row['nip']; ?>"
                                    class="btn btn-info btn-sm">
                                    Detail
                                 </a>
 
-                                <!-- EDIT -->
                                 <a href="edit.php?id=<?= $row['nip']; ?>"
                                    class="btn btn-warning btn-sm">
                                    Edit
                                 </a>
 
-                                <!-- HAPUS -->
                                 <a href="hapus.php?id=<?= $row['nip']; ?>"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Yakin ingin menghapus?')">
-                                   Hapus
+                                    onclick="return confirm('Yakin ingin menghapus data dosen ini?')"
+                                    class="btn btn-danger btn-sm">
+                                    Hapus
                                 </a>
+
 
                             </td>
                         </tr>

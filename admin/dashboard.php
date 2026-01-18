@@ -1,12 +1,8 @@
 <?php
-// dashboard.php
 include 'layout/header.php';
 include '../koneksi.php';
-
-// ambil data dari VIEW dashboard
 $query = mysqli_query($conn, "SELECT * FROM v_dashboard_admin");
-$data  = mysqli_fetch_assoc($query);
-?>
+$data  = mysqli_fetch_assoc($query);?>
 
 <div class="sidebar">
     <h4>🎓 Portal Admin</h4>
@@ -25,8 +21,6 @@ $data  = mysqli_fetch_assoc($query);
 </div>
 
 <div class="main">
-    
-    <!-- Header / Topbar -->
     <div class="topbar">
         <div class="admin">
             <div class="avatar"></div>
@@ -34,15 +28,11 @@ $data  = mysqli_fetch_assoc($query);
         </div>
     </div>
 
-    
-    <!-- Content -->
     <div class="content">
         <h4 class="mb-4">Dashboard</h4>
 
-        <!-- Card Statistik -->
         <div class="row g-3 mb-4">
 
-            <!-- Mahasiswa -->
             <div class="col-md-3">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
@@ -52,7 +42,6 @@ $data  = mysqli_fetch_assoc($query);
                 </div>
             </div>
 
-            <!-- Dosen -->
             <div class="col-md-3">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
@@ -62,7 +51,6 @@ $data  = mysqli_fetch_assoc($query);
                 </div>
             </div>
 
-            <!-- Mata Kuliah -->
             <div class="col-md-3">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
@@ -72,7 +60,6 @@ $data  = mysqli_fetch_assoc($query);
                 </div>
             </div>
 
-            <!-- Jadwal -->
             <div class="col-md-3">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
@@ -84,7 +71,6 @@ $data  = mysqli_fetch_assoc($query);
 
         </div>
 
-        <!-- Konten Besar -->
         <div class="card shadow-sm">
             <div class="card-body" style="height: 260px;">
                 <h6>Informasi</h6>
@@ -94,6 +80,6 @@ $data  = mysqli_fetch_assoc($query);
             </div>
         </div>
 
-    </div> <!-- content -->
+    </div>
 
 <?php include 'layout/footer.php'; ?>
