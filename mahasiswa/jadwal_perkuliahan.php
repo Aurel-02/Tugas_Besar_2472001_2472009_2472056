@@ -102,11 +102,16 @@ while ($row = $result->fetch_assoc()) {
                 <div class="col">
                     <h3 class="mb-0 text-white">Jadwal Perkuliahan</h3>
                 </div>
+
+                <?php
+                $jenisUjian = isset($_GET['jenis_ujian']) ? $_GET['jenis_ujian'] : '';
+                $semesterParam = isset($_GET['semester']) ? '?semester=' . $_GET['semester'] : '';
+                ?>
                 <div class="col-auto">
                     <select class="form-select form-select-sm" onchange="window.location.href = this.value;">
-                        <option value="jadwal_perkuliahan.php">Perkuliahan</option>
-                        <option value="uts.php">UTS</option>
-                        <option value="uas.php">UAS</option>
+                        <option value="jadwal_perkuliahan.php<?= $semesterParam ?>" <?php echo (!isset($_GET['jenis_ujian']) ? 'selected' : ''); ?>>Perkuliahan</option>
+                        <option value="ujian.php?jenis_ujian=UTS<?= (isset($_GET['semester']) ? '&semester=' . $_GET['semester'] : '') ?>" <?php echo ($jenisUjian == 'UTS' ? 'selected' : ''); ?>>UTS</option>
+                        <option value="ujian.php?jenis_ujian=UAS<?= (isset($_GET['semester']) ? '&semester=' . $_GET['semester'] : '') ?>" <?php echo ($jenisUjian == 'UAS' ? 'selected' : ''); ?>>UAS</option>
                     </select>
                 </div>
             </div>
