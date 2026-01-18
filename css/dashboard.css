@@ -59,3 +59,36 @@ body {
     background: #0a2a66;
     border-radius: 50%;
 } 
+
+.pengumuman-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.pengumuman-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+}
+
+.pengumuman-card img {
+    height: 180px;
+    width: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+}
+
+/* scrollbar halus */
+.pengumuman-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.pengumuman-scroll::-webkit-scrollbar-thumb {
+    background: #0a2a66;
+    border-radius: 10px;
+}

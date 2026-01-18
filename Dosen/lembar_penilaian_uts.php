@@ -8,26 +8,22 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '2') {
 
 include __DIR__ . "/../koneksi.php";
 
-/* ================= SESSION ================= */
 $nip   = $_SESSION['user_id'];
 $id_mk = $_SESSION['id_mk'];
 $kelas = $_SESSION['kelas'];
 
-/* ================= DATA DOSEN ================= */
 $dosen = $conn->query("
     SELECT nama_dosen 
     FROM tbdosen 
     WHERE nip = '$nip'
 ")->fetch_assoc();
 
-/* ================= DATA MK ================= */
 $mk = $conn->query("
     SELECT nama_mk 
     FROM tbmatakuliah 
     WHERE id_mk = '$id_mk'
 ")->fetch_assoc();
 
-/* ================= SEMESTER ================= */
 $semesterRow = $conn->query("
     SELECT semester
     FROM tbperwalian
@@ -39,7 +35,6 @@ $semesterRow = $conn->query("
 
 $semester = $semesterRow['semester'] ?? '-';
 
-/* ================= SIMPAN NILAI UTS ================= */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nilai'])) {
 
     $stmtSP = $conn->prepare(
@@ -49,8 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nilai'])) {
     foreach ($_POST['nilai'] as $nrp => $nilai) {
 
         if ($nilai === '') continue;
-
-        // SESUAI FORMAT DATABASE
         $id_transkrip = '01-' . $nrp;
         $jenis = 'UTS';
 
@@ -64,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nilai'])) {
         );
 
         $stmtSP->execute();
-        $conn->next_result(); // 🔥 WAJIB
+        $conn->next_result(); 
     }
 
     $stmtSP->close();
@@ -76,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nilai'])) {
     exit;
 }
 
-/* ================= DATA MAHASISWA ================= */
 $stmt = $conn->prepare("
     SELECT DISTINCT
         m.nrp,

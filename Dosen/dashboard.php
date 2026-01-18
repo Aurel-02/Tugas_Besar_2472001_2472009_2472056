@@ -61,9 +61,21 @@ $conn->close();
                         </small>
                     </div>
                 </div>
-            </a>
-            <div class="notif"></div>
-        </div>
+            </div>
+            
+            <div class="page">
+                <h5 class="mb-3 fw-semibold">Pengumuman Beasiswa</h5>
+                <div class="pengumuman-scroll">
+                    <div class="pengumuman-card">
+                        <img src="../img/pengumuman1.jpeg" alt="Pengumuman 1">
+                    </div>
+                    <br>
+                    <h5 class="mb-3 fw-semibold">Pengumuman seminar</h5>
+                    <div class="pengumuman-card">
+                        <img src="../img/pengumuman2.jpeg" alt="Pengumuman 2">
+                    </div>
+            </div>
+</div>
 
     </main>
 

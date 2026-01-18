@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-/* =========================
-   CEK LOGIN DOSEN
-========================= */
 if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '2') {
     header("Location: /login.php");
     exit;
@@ -13,9 +10,6 @@ include __DIR__ . '/../koneksi.php';
 
 $nip = $_SESSION['user_id'];
 
-/* =========================
-   SEMESTER TERAKHIR
-========================= */
 $qSemester = $conn->prepare("
     SELECT MAX(semester) AS semester
     FROM tbperwalian
@@ -32,9 +26,6 @@ if ($semester < 1 || $semester > $semesterMax) {
     $semester = $semesterMax;
 }
 
-/* =========================
-   JADWAL DOSEN
-========================= */
 $query = "
     SELECT 
         hari,
@@ -79,10 +70,8 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <title>Jadwal Perkuliahan Dosen</title>
 
-    <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- CSS KAMU -->
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="../css/jadwal_perkuliahan.css">
 </head>
@@ -94,7 +83,6 @@ while ($row = $result->fetch_assoc()) {
 
     <div class="main-content">
 
-        <!-- HEADER -->
         <div class="jadwal-header px-4">
             <div class="row align-items-center h-100">
                 <div class="col">
@@ -118,7 +106,6 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
 
-        <!-- CONTENT -->
         <div class="container mt-4 pt-3">
             <div class="row g-4">
 

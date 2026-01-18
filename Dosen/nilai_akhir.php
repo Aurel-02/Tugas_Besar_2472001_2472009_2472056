@@ -25,14 +25,14 @@ $dosen = $conn->query("
     WHERE nip = '$nip'
 ")->fetch_assoc();
 
-/* DATA MK */
+
 $mk = $conn->query("
     SELECT nama_mk 
     FROM tbmatakuliah 
     WHERE id_mk = '$id_mk'
 ")->fetch_assoc();
 
-/* SEMESTER */
+
 $semesterRow = $conn->query("
     SELECT semester
     FROM tbperwalian
@@ -44,7 +44,7 @@ $semesterRow = $conn->query("
 
 $semester = $semesterRow['semester'] ?? '-';
 
-/* DATA NILAI AKHIR */
+
 $stmt = $conn->prepare("
     SELECT DISTINCT
         m.nrp,

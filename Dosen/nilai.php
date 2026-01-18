@@ -76,7 +76,6 @@ while ($row = $result->fetch_assoc()) {
 
     <form method="POST">
 
-        <!-- Mata Kuliah -->
         <div class="mb-3">
             <label class="form-label">Mata Kuliah</label>
             <select name="matkul" class="form-select" required>
@@ -93,7 +92,6 @@ while ($row = $result->fetch_assoc()) {
             </select>
         </div>
 
-        <!-- Kelas -->
         <div class="mb-3">
             <label class="form-label">Kelas</label>
             <select name="kelas" class="form-select" required>
@@ -104,7 +102,6 @@ while ($row = $result->fetch_assoc()) {
             </select>
         </div>
 
-        <!-- Jenis Penilaian -->
         <div class="mb-3">
             <label class="form-label">Jenis Penilaian</label><br>
             <div class="btn-group" role="group">

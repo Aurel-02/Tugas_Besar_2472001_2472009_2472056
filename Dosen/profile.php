@@ -7,7 +7,6 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '2') {
 
 include __DIR__ . "/../koneksi.php";
 
-/* Query data dosen + prodi */
 $sql = "
     SELECT 
         d.nama_dosen,
@@ -97,7 +96,6 @@ $conn->close();
     </div>
 </div>
 
-<!-- MODAL EDIT -->
 <div class="modal fade" id="editProfileModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
