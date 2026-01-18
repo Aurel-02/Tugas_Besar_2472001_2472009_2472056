@@ -8,7 +8,6 @@ $data = mysqli_query($conn, "SELECT * FROM tbfakultas ORDER BY id_fakultas ASC")
 
 <div class="main">
 
-    <!-- Topbar -->
     <div class="topbar">
         <div class="admin">
             <div class="avatar"></div>
@@ -16,7 +15,6 @@ $data = mysqli_query($conn, "SELECT * FROM tbfakultas ORDER BY id_fakultas ASC")
         </div>
     </div>
 
-    <!-- Content -->
     <div class="content">
 
         <h4 class="mb-3">Data Fakultas</h4>

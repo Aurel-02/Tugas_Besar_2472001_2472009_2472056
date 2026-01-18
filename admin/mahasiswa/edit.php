@@ -3,12 +3,10 @@ include "../../koneksi.php";
 
 $id = $_GET['id'];
 
-/* data mahasiswa */
 $data = mysqli_fetch_assoc(
     mysqli_query($conn,"SELECT * FROM tbmahasiswa WHERE nrp='$id'")
 );
 
-/* data prodi */
 $prodi = mysqli_query($conn,"SELECT * FROM tbprodi ORDER BY id_prodi ASC");
 ?>
 
@@ -61,7 +59,6 @@ hr{ margin:25px 0; }
 
         <div class="modal-body">
 
-            <!-- NRP -->
             <input type="hidden" name="nrp" value="<?= $data['nrp']; ?>">
 
             <div class="mb-3">
@@ -70,7 +67,6 @@ hr{ margin:25px 0; }
                        value="<?= $data['nrp']; ?>" readonly>
             </div>
 
-            <!-- NAMA -->
             <div class="mb-3">
                 <label class="form-label">Nama Mahasiswa</label>
                 <input type="text" name="nama_mahasiswa"
@@ -78,7 +74,6 @@ hr{ margin:25px 0; }
                        value="<?= $data['nama_mahasiswa']; ?>" required>
             </div>
 
-            <!-- PRODI -->
             <div class="mb-3">
                 <label class="form-label">Program Studi</label>
                 <select name="id_prodi" class="form-select" required>
@@ -91,7 +86,6 @@ hr{ margin:25px 0; }
                 </select>
             </div>
 
-            <!-- ANGKATAN -->
             <div class="mb-3">
                 <label class="form-label">Angkatan</label>
                 <input type="text" name="angkatan"
@@ -99,7 +93,6 @@ hr{ margin:25px 0; }
                        value="<?= $data['angkatan']; ?>" required>
             </div>
 
-            <!-- STATUS -->
             <div class="mb-3">
                 <label class="form-label">Status Mahasiswa</label>
                 <select name="status_mhs" class="form-select">
@@ -110,7 +103,6 @@ hr{ margin:25px 0; }
                 </select>
             </div>
 
-            <!-- TEMPAT & TGL LAHIR -->
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Tempat Lahir</label>
@@ -127,7 +119,6 @@ hr{ margin:25px 0; }
                 </div>
             </div>
 
-            <!-- JENIS KELAMIN -->
             <div class="mb-3">
                 <label class="form-label">Jenis Kelamin</label>
                 <select name="jenis_kelamin" class="form-select">
@@ -136,7 +127,6 @@ hr{ margin:25px 0; }
                 </select>
             </div>
 
-            <!-- EMAIL & TELP -->
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Email Mahasiswa</label>
@@ -153,7 +143,6 @@ hr{ margin:25px 0; }
                 </div>
             </div>
 
-            <!-- ALAMAT -->
             <div class="mb-3">
                 <label class="form-label">Alamat Mahasiswa</label>
                 <textarea name="alamat_mahasiswa"

@@ -42,7 +42,6 @@ $data = mysqli_query($conn, "
     + Tambah Mahasiswa
 </a>
 
-<!-- TOMBOL SORTING -->
 <form method="GET" class="row g-2 mb-3">
     <div class="col-md-3">
         <select name="sort" class="form-select">

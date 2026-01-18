@@ -59,19 +59,16 @@ $prodi = mysqli_query($conn, "SELECT * FROM tbprodi ORDER BY nama_prodi ASC");
     <form method="POST" action="simpan.php">
         <div class="modal-body">
 
-            <!-- NIP -->
             <div class="mb-3">
                 <label class="form-label">NIP</label>
                 <input type="text" name="nip" class="form-control" placeholder="Masukkan NIP" required>
             </div>
 
-            <!-- Nama -->
             <div class="mb-3">
                 <label class="form-label">Nama Dosen</label>
                 <input type="text" name="nama" class="form-control" placeholder="Masukkan nama dosen" required>
             </div>
 
-            <!-- ID PRODI -->
             <div class="mb-3">
                 <label class="form-label">Program Studi</label>
                 <select name="id_prodi" class="form-select" required>

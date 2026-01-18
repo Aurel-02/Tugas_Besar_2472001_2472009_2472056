@@ -3,7 +3,6 @@ include "../../koneksi.php";
 
 $id = $_GET['id'];
 
-/* ambil data mata kuliah */
 $data = mysqli_fetch_assoc(
     mysqli_query($conn,"
         SELECT * FROM tbmatakuliah
@@ -11,7 +10,6 @@ $data = mysqli_fetch_assoc(
     ")
 );
 
-/* ambil data prodi */
 $prodi = mysqli_query($conn,"
     SELECT * FROM tbprodi
     ORDER BY nama_prodi ASC
@@ -70,7 +68,6 @@ body{ background:#f4f6fb; }
 
         <div class="modal-body">
 
-            <!-- ID MK -->
             <input type="hidden" name="id_mk" value="<?= $data['id_mk']; ?>">
 
             <div class="mb-3">
@@ -81,7 +78,6 @@ body{ background:#f4f6fb; }
                        readonly>
             </div>
 
-            <!-- NAMA MK -->
             <div class="mb-3">
                 <label class="form-label">Nama Mata Kuliah</label>
                 <input type="text"
@@ -91,7 +87,6 @@ body{ background:#f4f6fb; }
                        required>
             </div>
 
-            <!-- SKS -->
             <div class="mb-3">
                 <label class="form-label">SKS</label>
                 <select name="sks" class="form-select" required>
@@ -103,7 +98,6 @@ body{ background:#f4f6fb; }
                 </select>
             </div>
 
-            <!-- PRODI -->
             <div class="mb-3">
                 <label class="form-label">Program Studi</label>
                 <select name="id_prodi" class="form-select" required>

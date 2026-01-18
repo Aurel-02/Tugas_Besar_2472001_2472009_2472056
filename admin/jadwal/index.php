@@ -3,20 +3,12 @@ include "../layout/header.php";
 include "../layout/sidebar.php";
 include "../../koneksi.php";
 
-/* ==============================
-   SORTING HARI
-================================ */
-
 $filterHari = "";
 
 if (isset($_GET['hari']) && $_GET['hari'] != "") {
     $hari = mysqli_real_escape_string($conn, $_GET['hari']);
     $filterHari = "WHERE p.hari = '$hari'";
 }
-
-/* ==============================
-   QUERY DATA
-================================ */
 
 $data = mysqli_query($conn, "
     SELECT p.*, m.nama_mk, d.nama_dosen
@@ -33,7 +25,6 @@ $data = mysqli_query($conn, "
 
 <div class="main">
 
-    <!-- Topbar -->
     <div class="topbar">
         <div class="admin">
             <div class="avatar"></div>
@@ -41,19 +32,16 @@ $data = mysqli_query($conn, "
         </div>
     </div>
 
-    <!-- Content -->
     <div class="content">
 
         <h4 class="mb-3">Data Jadwal</h4>
 
-        <!-- TOMBOL -->
         <div class="d-flex justify-content-between mb-3">
 
             <a href="tambah.php" class="btn btn-primary">
                 + Tambah Jadwal
             </a>
 
-            <!-- SORTING HARI -->
             <form method="GET" class="d-flex gap-2">
                 <select name="hari" class="form-select">
                     <option value="">-- Semua Hari --</option>

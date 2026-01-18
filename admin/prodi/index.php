@@ -3,7 +3,6 @@ include "../layout/header.php";
 include "../layout/sidebar.php";
 include "../../koneksi.php";
 
-// Query data prodi + fakultas
 $data = mysqli_query($conn, "
     SELECT p.*, f.nama_fakultas
     FROM tbprodi p
@@ -14,7 +13,6 @@ $data = mysqli_query($conn, "
 
 <div class="main">
 
-<!-- Topbar -->
 <div class="topbar">
     <div class="admin">
         <div class="avatar"></div>
@@ -22,7 +20,6 @@ $data = mysqli_query($conn, "
     </div>
 </div>
 
-<!-- Content -->
 <div class="content">
 
 <h4 class="mb-3">Data Program Studi</h4>

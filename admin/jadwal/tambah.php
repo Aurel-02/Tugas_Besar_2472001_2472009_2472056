@@ -1,13 +1,11 @@
 <?php
 include "../../koneksi.php";
 
-/* ambil data mata kuliah */
 $mk = mysqli_query($conn, "
     SELECT * FROM tbmatakuliah
     ORDER BY nama_mk ASC
 ");
 
-/* ambil data dosen */
 $dosen = mysqli_query($conn, "
     SELECT * FROM tbdosen
     ORDER BY nama_dosen ASC
@@ -66,7 +64,6 @@ body{ background:#f4f6fb; }
 
         <div class="modal-body">
 
-            <!-- HARI -->
             <div class="mb-3">
                 <label class="form-label">Hari</label>
                 <select name="hari" class="form-select" required>
@@ -80,7 +77,6 @@ body{ background:#f4f6fb; }
                 </select>
             </div>
 
-            <!-- MATA KULIAH -->
             <div class="mb-3">
                 <label class="form-label">Mata Kuliah</label>
                 <select name="id_mk" class="form-select" required>
@@ -95,7 +91,6 @@ body{ background:#f4f6fb; }
                 </select>
             </div>
 
-            <!-- DOSEN -->
             <div class="mb-3">
                 <label class="form-label">Dosen</label>
                 <select name="nip" class="form-select" required>
@@ -110,7 +105,6 @@ body{ background:#f4f6fb; }
                 </select>
             </div>
 
-            <!-- JAM -->
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Jam Mulai</label>
@@ -125,7 +119,6 @@ body{ background:#f4f6fb; }
                 </div>
             </div>
 
-            <!-- RUANG -->
             <div class="mb-3">
                 <label class="form-label">Ruang</label>
                 <input type="text"
