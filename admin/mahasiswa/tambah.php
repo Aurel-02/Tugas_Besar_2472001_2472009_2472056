@@ -1,3 +1,8 @@
+<?php
+include "../../koneksi.php";
+$prodi = mysqli_query($conn,"SELECT * FROM tbprodi ORDER BY id_prodi");
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,7 +13,6 @@
 
 <style>
 body{ background:#f4f6fb; }
-
 .modal-box{
     max-width:600px;
     margin:80px auto;
@@ -36,32 +40,48 @@ body{ background:#f4f6fb; }
 
 <div class="modal-box">
 
-    <div class="modal-header d-flex justify-content-between align-items-center">
-        <span>Tambah Mahasiswa</span>
-        <a href="index.php" class="text-dark text-decoration-none fs-5">&times;</a>
+<div class="modal-header d-flex justify-content-between align-items-center">
+    <span>Tambah Mahasiswa</span>
+    <a href="index.php" class="text-dark fs-5 text-decoration-none">&times;</a>
+</div>
+
+<form method="POST" action="simpan.php">
+<div class="modal-body">
+
+    <div class="mb-3">
+        <label class="form-label">Nama Mahasiswa</label>
+        <input type="text" name="nama" class="form-control" required>
     </div>
 
-    <form method="POST" action="simpan.php">
-        <div class="modal-body">
+    <div class="mb-3">
+        <label class="form-label">Program Studi</label>
+        <select name="id_prodi" class="form-select" required>
+            <option value="">-- Pilih Prodi --</option>
+            <?php while($p = mysqli_fetch_assoc($prodi)) { ?>
+                <option value="<?= $p['id_prodi'] ?>">
+                    <?= $p['id_prodi'] ?> - <?= $p['nama_prodi'] ?>
+                </option>
+            <?php } ?>
+        </select>
+    </div>
 
-            <div class="mb-3">
-                <label class="form-label">NRP</label>
-                <input type="text" name="nrp" class="form-control" placeholder="Masukkan NRP" required>
-            </div>
+    <div class="mb-3">
+        <label class="form-label">Angkatan</label>
+        <input type="text" name="angkatan"
+               class="form-control"
+               placeholder="2024"
+               maxlength="4"
+               required>
+    </div>
 
-            <div class="mb-3">
-                <label class="form-label">Nama Mahasiswa</label>
-                <input type="text" name="nama" class="form-control" placeholder="Masukkan nama mahasiswa" required>
-            </div>
+</div>
 
-        </div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="index.php" class="btn btn-secondary">Batal</a>
+</div>
 
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="index.php" class="btn btn-secondary">Batal</a>
-        </div>
-    </form>
-
+</form>
 </div>
 
 </body>

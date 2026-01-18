@@ -83,7 +83,6 @@ body {
     display: block;
 }
 
-/* scrollbar halus */
 .pengumuman-scroll::-webkit-scrollbar {
     height: 6px;
 }

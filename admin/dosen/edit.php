@@ -22,6 +22,8 @@ if (!$row) {
     echo "Data dosen tidak ditemukan.";
     exit;
 }
+
+$prodi = mysqli_query($conn, "SELECT * FROM tbprodi ORDER BY nama_prodi ASC");
 ?>
 
 <!DOCTYPE html>
@@ -33,9 +35,7 @@ if (!$row) {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-body{
-    background:#f4f6fb;
-}
+body{ background:#f4f6fb; }
 
 .modal-box{
     max-width:600px;
@@ -53,9 +53,7 @@ body{
     color:#2b4cff;
 }
 
-.modal-body{
-    padding:20px;
-}
+.modal-body{ padding:20px; }
 
 .modal-footer{
     padding:15px 20px;
@@ -63,9 +61,7 @@ body{
     text-align:right;
 }
 
-.form-label{
-    font-weight:500;
-}
+.form-label{ font-weight:500; }
 </style>
 </head>
 
@@ -92,10 +88,22 @@ body{
 
             <div class="mb-3">
                 <label class="form-label">Nama Dosen</label>
-                <input type="text" name="nama"
+                <input type="text" name="nama_dosen"
                        class="form-control"
                        value="<?= $row['nama_dosen']; ?>"
                        required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Program Studi</label>
+                <select name="id_prodi" class="form-select" required>
+                    <?php while($p = mysqli_fetch_assoc($prodi)) : ?>
+                        <option value="<?= $p['id_prodi']; ?>"
+                            <?= ($row['id_prodi'] == $p['id_prodi']) ? 'selected' : ''; ?>>
+                            <?= $p['id_prodi']; ?> - <?= $p['nama_prodi']; ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
             </div>
 
         </div>
