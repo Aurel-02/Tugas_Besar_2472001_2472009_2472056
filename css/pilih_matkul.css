@@ -1,16 +1,14 @@
-/* Layout */
 .layout {
     display: flex;
     min-height: 100vh;
 }
 
 .main-content {
-    margin-left: 120px; /* Space for sidebar */
+    margin-left: 120px;
     background-color: #f4f6f9;
     flex-grow: 1;
 }
 
-/* Header */
 .header {
     background-color: #0a2a66;
     color: white;
@@ -21,7 +19,6 @@
     padding: 10px;
 }
 
-/* Course Card */
 .course-card {
     background-color: white;
     padding: 20px;
@@ -44,14 +41,22 @@
     font-weight: bold;
 }
 
-/* Semester Info */
 .semester-info {
-    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
     font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 20px;
 }
 
-/* Button */
+.left-line, .right-line {
+    border: none;
+    border-top: 2px solid #000; 
+    flex-grow: 1;
+    margin: 0 15px;
+}
+
 .btn-primary {
     background-color: #0a2a66;
     border: none;
@@ -61,17 +66,15 @@
     background-color: #08224f;
 }
 
-/* Header Styling */
 .nilai-header {
     height: 60px;
     background-color: #0a2a66;
-    width: 100%; /* Ensure it spans the full width */
-    padding: 0 20px; /* Optional: Adds padding for spacing on sides */
+    width: 100%;
+    padding: 0 20px;
     position: relative;
-    z-index: 10; /* Ensures the header stays on top */
+    z-index: 10;
 }
 
-/* Flex for Header Content */
 .nilai-header .row {
     display: flex;
     justify-content: space-between;
@@ -79,7 +82,6 @@
     height: 100%;
 }
 
-/* Option dropdown alignment (optional) */
 .nilai-header select {
     width: auto;
 }

@@ -6,7 +6,7 @@
     <title>Pilih Mata Kuliah</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/Tugas_Besar_2472001_2472009_2472056/css/sidebar.css">
-    <link rel="stylesheet" href="/Tugas_Besar_2472001_2472009_2472056/css/pilih_matkul.css"> <!-- Link ke file CSS terpisah -->
+    <link rel="stylesheet" href="/Tugas_Besar_2472001_2472009_2472056/css/pilih_matkul.css">
 </head>
 <body>
 <?php
@@ -17,48 +17,41 @@ if (!isset($_SESSION['login']) || $_SESSION['role_id'] !== '3') {
     exit;
 }
 
-include __DIR__ . '/../koneksi.php';
+include __DIR__ . '/../koneksi.php'; // Koneksi database
 
-$nrp = $_SESSION['user_id'];
+$nrp = $_SESSION['user_id']; // Ambil NRP mahasiswa dari session
 
+// Query untuk mengambil id_prodi mahasiswa
 $query_prodi = "SELECT id_prodi FROM tbmahasiswa WHERE nrp = ?";
 $stmt_prodi = $conn->prepare($query_prodi);
 
+// Cek apakah prepare untuk query_prodi berhasil
 if (!$stmt_prodi) {
-    die("Prepare failed for prodi query: " . mysqli_error($conn));
+    die("Prepare failed for prodi query: " . mysqli_error($conn)); 
 }
 
 $stmt_prodi->bind_param("s", $nrp);
 $stmt_prodi->execute();
 $result_prodi = $stmt_prodi->get_result();
 $prodi_data = $result_prodi->fetch_assoc();
-$id_prodi = $prodi_data['id_prodi'];
+$id_prodi = $prodi_data['id_prodi']; // Ambil id_prodi dari query
 
-$query = "
-    SELECT m.id_mk, m.nama_mk, p.kelas, p.hari, p.jam_mulai, p.jam_selesai, p.ruang, m.sks, m.semester
-    FROM tbmatakuliah m
-    JOIN tbperwalian p ON m.id_mk = p.id_mk
-    WHERE m.id_prodi = ? 
-    AND m.id_mk NOT IN (
-        SELECT id_mk 
-        FROM tbdkbs 
-        WHERE nrp = ?
-    )
-    ORDER BY m.semester, m.id_mk
-";
-
+// Memanggil Stored Procedure untuk mengambil mata kuliah yang belum diambil
+$query = "CALL sp_get_mata_kuliah_yang_belum_diambil(?, ?)";
 $stmt = $conn->prepare($query);
 
+// Cek apakah prepare untuk query utama berhasil
 if (!$stmt) {
-    die("Prepare failed for main query: " . mysqli_error($conn));
+    die("Prepare failed for main query: " . mysqli_error($conn)); 
 }
 
-$stmt->bind_param("ss", $id_prodi, $nrp);
+$stmt->bind_param("si", $nrp, $id_prodi); // Menggunakan id_prodi dan nrp untuk query
 $stmt->execute();
 $result = $stmt->get_result();
 
 $mataKuliahPerSemester = [];
 
+// Mengelompokkan mata kuliah per semester
 while ($row = $result->fetch_assoc()) {
     $semester = $row['semester'];
     if (!isset($mataKuliahPerSemester[$semester])) {
@@ -81,7 +74,7 @@ while ($row = $result->fetch_assoc()) {
 
                 <?php foreach ($mataKuliahPerSemester as $semester => $mataKuliahList): ?>
                     <div class="semester-info">
-                        <label for="semester">Semester <?= $semester ?></label>
+                        <hr class="left-line"> <label for="semester">Semester <?= $semester ?></label> <hr class="right-line">
                     </div>
 
                     <?php foreach ($mataKuliahList as $row): ?>
@@ -95,7 +88,7 @@ while ($row = $result->fetch_assoc()) {
                                         <small><?= $row['sks'] ?> sks</small>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary">Pilih</button>
+                                <button class="btn btn-primary pilih-mk" data-id_mk="<?= $mataKuliah['id_mk'] ?>">Pilih</button>
                             </div>
                         </div>
                     <?php endforeach; ?>

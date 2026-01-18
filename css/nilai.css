@@ -1,4 +1,3 @@
-/* nilai.css */
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f9fc;
@@ -66,14 +65,4 @@ button[type="submit"]:hover {
 
 select.form-control {
     height: 40px;
-}
-
-@media (max-width: 768px) {
-    .form-container {
-        padding: 20px;
-    }
-
-    .header h2 {
-        font-size: 20px;
-    }
 }

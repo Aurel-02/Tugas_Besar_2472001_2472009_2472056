@@ -17,7 +17,6 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* Header */
 .header {
     background-color: #0b2c6d;
     color: white;
@@ -37,7 +36,6 @@ body {
     font-size: 28px;
 }
 
-/* Info */
 .info {
     display: flex;
     justify-content: space-between;
@@ -48,7 +46,6 @@ body {
     margin: 6px 0;
 }
 
-/* Table header */
 .table-header {
     display: flex;
     justify-content: space-between;
@@ -60,7 +57,6 @@ body {
     margin: 0;
 }
 
-/* Table */
 table {
     width: calc(100% - 40px);
     margin: 0 20px;
@@ -91,7 +87,6 @@ tbody td {
     width: 15%;
 }
 
-/* Buttons */
 .button-area {
     display: flex;
     justify-content: flex-end;

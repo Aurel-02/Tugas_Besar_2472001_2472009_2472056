@@ -9,7 +9,6 @@ body {
     height: 100vh;
 }
 
-/* SIDEBAR */
 .sidebar {
     width: 230px;
     background: #2f3542;
@@ -45,7 +44,6 @@ body {
     background: #e84118;
 }
 
-/* CONTENT */
 .content {
     flex: 1;
     padding: 30px;
