@@ -51,14 +51,11 @@ $sql = "
 
 $stmt = $conn->prepare($sql);
 
-
 if (!$stmt) {
     die("Error preparing statement: " . mysqli_error($conn));
 }
 
-
 $stmt->bind_param("s", $_SESSION['user_id']); 
-
 
 if (!$stmt->execute()) {
     die("Error executing query: " . mysqli_error($conn));
@@ -69,25 +66,25 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     
-    $nama_mahasiswa = $row['nama_mahasiswa'];
-    $nrp = $row['nrp'];
-    $email = $row['email_mahasiswa'];
-    $angkatan = $row['angkatan'];
-    $tgl_lahir = $row['tgl_lahir'];
-    $tempat_lahir = $row['tempat_lahir'];
-    $jenis_kelamin = $row['jenis_kelamin'];
-    $no_telp_mahasiswa = $row['no_telp_mahasiswa'];
-    $status_mhs = $row['status_mhs'];
-    $alamat_mahasiswa = $row['alamat_mahasiswa'];
-    $nama_wali = $row['nama_wali'];
-    $alamat_wali = $row['alamat_wali'];
-    $no_telp_wali = $row['no_telp_wali'];
-    $email_wali = $row['email_wali'];
-    $nama_prodi = $row['nama_prodi'];
+    $nama_mahasiswa = $row['nama_mahasiswa'] ?? 'Tidak ada data';
+    $nrp = $row['nrp'] ?? 'Tidak ada data';
+    $email = $row['email_mahasiswa'] ?? 'Tidak ada data';
+    $angkatan = $row['angkatan'] ?? 'Tidak ada data';
+    $tgl_lahir = $row['tgl_lahir'] ?? 'Tidak ada data';
+    $tempat_lahir = $row['tempat_lahir'] ?? 'Tidak ada data';
+    $jenis_kelamin = $row['jenis_kelamin'] ?? 'Tidak ada data';
+    $no_telp_mahasiswa = $row['no_telp_mahasiswa'] ?? 'Tidak ada data';
+    $status_mhs = $row['status_mhs'] ?? 'Tidak ada data';
+    $alamat_mahasiswa = $row['alamat_mahasiswa'] ?? 'Tidak ada data';
+    $nama_wali = $row['nama_wali'] ?? 'Tidak ada data';
+    $alamat_wali = $row['alamat_wali'] ?? 'Tidak ada data';
+    $no_telp_wali = $row['no_telp_wali'] ?? 'Tidak ada data';
+    $email_wali = $row['email_wali'] ?? 'Tidak ada data';
+    $nama_prodi = $row['nama_prodi'] ?? 'Tidak ada data';
 
-    $nama_dosen = $row['nama_dosen'];
-    $email_dosen = $row['email_dosen'];
-    $no_telp_dosen = $row['no_telp'];
+    $nama_dosen = $row['nama_dosen'] ?? 'Tidak ada data';
+    $email_dosen = $row['email_dosen'] ?? 'Tidak ada data';
+    $no_telp_dosen = $row['no_telp'] ?? 'Tidak ada data';
 } else {
     echo "Tidak ada data";
 }
@@ -97,7 +94,7 @@ if ($jenis_kelamin === 'L') {
 } elseif ($jenis_kelamin === 'P') {
     $jenis_kelamin_text = 'Perempuan';
 } else {
-    $jenis_kelamin_text = '-';
+    $jenis_kelamin_text = 'Tidak ada data';
 }
 
 $stmt->close();

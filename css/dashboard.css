@@ -60,27 +60,54 @@ body {
     border-radius: 50%;
 } 
 
+.notif-tooltip {
+    position: absolute;
+    top: 50px;
+    left: 75%;
+    transform: translateX(-50%);
+    background-color: #0a2a66;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: auto;
+    display: none; 
+    z-index: 10;
+    word-wrap: break-word;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+.notif:hover .notif-tooltip {
+    display: block;
+}
+
 .pengumuman-scroll {
     display: flex;
+    flex-direction: column;
     gap: 20px;
-    overflow-x: auto;
     padding-bottom: 10px;
+    padding-top: 10px;  
 }
 
 .pengumuman-card {
     background: #ffffff;
     border-radius: 14px;
     padding: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 100%; 
+    max-width: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pengumuman-card img {
-    height: 180px;
-    width: auto;
+    width: 100%;
+    height: auto;
     border-radius: 10px;
-    object-fit: cover;
-    display: block;
+    object-fit: cover; 
 }
 
 .pengumuman-scroll::-webkit-scrollbar {
@@ -90,4 +117,12 @@ body {
 .pengumuman-scroll::-webkit-scrollbar-thumb {
     background: #0a2a66;
     border-radius: 10px;
+}
+
+.page {
+    padding: 40px;
+}
+
+h5 {
+    font-weight: 600;
 }

@@ -60,21 +60,46 @@ $stmt->close();
                     </div>
                 </div>
             </a>
-        </div>
-          
-            <div class="page">
-                <h5 class="mb-3 fw-semibold">Pengumuman Beasiswa</h5>
-                <div class="pengumuman-scroll">
-                    <div class="pengumuman-card">
-                        <img src="../img/pengumuman1.jpeg" alt="Pengumuman 1">
-                    </div>
-                    <br>
-                    <h5 class="mb-3 fw-semibold">Pengumuman seminar</h5>
-                    <div class="pengumuman-card">
-                        <img src="../img/pengumuman2.jpeg" alt="Pengumuman 2">
-                    </div>
-            </div>
+            <div class="notif">
+                <div class="notif-tooltip">
+                    <p><strong>Notifikasi</strong></p>
+                    <hr>
+                    <?php
+                    $query = "SELECT keterangan FROM tblogakademik";
+                    $stmt = $conn->prepare($query);
 
+                    if ($stmt === false) {
+                        die('Error in preparing the query: ' . $conn->error);
+                    }
+
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo nl2br($row['keterangan']) . '<hr>';
+                        }
+                    } else {
+                        echo 'Tidak ada keterangan ditemukan';
+                    }
+
+                    $stmt->close();
+                    ?>
+                </div>
+            </div>
+        </div>
+        <div class="page">
+            <h5 class="mb-3 fw-semibold">Pengumuman Beasiswa</h5>
+            <div class="pengumuman-scroll">
+                <div class="pengumuman-card">
+                    <img src="../img/pengumuman1.jpeg" alt="Pengumuman 1">
+                </div>
+                <br>
+                <h5 class="mb-3 fw-semibold">Pengumuman seminar</h5>
+                <div class="pengumuman-card">
+                    <img src="../img/pengumuman2.jpeg" alt="Pengumuman 2">
+                </div>
+        </div>
     </main>
 
 </div>
