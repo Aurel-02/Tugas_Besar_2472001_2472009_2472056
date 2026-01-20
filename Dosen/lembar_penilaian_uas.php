@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nilai'])) {
 
         if ($nilai === '') continue;
 
-        $id_transkrip = '01-' . $nrp;
+        $id_transkrip = '02-' . $nrp;
         $jenis = 'UAS';
 
         $stmtSP->bind_param(
@@ -80,7 +80,7 @@ $stmt = $conn->prepare("
     JOIN tbmahasiswa m ON d.nrp = m.nrp
     JOIN tbperwalian p ON d.id_perwalian = p.id_perwalian
     LEFT JOIN tbnilai n 
-        ON n.id_transkrip = CONCAT('01-', m.nrp)
+        ON n.id_transkrip = CONCAT('02-', m.nrp)
        AND n.id_mk = ?
     WHERE p.nip = ?
       AND p.id_mk = ?

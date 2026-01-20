@@ -5,7 +5,7 @@ $nama     = $_POST['nama'];
 $id_prodi = $_POST['id_prodi'];
 $angkatan = $_POST['angkatan'];
 
-$stmt = $conn->prepare("CALL sp_InsertMahasiswa(?, ?, ?)");
+$stmt = $conn->prepare("CALL sp_admin_InsertMahasiswa(?, ?, ?)");
 $stmt->bind_param("sss", $nama, $id_prodi, $angkatan);
 $stmt->execute();
 

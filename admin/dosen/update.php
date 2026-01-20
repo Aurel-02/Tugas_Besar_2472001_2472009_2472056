@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $alamat        = $_POST['alamat'];
     $id_prodi      = $_POST['id_prodi'];
 
-    $stmt = $conn->prepare("CALL sp_update_dosen(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("CALL sp_admin_update_dosen(?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param(
         "ssssssssi",
         $nip,
